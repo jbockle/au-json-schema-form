@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "sourceMap": true,
+    "sourceRoot": "src",
     "target": "es5",
     "module": "amd",
     "declaration": false,
@@ -10,7 +11,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "lib": ["es2017", "dom"]
+    "lib": [
+      "es2017",
+      "dom"
+    ]
   },
   "exclude": [
     "dist",
