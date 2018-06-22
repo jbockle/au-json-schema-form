@@ -1,0 +1,67 @@
+{
+  "name": "aurelia-json-schema-form",
+  "type": "project:plugin",
+  "transpiler": {
+    "id": "typescript",
+    "displayName": "TypeScript",
+    "fileExtension": ".ts",
+    "source": "src/**/*.ts",
+    "dtsSource": [
+      "./custom_typings/**/*.d.ts"
+    ],
+    "outputs": {
+      "es2015": {
+        "compileOptions": {
+          "module": "es2015",
+          "target": "es2015"
+        }
+      },
+      "commonjs": {
+        "compileOptions": {
+          "module": "commonjs"
+        }
+      },
+      "amd": {
+        "compileOptions": {
+          "module": "amd"
+        }
+      },
+      "system": {
+        "compileOptions": {
+          "module": "system"
+        }
+      }
+    }
+  },
+  "markupProcessor": {
+    "id": "none",
+    "displayName": "None",
+    "fileExtension": ".html",
+    "source": "src/**/*.html"
+  },
+  "cssProcessor": {
+    "id": "sass",
+    "displayName": "Sass",
+    "fileExtension": ".scss",
+    "source": "src/**/*.scss"
+  },
+  "editor": {
+    "id": "vscode",
+    "displayName": "Visual Studio Code"
+  },
+  "unitTestRunner": {
+    "id": "karma",
+    "displayName": "Karma"
+  },
+  "build": {
+    "copyFiles": {}
+  },
+  "paths": {
+    "root": "src",
+    "output": "dist"
+  },
+  "testFramework": {
+    "id": "jasmine",
+    "displayName": "Jasmine"
+  }
+}
