@@ -1,22 +1,12 @@
 import { PLATFORM } from "aurelia-pal";
+import { ITemplates } from "../../interfaces/templates";
 import { FrameworkConfiguration } from "aurelia-framework";
-import { Inputs } from "../../constants/inputs";
 
-const rootPath = "./templates/bootstrap4";
+const rootPath = "aurelia-json-schema-form/templates/bootstrap4";
 
-export function configure(config: FrameworkConfiguration) {
-
-  config.globalResources(
-    [
-      // resources
-      PLATFORM.moduleName(`${rootPath}/resources/guid`),
-    ]
-      // inputs
-      .concat(getInputs()));
-}
-
-function getInputs() {
-  return Object.keys(Inputs.controls).map((key) => {
-    return PLATFORM.moduleName(`${rootPath}/inputs/${key}/${Inputs.controls[key]}`);
-  });
+export function GetBootstrapTemplates(config: FrameworkConfiguration): ITemplates {
+  return {
+    number: `${rootPath}/inputs/number/sft-number.html`,
+    text: `${rootPath}/inputs/text/sft-text.html`,
+  };
 }

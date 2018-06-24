@@ -8,10 +8,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia-framework": "latest",
+    "aurelia-framework": "1.2.0",
     "aurelia-validation": "^1.2.0"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "aurelia-validation": "^1.2.0"
+  },
   "devDependencies": {
     "aurelia-cli": "^0.33.1",
     "aurelia-tools": "^2.0.0",

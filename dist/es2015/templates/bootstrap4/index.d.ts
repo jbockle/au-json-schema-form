@@ -1,2 +1,3 @@
+import { ITemplates } from "../../interfaces/templates";
 import { FrameworkConfiguration } from "aurelia-framework";
-export declare function configure(config: FrameworkConfiguration): void;
+export declare function GetBootstrapTemplates(config: FrameworkConfiguration): ITemplates;
