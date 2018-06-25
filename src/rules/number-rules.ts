@@ -42,7 +42,7 @@ export class NumberRules {
     // exclusiveMaximum
     ValidationRules
       .customRule(
-        "exclusionMaximum",
+        "exclusiveMaximum",
         (val, obj, max) => val !== undefined ? val < max : true,
         this.configuration.messages.exclusiveMaximum || "${$displayName} must be less than ${$config.max}",
         (max) => ({ max })
