@@ -3,8 +3,8 @@
   "description": "Create dynamic forms using json schema",
   "version": "0.1.0",
   "repository": {
-    "type": "???",
-    "url": "???"
+    "type": "git",
+    "url": "https://github.com/jbockle/au-json-schema-form"
   },
   "license": "MIT",
   "dependencies": {
