@@ -24,7 +24,7 @@ export class NumberRules {
     // exclusionMinimum
     ValidationRules
       .customRule(
-        "exclusionMinimum",
+        "exclusiveMinimum",
         (val, obj, min) => val !== undefined ? val > min : true,
         this.configuration.messages.exclusiveMinimum || "${$displayName} must be greater than ${$config.min}",
         (min) => ({ min })
