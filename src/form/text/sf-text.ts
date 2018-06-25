@@ -23,5 +23,9 @@ export class SfText {
 
   bind() {
     this.rules.bind(this);
+
+    if (["date-time", "date", "time"].indexOf(this.schema.format) > -1) {
+      throw new Error("not implemented, add datetime/date/time picker here");
+    }
   }
 }
