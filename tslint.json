@@ -10,6 +10,7 @@
     "no-trailing-whitespace": [
       true,
       "ignore-comments"
-    ]
+    ],
+    "no-string-literal": false
   }
 }

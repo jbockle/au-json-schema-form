@@ -7,6 +7,7 @@ import { SchemaFormLogger } from "./resources/logger";
 import { ITemplates } from "./interfaces/templates";
 import { AuJsonSchemaForm } from "./form/au-json-schema-form";
 import { GetBootstrapTemplates } from "./templates/bootstrap4/index";
+import { IValidationMessages } from "./interfaces/validation-messages";
 
 interface ISchemaFormConfiguration {
   /**
@@ -18,6 +19,11 @@ interface ISchemaFormConfiguration {
    * @property the list of dependencies used to generate form elements
    */
   templates?: ITemplates;
+
+  /**
+   * @property list of overrides for validation messages
+   */
+  validationMessages?: IValidationMessages;
 
   /**
    * @property sets the log level, default is none
@@ -61,7 +67,7 @@ function registerConfiguration(
   const configuration = new SchemaFormConfiguration(
     options.validationRenderer || new BootstrapValidationRenderer(),
     options.templates || GetBootstrapTemplates(frameworkConfig),
-    frameworkConfig
+    options.validationMessages || {}
   );
   frameworkConfig.container.registerInstance(SchemaFormConfiguration, configuration);
   logger.info("registered configuration", configuration);

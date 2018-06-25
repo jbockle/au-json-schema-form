@@ -1,9 +1,10 @@
-import { ValidationRules } from "aurelia-validation";
 import { bindable, customElement, inject } from "aurelia-framework";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
+import { IFormController } from "../../interfaces/form-controller";
+import { RulesFactory } from "../../rules/rules-factory";
 
-@inject(SchemaFormConfiguration)
+@inject(SchemaFormConfiguration, RulesFactory)
 @customElement("sf-number")
 export class SfNumber {
   @bindable schema: any;
@@ -13,19 +14,14 @@ export class SfNumber {
 
   id: string = Guid.newGuid();
 
-  constructor(public configuration: SchemaFormConfiguration) { }
+  kind = "number";
+
+  constructor(
+    public configuration: SchemaFormConfiguration,
+    public rules: RulesFactory
+  ) { }
 
   bind() {
-    let rule = ValidationRules
-      .ensure("model")
-      .displayName(this.title)
-      .satisfies(() => true);
-    if (this.required) {
-      rule = rule.required();
-    }
-    if (this.schema.minimum) {
-      rule = rule.satisfiesRule("minimum", this.schema.minimum);
-    }
-    rule.on(this);
+    this.rules.bind(this);
   }
 }

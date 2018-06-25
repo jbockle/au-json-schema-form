@@ -1,8 +1,8 @@
 import { ValidationControllerFactory, ValidationController } from "aurelia-validation";
 import { InlineViewStrategy } from "aurelia-framework";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
+import { RulesFactory } from "../rules/rules-factory";
 export declare class AuJsonSchemaForm {
-    private globalOptions;
     schema: any;
     form: any;
     model: any;
@@ -10,7 +10,7 @@ export declare class AuJsonSchemaForm {
     controller: ValidationController;
     viewStrategy: InlineViewStrategy;
     loaded: boolean;
-    constructor(vcf: ValidationControllerFactory, globalOptions: SchemaFormConfiguration);
+    constructor(validationControllerFactory: ValidationControllerFactory, configuration: SchemaFormConfiguration, rulesFactory: RulesFactory);
     bind(): void;
     schemaChanged(): void;
     formChanged(): void;

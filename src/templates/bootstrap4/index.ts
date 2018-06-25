@@ -1,4 +1,3 @@
-import { PLATFORM } from "aurelia-pal";
 import { ITemplates } from "../../interfaces/templates";
 import { FrameworkConfiguration } from "aurelia-framework";
 

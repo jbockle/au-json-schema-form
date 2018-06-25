@@ -1,9 +1,10 @@
-import { ValidationRules } from "aurelia-validation";
 import { bindable, customElement, inject } from "aurelia-framework";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
+import { RulesFactory } from "../../rules/rules-factory";
+import { IFormController } from "../../interfaces/form-controller";
 
-@inject(SchemaFormConfiguration)
+@inject(SchemaFormConfiguration, RulesFactory)
 @customElement("sf-text")
 export class SfText {
   @bindable schema: any;
@@ -13,22 +14,14 @@ export class SfText {
 
   id: string = Guid.newGuid();
 
-  constructor(public configuration: SchemaFormConfiguration) { }
+  kind = "string";
+
+  constructor(
+    public configuration: SchemaFormConfiguration,
+    public rules: RulesFactory
+  ) { }
 
   bind() {
-    let rule = ValidationRules
-      .ensure("model")
-      .displayName(this.title)
-      .satisfies(() => true);
-    if (this.schema.pattern) {
-      rule = rule.matches(this.schema.pattern);
-    }
-    if (this.schema.minLength) {
-      rule = rule.minLength(this.schema.minLength);
-    }
-    if (this.required) {
-      rule = rule.required();
-    }
-    rule.on(this);
+    this.rules.bind(this);
   }
 }

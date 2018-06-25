@@ -1,8 +1,13 @@
 import { ValidationControllerFactory, ValidationController, ValidationRules } from "aurelia-validation";
 import { inject, bindable, InlineViewStrategy, customElement } from "aurelia-framework";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
+import { RulesFactory } from "../rules/rules-factory";
 
-@inject(ValidationControllerFactory, SchemaFormConfiguration)
+@inject(
+  ValidationControllerFactory,
+  SchemaFormConfiguration,
+  RulesFactory
+)
 @customElement("au-json-schema-form")
 export class AuJsonSchemaForm {
   @bindable schema: any;
@@ -19,17 +24,14 @@ export class AuJsonSchemaForm {
 
   loaded: boolean = false;
 
-  constructor(vcf: ValidationControllerFactory, private globalOptions: SchemaFormConfiguration) {
-    this.controller = vcf.createForCurrentScope();
-    this.controller.addRenderer(globalOptions.validationRenderer);
-
-    ValidationRules
-      .customRule(
-        "minimum",
-        (val, obj, min) => val !== undefined ? val >= min : true,
-        "${$displayName} must be greater than ${$config.min}",
-        (min) => ({ min })
-      );
+  constructor(
+    validationControllerFactory: ValidationControllerFactory,
+    configuration: SchemaFormConfiguration,
+    rulesFactory: RulesFactory
+  ) {
+    this.controller = validationControllerFactory.createForCurrentScope();
+    this.controller.addRenderer(configuration.validationRenderer);
+    rulesFactory.register();
   }
 
   bind() {
