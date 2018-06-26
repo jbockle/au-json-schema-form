@@ -14,7 +14,6 @@
     "bluebird": "^3.5.1",
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
-    "monaco-editor": "^0.13.1",
     "popper.js": "^1.14.3",
     "requirejs": "^2.3.5",
     "text": "github:requirejs/text#latest"
@@ -44,5 +43,8 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-notify": "^3.2.0",
     "gulp-watch": "^5.0.0"
+  },
+  "scripts": {
+    "start": "npm link aurelia-json-schema-form & au run --watch"
   }
 }
