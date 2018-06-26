@@ -2,7 +2,6 @@ import { IRules } from "../interfaces/rules";
 import { inject } from "aurelia-framework";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
 import { ValidationRules, validationMessages, FluentRuleCustomizer } from "aurelia-validation";
-import { IFormController } from "../interfaces/form-controller";
 
 @inject(SchemaFormConfiguration)
 export class CommonRules implements IRules {

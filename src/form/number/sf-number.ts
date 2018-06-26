@@ -1,7 +1,6 @@
 import { bindable, customElement, inject } from "aurelia-framework";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
-import { IFormController } from "../../interfaces/form-controller";
 import { RulesFactory } from "../../rules/rules-factory";
 
 @inject(SchemaFormConfiguration, RulesFactory)

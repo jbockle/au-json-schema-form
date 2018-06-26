@@ -2,7 +2,6 @@ import { bindable, customElement, inject } from "aurelia-framework";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { RulesFactory } from "../../rules/rules-factory";
-import { IFormController } from "../../interfaces/form-controller";
 
 @inject(SchemaFormConfiguration, RulesFactory)
 @customElement("sf-text")

@@ -1,0 +1,59 @@
+<template>
+  <require from="bootstrap/css/bootstrap.css"></require>
+
+  <h2>Aurelia JSON Schema Form!</h2>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <div class="col">
+            <strong>Schema
+              <span class="text-danger"
+                    if.bind="schemaState"
+                    textcontent.bind="schemaState"></span>
+            </strong>
+            <br>
+            <textarea value.bind="schemaString"
+                      rows="12"
+                      cols="80"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <strong>Form
+              <span class="text-danger"
+                    if.bind="formState"
+                    textcontent.bind="formState"></span>
+            </strong>
+            <br>
+            <textarea value.bind="formString"
+                      rows="12"
+                      cols="80"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <strong>Model</strong>
+            <button type="button"
+                    class="btn-info"
+                    click.delegate="refreshModel()">refresh</button>
+            <br>
+            <textarea value.to-view="modelString"
+                      rows="12"
+                      cols="80"></textarea> ${model.firstName}
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <hello-world></hello-world>
+        <form>
+          <au-json-schema-form schema.bind="schema"
+                               form.bind="form"
+                               model.two-way="model"
+                               options.bind="{validateOnRender:true}"></au-json-schema-form>
+        </form>
+      </div>
+    </div>
+  </div>
+  <hr>
+</template>
