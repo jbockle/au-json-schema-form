@@ -108,7 +108,6 @@ export class AuJsonSchemaForm {
     return template;
   }
 
-
   isRequired(key: string, part: any): boolean {
     this.logger.info("isRequired", arguments);
     let required = false;
