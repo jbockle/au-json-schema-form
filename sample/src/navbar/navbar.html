@@ -1,0 +1,21 @@
+<template>
+  <nav class="navbar navbar-dark navbar-expand-sm bg-primary mb-3">
+    <a class="navbar-brand" href="#">Aurelia JSON Schema Form</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" ref="toggler">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto pr-2">
+        <li class="nav-item dropdown dropleft">
+          <a class="nav-link dropdown-toggle" href="#" id="themeSelector" role="button" data-toggle="dropdown">
+            <em class="small">Theme:</em>&nbsp;
+            <strong>${current}</strong>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="themeSelector">
+            <a class="dropdown-item text-center ${current === theme ? 'active' : ''}" href="#" repeat.for="theme of themes" click.trigger="themeSelected(theme)">${theme}</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</template>

@@ -1,10 +1,10 @@
 import { BindingSignaler } from "aurelia-templating-resources";
 import { observable, inject, useShadowDOM } from "aurelia-framework";
+import { IFormOptions } from "aurelia-json-schema-form";
 
 @useShadowDOM()
 @inject(BindingSignaler)
 export class App {
-
   form = {
     firstName: {
       $title: "Given name"
@@ -104,16 +104,23 @@ export class App {
 
   @observable schemaString: string = JSON.stringify(this.schema, null, "\t");
 
+  formVisible: boolean = true;
+
   formState: string;
 
   schemaState: string;
 
   modelString: string;
 
+  options: IFormOptions = {
+    validateOnRender: true
+  }
+
   model: any = {};
   attached() {
     this.refreshModel();
   }
+
   formStringChanged(newValue, oldValue) {
     if (!oldValue) { return; }
     try {

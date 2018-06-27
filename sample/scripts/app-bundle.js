@@ -1,4 +1,48 @@
-define('main',["require", "exports", "aurelia-pal", "aurelia-framework", "./environment", "aurelia-logging", "aurelia-logging-console", "bootstrap"], function (require, exports, aurelia_pal_1, aurelia_framework_1, environment_1, aurelia_logging_1, aurelia_logging_console_1) {
+define('navbar/navbar',["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Navbar = (function () {
+        function Navbar() {
+            this.themes = [
+                "cerulean",
+                "cosmo",
+                "cyborg",
+                "darkly",
+                "flatly",
+                "journal",
+                "litera",
+                "lumen",
+                "lux",
+                "materia",
+                "minty",
+                "pulse",
+                "sandstone",
+                "simplex",
+                "sketchy",
+                "slate",
+                "solar",
+                "spacelab",
+                "superhero",
+                "united",
+                "yeti"
+            ];
+            this.current = "minty";
+        }
+        Navbar.prototype.themeSelected = function (theme) {
+            this.current = theme;
+            aurelia_framework_1.DOM
+                .getElementById('linkStylesheet')
+                .setAttribute("href", "css/" + theme + "/bootstrap.min.css");
+        };
+        return Navbar;
+    }());
+    exports.Navbar = Navbar;
+});
+
+
+
+define('text!navbar/navbar.html', ['module'], function(module) { module.exports = "<template>\n  <nav class=\"navbar navbar-dark navbar-expand-sm bg-primary mb-3\">\n    <a class=\"navbar-brand\" href=\"#\">Aurelia JSON Schema Form</a>\n    <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarNavDropdown\" ref=\"toggler\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n    <div class=\"collapse navbar-collapse\" id=\"navbarNavDropdown\">\n      <ul class=\"navbar-nav ml-auto pr-2\">\n        <li class=\"nav-item dropdown dropleft\">\n          <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"themeSelector\" role=\"button\" data-toggle=\"dropdown\">\n            <em class=\"small\">Theme:</em>&nbsp;\n            <strong>${current}</strong>\n          </a>\n          <div class=\"dropdown-menu\" aria-labelledby=\"themeSelector\">\n            <a class=\"dropdown-item text-center ${current === theme ? 'active' : ''}\" href=\"#\" repeat.for=\"theme of themes\" click.trigger=\"themeSelected(theme)\">${theme}</a>\n          </div>\n        </li>\n      </ul>\n    </div>\n  </nav>\n</template>\n"; });
+define('main',["require", "exports", "aurelia-logging-console", "aurelia-framework", "aurelia-logging", "aurelia-pal", "./environment", "bootstrap"], function (require, exports, aurelia_logging_console_1, aurelia_framework_1, aurelia_logging_1, aurelia_pal_1, environment_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function configure(aurelia) {
@@ -9,6 +53,7 @@ define('main',["require", "exports", "aurelia-pal", "aurelia-framework", "./envi
         aurelia.use
             .plugin(aurelia_pal_1.PLATFORM.moduleName("aurelia-json-schema-form"), function (options) {
             options.logLevel = aurelia_logging_1.logLevel.debug;
+            options.validationMessages = { pattern: "Must start with j" };
         });
         if (environment_1.default.debug) {
             aurelia.use.developmentLogging();
@@ -145,6 +190,10 @@ define('app',["require", "exports", "aurelia-templating-resources", "aurelia-fra
             };
             this.formString = JSON.stringify(this.form, null, "\t");
             this.schemaString = JSON.stringify(this.schema, null, "\t");
+            this.formVisible = true;
+            this.options = {
+                validateOnRender: true
+            };
             this.model = {};
         }
         App.prototype.attached = function () {
@@ -198,5 +247,6 @@ define('app',["require", "exports", "aurelia-templating-resources", "aurelia-fra
 
 
 
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\r\n  <require from=\"bootstrap/css/bootstrap.css\"></require>\r\n\r\n  <h2>Aurelia JSON Schema Form!</h2>\r\n  <div class=\"container-fluid\">\r\n    <div class=\"row\">\r\n      <div class=\"col\">\r\n        <div class=\"row\">\r\n          <div class=\"col\">\r\n            <strong>Schema\r\n              <span class=\"text-danger\"\r\n                    if.bind=\"schemaState\"\r\n                    textcontent.bind=\"schemaState\"></span>\r\n            </strong>\r\n            <br>\r\n            <textarea value.bind=\"schemaString\"\r\n                      rows=\"12\"\r\n                      cols=\"80\"></textarea>\r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col\">\r\n            <strong>Form\r\n              <span class=\"text-danger\"\r\n                    if.bind=\"formState\"\r\n                    textcontent.bind=\"formState\"></span>\r\n            </strong>\r\n            <br>\r\n            <textarea value.bind=\"formString\"\r\n                      rows=\"12\"\r\n                      cols=\"80\"></textarea>\r\n          </div>\r\n        </div>\r\n        <div class=\"row\">\r\n          <div class=\"col\">\r\n            <strong>Model</strong>\r\n            <button type=\"button\"\r\n                    class=\"btn-info\"\r\n                    click.delegate=\"refreshModel()\">refresh</button>\r\n            <br>\r\n            <textarea value.to-view=\"modelString\"\r\n                      rows=\"12\"\r\n                      cols=\"80\"></textarea> ${model.firstName}\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col\">\r\n        <hello-world></hello-world>\r\n        <form>\r\n          <au-json-schema-form schema.bind=\"schema\"\r\n                               form.bind=\"form\"\r\n                               model.two-way=\"model\"\r\n                               options.bind=\"{validateOnRender:true}\"></au-json-schema-form>\r\n        </form>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <hr>\r\n</template>\r\n"; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./navbar/navbar\"></require>\n  <div ref=\"styleDiv\"></div>\n  <div class=\"d-flex flex-column h-100\">\n    <navbar></navbar>\n    <div class=\"d-flex flex-row h-100\">\n      <div class=\"d-flex flex-column h-100 w-50 pr-2\">\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"schema\">\n            Schema\n            <span class=\"text-danger\" if.bind=\"schemaState\" textcontent.bind=\"schemaState\"></span>\n          </label>\n          <textarea id=\"schema\" value.bind=\"schemaString\" class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"form\">Form\n            <span class=\"text-danger\" if.bind=\"formState\" textcontent.bind=\"formState\"></span>\n          </label>\n          <textarea value.bind=\"formString\" class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill h-100 pr-2\">\n        <label>Options</label>\n        <div class=\"border border-secondary p-2 clearfix align-items-center\">\n          <div class=\"form-check float-left align-items-center\">\n            <input class=\"form-check-input\" type=\"checkbox\" checked.bind=\"options.validateOnRender\" id=\"validateOnRender\">\n            <label class=\"form-check-label\" for=\"validateOnRender\">\n              Validate on render\n            </label>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary btn-sm float-right\" click.trigger=\"schemaform.buildForm()\" if.bind=\"schemaform\">Reload Form</button>\n        </div>\n        <label>Form</label>\n        <form class=\"p-2 border border-warning\">\n          <au-json-schema-form schema.bind=\"schema\" form.bind=\"form\" model.two-way=\"model\" options.bind=\"options\" if.bind=\"formVisible\"\n            view-model.ref=\"schemaform\"></au-json-schema-form>\n        </form>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <div class=\"d-flex flex-row w-100 justify-content-between\">\n            <label>Model</label>\n            <button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right mb-2\" click.delegate=\"refreshModel()\">refresh</button>\n          </div>\n          <textarea value.to-view=\"modelString\" class=\"flex-fill border border-secondary no-resize\" readonly></textarea> ${model.firstName}\n        </div>\n      </div>\n    </div>\n  </div>\n</template>\n"; });
+define('text!app.css', ['module'], function(module) { module.exports = ".no-resize {\n  resize: none;\n}\n"; });
 //# sourceMappingURL=app-bundle.js.map

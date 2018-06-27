@@ -93,10 +93,12 @@
             "deps": [
               "jquery"
             ],
-            "exports": "$",
-            "resources": [
-              "css/bootstrap.css"
-            ]
+            "exports": "$"
+          },
+          {
+            "name": "bootswatch",
+            "path": "../node_modules/bootswatch/dist/minty",
+            "main": "bootstrap.css"
           },
           {
             "name": "aurelia-json-schema-form",
@@ -106,6 +108,29 @@
         ]
       }
     ],
+    "copyFiles": {
+      "node_modules/bootswatch/dist/cerulean/bootstrap.min.css": "css/cerulean",
+      "node_modules/bootswatch/dist/cosmo/bootstrap.min.css": "css/cosmo",
+      "node_modules/bootswatch/dist/cyborg/bootstrap.min.css": "css/cyborg",
+      "node_modules/bootswatch/dist/darkly/bootstrap.min.css": "css/darkly",
+      "node_modules/bootswatch/dist/flatly/bootstrap.min.css": "css/flatly",
+      "node_modules/bootswatch/dist/journal/bootstrap.min.css": "css/journal",
+      "node_modules/bootswatch/dist/litera/bootstrap.min.css": "css/litera",
+      "node_modules/bootswatch/dist/lumen/bootstrap.min.css": "css/lumen",
+      "node_modules/bootswatch/dist/lux/bootstrap.min.css": "css/lux",
+      "node_modules/bootswatch/dist/materia/bootstrap.min.css": "css/materia",
+      "node_modules/bootswatch/dist/minty/bootstrap.min.css": "css/minty",
+      "node_modules/bootswatch/dist/pulse/bootstrap.min.css": "css/pulse",
+      "node_modules/bootswatch/dist/sandstone/bootstrap.min.css": "css/sandstone",
+      "node_modules/bootswatch/dist/simplex/bootstrap.min.css": "css/simplex",
+      "node_modules/bootswatch/dist/sketchy/bootstrap.min.css": "css/sketchy",
+      "node_modules/bootswatch/dist/slate/bootstrap.min.css": "css/slate",
+      "node_modules/bootswatch/dist/solar/bootstrap.min.css": "css/solar",
+      "node_modules/bootswatch/dist/spacelab/bootstrap.min.css": "css/spacelab",
+      "node_modules/bootswatch/dist/superhero/bootstrap.min.css": "css/superhero",
+      "node_modules/bootswatch/dist/united/bootstrap.min.css": "css/united",
+      "node_modules/bootswatch/dist/yeti/bootstrap.min.css": "css/yeti"
+    },
     "loader": {
       "type": "require",
       "configTarget": "vendor-bundle.js",

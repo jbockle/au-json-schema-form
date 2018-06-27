@@ -5,38 +5,54 @@ import { ValidationRenderer } from "aurelia-validation";
 import { getLogger } from "aurelia-logging";
 import { SchemaFormLogger } from "./resources/logger";
 import { ITemplates } from "./interfaces/templates";
-import { AuJsonSchemaForm } from "./form/au-json-schema-form";
 import { GetBootstrapTemplates } from "./templates/bootstrap4/index";
 import { IValidationMessages } from "./interfaces/validation-messages";
+import { IFormOptions } from "./interfaces/form-options";
 
-interface ISchemaFormConfiguration {
+class PluginOptions {
   /**
-   * @property the renderer to display error, success and more on form elements
+   * @property modifies DOM to display error/success states 
+   * @default BootstrapValidationRenderer "targets Bootstrap v4"
    */
-  validationRenderer?: ValidationRenderer;
-
-  /**
-   * @property the list of dependencies used to generate form elements
-   */
-  templates?: ITemplates;
+  validationRenderer: ValidationRenderer = new BootstrapValidationRenderer();
 
   /**
-   * @property list of overrides for validation messages
+   * @property defines moduleNames of form elements 
+   * @default bootstrap4 "pre-defined custom elements"
    */
-  validationMessages?: IValidationMessages;
+  templates: ITemplates;
 
   /**
-   * @property sets the log level, default is none
+   * @property global validation message overrides, choose which messages you want to override (default)
+   * @default empty "use validator's default message"
    */
-  logLevel?: number;
+  validationMessages: IValidationMessages = {};
+
+  /**
+   * @property sets the log level (available values from LogManager.logLevel)
+   * @default none "only initialization is logged"
+   */
+  logLevel: number = LogManager.logLevel.none;
+
+  constructor() {
+    this.templates = GetBootstrapTemplates();
+  }
 }
 
-function configure(
-  frameworkConfig: FrameworkConfiguration,
-  options: ISchemaFormConfiguration = {}
-) {
-  const logger = getLogger("au-json-schema-form");
+function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void) {
+
+  const logger = getLogger("aurelia-json-schema-form");
+
+  logger.info("initializing aurelia-json-schema-form");
+
+  // create defaults/apply user defined configuration
+  const options = new PluginOptions();
+  if (callback instanceof Function) {
+    callback(options);
+  }
+
   registerLogger(logger, options, frameworkConfig);
+
   registerConfiguration(logger, options, frameworkConfig);
 
   frameworkConfig.globalResources([
@@ -51,26 +67,33 @@ function configure(
 
 function registerLogger(
   logger: SchemaFormLogger,
-  options: ISchemaFormConfiguration,
+  options: PluginOptions,
   frameworkConfig: FrameworkConfiguration
 ) {
-  logger.setLevel(options.logLevel || LogManager.logLevel.none);
+  logger.setLevel(options.logLevel);
+
   frameworkConfig.container.registerInstance(SchemaFormLogger, logger);
+
   logger.info("registered logger");
 }
 
 function registerConfiguration(
   logger: SchemaFormLogger,
-  options: ISchemaFormConfiguration,
+  options: PluginOptions,
   frameworkConfig: FrameworkConfiguration
 ) {
   const configuration = new SchemaFormConfiguration(
-    options.validationRenderer || new BootstrapValidationRenderer(),
-    options.templates || GetBootstrapTemplates(frameworkConfig),
-    options.validationMessages || {}
-  );
+    options.validationRenderer, options.templates, options.validationMessages);
+
   frameworkConfig.container.registerInstance(SchemaFormConfiguration, configuration);
+
   logger.info("registered configuration", configuration);
 }
 
-export { AuJsonSchemaForm, GetBootstrapTemplates, ISchemaFormConfiguration, configure };
+export {
+  configure,
+  ITemplates,
+  IValidationMessages,
+  PluginOptions,
+  IFormOptions
+};

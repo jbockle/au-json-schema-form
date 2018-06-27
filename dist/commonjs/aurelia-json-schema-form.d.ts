@@ -1,26 +1,30 @@
 import { FrameworkConfiguration } from "aurelia-framework";
 import { ValidationRenderer } from "aurelia-validation";
 import { ITemplates } from "./interfaces/templates";
-import { AuJsonSchemaForm } from "./form/au-json-schema-form";
-import { GetBootstrapTemplates } from "./templates/bootstrap4/index";
 import { IValidationMessages } from "./interfaces/validation-messages";
-interface ISchemaFormConfiguration {
+import { IFormOptions } from "./interfaces/form-options";
+declare class PluginOptions {
     /**
-     * @property the renderer to display error, success and more on form elements
+     * @property modifies DOM to display error/success states
+     * @default BootstrapValidationRenderer "targets Bootstrap v4"
      */
-    validationRenderer?: ValidationRenderer;
+    validationRenderer: ValidationRenderer;
     /**
-     * @property the list of dependencies used to generate form elements
+     * @property defines moduleNames of form elements
+     * @default bootstrap4 "pre-defined custom elements"
      */
-    templates?: ITemplates;
+    templates: ITemplates;
     /**
-     * @property list of overrides for validation messages
+     * @property global validation message overrides, choose which messages you want to override (default)
+     * @default empty "use validator's default message"
      */
-    validationMessages?: IValidationMessages;
+    validationMessages: IValidationMessages;
     /**
-     * @property sets the log level, default is none
+     * @property sets the log level (available values from LogManager.logLevel)
+     * @default none "only initialization is logged"
      */
-    logLevel?: number;
+    logLevel: number;
+    constructor();
 }
-declare function configure(frameworkConfig: FrameworkConfiguration, options?: ISchemaFormConfiguration): void;
-export { AuJsonSchemaForm, GetBootstrapTemplates, ISchemaFormConfiguration, configure };
+declare function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void): void;
+export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions };

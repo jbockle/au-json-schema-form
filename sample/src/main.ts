@@ -1,12 +1,11 @@
-import { PLATFORM } from "aurelia-pal";
-/// <reference types="aurelia-loader-webpack/src/webpack-hot-interface"/>
-// we want font-awesome to load as soon as possible to show the fa-spinner
-import { Aurelia, LogManager } from "aurelia-framework";
-import "bootstrap";
-import environment from "./environment";
-import { ISchemaFormConfiguration } from "aurelia-json-schema-form";
-import { logLevel } from "aurelia-logging";
+import { AureliaValidationConfiguration } from "aurelia-validation";
+import { PluginOptions } from "aurelia-json-schema-form";
 import { ConsoleAppender } from "aurelia-logging-console";
+import { Aurelia, LogManager } from "aurelia-framework";
+import { logLevel } from "aurelia-logging";
+import { PLATFORM } from "aurelia-pal";
+import environment from "./environment";
+import "bootstrap";
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
@@ -15,8 +14,9 @@ export function configure(aurelia: Aurelia) {
 
   LogManager.addAppender(new ConsoleAppender());
   aurelia.use
-    .plugin(PLATFORM.moduleName("aurelia-json-schema-form"), (options: ISchemaFormConfiguration) => {
+    .plugin(PLATFORM.moduleName("aurelia-json-schema-form"), (options: PluginOptions) => {
       options.logLevel = logLevel.debug;
+      options.validationMessages = { pattern: "Must start with j" };
     });
 
   // Uncomment the line below to enable animation.

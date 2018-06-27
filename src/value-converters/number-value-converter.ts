@@ -7,7 +7,7 @@ export class NumberValueConverter {
   }
 
   fromView(val) {
-    if (val === "") { return; }
+    if (val === "") { return null; }
     return Number(val);
   }
 }

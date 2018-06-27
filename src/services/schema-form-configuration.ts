@@ -1,5 +1,4 @@
 import { ValidationRenderer } from "aurelia-validation";
-import { FrameworkConfiguration } from "aurelia-framework";
 import { ITemplates } from "../interfaces/templates";
 import { IValidationMessages } from "../interfaces/validation-messages";
 
