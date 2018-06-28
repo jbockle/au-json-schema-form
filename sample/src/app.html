@@ -1,5 +1,6 @@
 <template>
   <require from="./navbar/navbar"></require>
+  <require from="./app.css"></require>
   <div ref="styleDiv"></div>
   <div class="d-flex flex-column h-100">
     <navbar></navbar>
@@ -16,12 +17,16 @@
           <label for="form">Form
             <span class="text-danger" if.bind="formState" textcontent.bind="formState"></span>
           </label>
-          <textarea value.bind="formString" class="flex-fill border border-secondary no-resize"></textarea>
+          <textarea id="form" value.bind="formString" class="flex-fill border border-secondary no-resize"></textarea>
+        </div>
+        <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
+          <label for="model">Model</label>
+          <textarea id="model" value.to-view="modelString" class="flex-fill border border-secondary no-resize" readonly></textarea>
         </div>
       </div>
       <div class="d-flex flex-column flex-fill h-100 pr-2">
         <label>Options</label>
-        <div class="border border-secondary p-2 clearfix align-items-center">
+        <div class="border p-2 clearfix align-items-center bg-dark text-light">
           <div class="form-check float-left align-items-center">
             <input class="form-check-input" type="checkbox" checked.bind="options.validateOnRender" id="validateOnRender">
             <label class="form-check-label" for="validateOnRender">
@@ -30,18 +35,12 @@
           </div>
           <button type="button" class="btn btn-primary btn-sm float-right" click.trigger="schemaform.buildForm()" if.bind="schemaform">Reload Form</button>
         </div>
+        <hr>
         <label>Form</label>
         <form class="p-2 border border-warning">
           <au-json-schema-form schema.bind="schema" form.bind="form" model.two-way="model" options.bind="options" if.bind="formVisible"
             view-model.ref="schemaform"></au-json-schema-form>
         </form>
-        <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
-          <div class="d-flex flex-row w-100 justify-content-between">
-            <label>Model</label>
-            <button type="button" class="btn btn-outline-primary btn-sm float-right mb-2" click.delegate="refreshModel()">refresh</button>
-          </div>
-          <textarea value.to-view="modelString" class="flex-fill border border-secondary no-resize" readonly></textarea> ${model.firstName}
-        </div>
       </div>
     </div>
   </div>

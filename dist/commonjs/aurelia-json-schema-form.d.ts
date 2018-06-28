@@ -3,6 +3,7 @@ import { ValidationRenderer } from "aurelia-validation";
 import { ITemplates } from "./interfaces/templates";
 import { IValidationMessages } from "./interfaces/validation-messages";
 import { IFormOptions } from "./interfaces/form-options";
+import { AuJsonSchemaForm } from "./form/au-json-schema-form";
 declare class PluginOptions {
     /**
      * @property modifies DOM to display error/success states
@@ -27,4 +28,4 @@ declare class PluginOptions {
     constructor();
 }
 declare function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void): void;
-export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions };
+export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions, AuJsonSchemaForm };

@@ -1,15 +1,13 @@
 import { ValidationControllerFactory, ValidationController } from "aurelia-validation";
-import { inject, bindable, InlineViewStrategy, customElement } from "aurelia-framework";
+import { inject, bindable, InlineViewStrategy, customElement, Container } from "aurelia-framework";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
-import { RulesFactory } from "../rules/rules-factory";
 import { IFormOptions } from "../interfaces/form-options";
 import { SchemaFormLogger } from "../resources/logger";
-import { FormController } from "./form-controller";
+import { FormObjectController } from "./form-object-controller";
 
 @inject(
   ValidationControllerFactory,
   SchemaFormConfiguration,
-  RulesFactory,
   SchemaFormLogger
 )
 @customElement("au-json-schema-form")
@@ -26,34 +24,32 @@ export class AuJsonSchemaForm {
 
   formView: InlineViewStrategy;
 
-  formController: FormController;
+  formController: FormObjectController;
 
-  loaded: boolean = false;
+  private log: (message: string, ...rest: any[]) => void;
 
   constructor(
     validationControllerFactory: ValidationControllerFactory,
     configuration: SchemaFormConfiguration,
-    rulesFactory: RulesFactory,
     private logger: SchemaFormLogger
   ) {
-    this.logger.info("constructor", arguments);
+    this.log = logger.info;
     this.validationController = validationControllerFactory.createForCurrentScope();
     this.validationController.addRenderer(configuration.validationRenderer);
-    rulesFactory.register();
   }
 
   bind() {
-    this.logger.info("bind", arguments);
+    this.log("bind", arguments);
     this.buildForm();
   }
 
   schemaChanged() {
-    this.logger.info("schemaChanged", arguments);
+    this.log("schemaChanged", arguments);
     this.buildForm();
   }
 
   formChanged() {
-    this.logger.info("formChanged", arguments);
+    this.log("formChanged", arguments);
     this.buildForm();
   }
 
@@ -61,12 +57,12 @@ export class AuJsonSchemaForm {
     if (this.formView) {
       this.formView = null;
     }
-    this.logger.info("buildForm", arguments, this.options);
+    this.log("buildForm", this.options);
     this.buildViewStrategy();
   }
 
   buildViewStrategy() {
-    this.logger.info("buildViewStrategy", arguments);
+    this.log("buildViewStrategy");
     let viewStrategy = "";
     const keys = Object.keys(this.form);
     keys.forEach((key) => {
@@ -82,11 +78,11 @@ export class AuJsonSchemaForm {
       }
     });
     this.formView = new InlineViewStrategy(`<template>${viewStrategy}</template>`);
-    this.formController = new FormController(this.logger, this.options, this.validationController);
+    this.formController = new FormObjectController(this.logger, this.options, this.validationController);
   }
 
   getSchemaTemplate(key: string, form: any, part: any = this.schema) {
-    this.logger.info("getSchemaTemplate", arguments);
+    this.log("getSchemaTemplate", arguments);
     let template: string;
     const schema = part.properties[key];
     switch (schema.type) {
@@ -109,7 +105,7 @@ export class AuJsonSchemaForm {
   }
 
   isRequired(key: string, part: any): boolean {
-    this.logger.info("isRequired", arguments);
+    this.log("isRequired", arguments);
     let required = false;
     if (Array.isArray(part.required)) {
       required = part.required
@@ -119,7 +115,7 @@ export class AuJsonSchemaForm {
   }
 
   toTitle(key: string) {
-    this.logger.info("toTitle", arguments);
+    this.log("toTitle", arguments);
     if (key) {
       return key
         .replace(/([A-Z])/g, " $1")

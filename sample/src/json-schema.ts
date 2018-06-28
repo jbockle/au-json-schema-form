@@ -1,14 +1,18 @@
-{
+export const schema = {
   "type": "object",
   "properties": {
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^j",
+      "minLength": 2
     },
     "lastName": {
-      "type": "string"
+      "type": "string",
+      "minLength": 3
     },
     "age": {
-      "type": "number"
+      "type": "number",
+      "minimum": 1
     },
     "phoneNumbers": {
       "type": "array",

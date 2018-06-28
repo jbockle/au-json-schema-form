@@ -1,105 +1,18 @@
 import { BindingSignaler } from "aurelia-templating-resources";
-import { observable, inject, useShadowDOM } from "aurelia-framework";
+import { observable, inject, useShadowDOM, BindingEngine } from "aurelia-framework";
 import { IFormOptions } from "aurelia-json-schema-form";
+import { form } from "./json-form";
+import { schema } from "./json-schema";
+import { AuJsonSchemaForm } from "aurelia-json-schema-form";
+import { ValidateEvent } from "aurelia-validation";
 
 @useShadowDOM()
-@inject(BindingSignaler)
+@inject(BindingSignaler, BindingEngine)
 export class App {
-  form = {
-    firstName: {
-      $title: "Given name"
-    },
-    lastName: {
-      $placeholder: "Last name"
-    },
-    age: {
-      "!widget": "alt-number"
-    },
-    phoneNumbers: {},
-    addresses: {
-      "street": {},
-      "@div.row": [
-        {
-          "@div.col": [
-            {
-              city: {}
-            }
-          ]
-        },
-        {
-          "@div.col": [
-            {
-              state: {}
-            }
-          ]
-        },
-        {
-          "@div.col-2": [
-            {
-              zip: {
-                $readOnly: true
-              }
-            }
-          ]
-        }
-      ]
-    }
-  };
-  schema = {
-    type: "object",
-    properties: {
-      firstName: {
-        type: "string",
-        pattern: "^j",
-        minLength: 2
-      },
-      lastName: {
-        type: "string",
-        minLength: 3
-      },
-      age: {
-        type: "number",
-        minimum: 1
-      },
-      phoneNumbers: {
-        type: "array",
-        items: {
-          type: "string",
-          pattern: "^(\\d{3}-\\d{3}-\\d{4})|(\\d{10})$"
-        }
-      },
-      addresses: {
-        type: "array",
-        items: {
-          type: "object",
-          properties: {
-            street: {
-              type: "string"
-            },
-            city: {
-              type: "string"
-            },
-            state: {
-              type: "string"
-            },
-            zip: {
-              type: "number",
-              minimum: 10000,
-              maximum: 99999
-            },
-            country: {
-              type: "string",
-              const: "USA"
-            }
-          }
-        }
-      }
-    },
-    required: [
-      "firstName",
-      "lastName"
-    ]
-  };
+  form: any = form;
+
+  schema: any = schema;
+
   @observable formString: string = JSON.stringify(this.form, null, "\t");
 
   @observable schemaString: string = JSON.stringify(this.schema, null, "\t");
@@ -112,13 +25,21 @@ export class App {
 
   modelString: string;
 
+  schemaform: AuJsonSchemaForm
+
   options: IFormOptions = {
     validateOnRender: true
   }
 
   model: any = {};
+
+  constructor(private signaler: BindingSignaler, private engine: BindingEngine) { }
+
   attached() {
     this.refreshModel();
+    this.schemaform.validationController.subscribe((event: ValidateEvent) => {
+      this.refreshModel();
+    });
   }
 
   formStringChanged(newValue, oldValue) {

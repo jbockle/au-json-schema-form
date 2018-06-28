@@ -8,6 +8,8 @@ import { ITemplates } from "./interfaces/templates";
 import { GetBootstrapTemplates } from "./templates/bootstrap4/index";
 import { IValidationMessages } from "./interfaces/validation-messages";
 import { IFormOptions } from "./interfaces/form-options";
+import { AuJsonSchemaForm } from "./form/au-json-schema-form";
+import { RulesFactory } from "./rules/rules-factory";
 
 class PluginOptions {
   /**
@@ -55,6 +57,8 @@ function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: 
 
   registerConfiguration(logger, options, frameworkConfig);
 
+  (frameworkConfig.container.get(RulesFactory) as RulesFactory).register();
+
   frameworkConfig.globalResources([
     PLATFORM.moduleName("./form/au-json-schema-form"),
     PLATFORM.moduleName("./value-converters/number-value-converter"),
@@ -95,5 +99,6 @@ export {
   ITemplates,
   IValidationMessages,
   PluginOptions,
-  IFormOptions
+  IFormOptions,
+  AuJsonSchemaForm
 };

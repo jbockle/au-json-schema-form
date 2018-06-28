@@ -1,3 +1,24 @@
 .no-resize {
   resize: none;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 10px var(--secondary);
+}
+
+::-webkit-scrollbar-track:hover {
+  box-shadow: inset 0 0 15px var(--secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 20px var(--primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 0 0 40px var(--primary);
+}
