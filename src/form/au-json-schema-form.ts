@@ -81,29 +81,6 @@ export class AuJsonSchemaForm {
     this.formController = new FormObjectController(this.logger, this.options, this.validationController);
   }
 
-  getSchemaTemplate(key: string, form: any, part: any = this.schema) {
-    this.log("getSchemaTemplate", arguments);
-    let template: string;
-    const schema = part.properties[key];
-    switch (schema.type) {
-      case "number":
-        template = `<sf-number
-        schema.bind="schema.properties.${key}"
-        model.two-way="model.${key}"
-        title="${form.$title || schema.title || this.toTitle(key)}"
-        required.bind="${this.isRequired(key, part)}"></sf-number>\r\n`;
-        break;
-      case "string":
-        template = `<sf-text
-      schema.bind="schema.properties.${key}"
-      model.two-way="model.${key}"
-      title="${form.$title || schema.title || this.toTitle(key)}"
-      required.bind="${this.isRequired(key, part)}"></sf-text>\r\n`;
-        break;
-    }
-    return template;
-  }
-
   isRequired(key: string, part: any): boolean {
     this.log("isRequired", arguments);
     let required = false;
