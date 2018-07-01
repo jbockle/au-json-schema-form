@@ -2,6 +2,8 @@
 
 Build aurelia forms based on JSON schema! All built-in templates are styled with bootstrap 4.1.1
 
+to view a demo, clone and checkout the **sample/readme.md**
+
 ## Use
 
 - installation
@@ -26,6 +28,7 @@ Build aurelia forms based on JSON schema! All built-in templates are styled with
   - add date/time/date-time pickers
   - add alternate array template using tabs
 - add materialize templates
+- add additional schema validation (maybe ajv)
 
 ## Contributing
 
