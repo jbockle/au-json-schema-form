@@ -1,4 +1,4 @@
-import { IJsonSchemaObjectDefinition } from "../interfaces/json-schema-definition";
+import { IJsonSchemaObjectDefinition, IJsonSchemaArrayDefinition } from "../interfaces/json-schema-definition";
 import { IForm, IFormOverride } from "../interfaces/form";
 import { SchemaFormLogger } from "../resources/logger";
 export declare class FormService {
@@ -6,7 +6,17 @@ export declare class FormService {
     readonly containerMarker: string;
     readonly overrideMarker: string;
     constructor(logger: SchemaFormLogger);
+    buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IForm, formKey: string, model: any[]): string;
     buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment?: string): string;
+    getContainerTemplate(segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object): {
+        segment: string;
+        template: string;
+    };
+    getArrayItemDefault(schema: IJsonSchemaArrayDefinition, model: any): any;
+    getObjectPropertyTemplate(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string): {
+        model: object;
+        template: string;
+    };
     isOverride(key: string): boolean;
     isContainer(key: string): boolean;
     getOverride(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition): IFormOverride;

@@ -1,4 +1,6 @@
 <template>
-  <h5>${schema.title}</h5>
-  <compose view.bind="view"></compose>
+  <h5 if.bind="!form.$noTitle">${schema.title}</h5>
+  <div class="border p-2">
+    <compose view.bind="view"></compose>
+  </div>
 </template>

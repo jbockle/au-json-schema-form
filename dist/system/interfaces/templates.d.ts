@@ -2,6 +2,7 @@ export interface ITemplates {
     number: string;
     text: string;
     object: string;
+    array: string;
     formats?: IFormatTemplates;
 }
 export interface IFormatTemplates {

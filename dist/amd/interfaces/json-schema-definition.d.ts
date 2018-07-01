@@ -1,4 +1,4 @@
-export declare type StringFormat = "date-time" | "date" | "time" | "ipv4" | "ipv6" | "";
+export declare type StringFormat = "date-time" | "date" | "time" | "ipv4" | "ipv6" | "email";
 export declare type SchemaType = "object" | "array" | "string" | "number";
 export declare type PrimitiveType = number | boolean | string | null;
 export interface IJsonSchemaDefinition {
@@ -16,7 +16,7 @@ export interface IJsonSchemaDefinition {
     [key: string]: any;
 }
 export interface IJsonSchemaArrayDefinition extends IJsonSchemaDefinition {
-    items?: IJsonSchemaDefinition | IJsonSchemaDefinition[];
+    items?: IJsonSchemaDefinition;
     minItems?: number;
     maxItems?: number;
     uniqueItems?: boolean;

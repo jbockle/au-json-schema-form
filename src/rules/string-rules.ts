@@ -95,9 +95,12 @@ export class StringRules {
     if (ctrl.schema.maxLength) {
       rule = rule.maxLength(ctrl.schema.maxLength);
     }
-    if (ctrl.schema.format) {
+    if (ctrl.schema.format && ctrl.schema.format !== "email") {
       const rulename = `format_${ctrl.schema.format.replace("-", "")}`;
       rule = rule.satisfiesRule(rulename);
+    }
+    if (ctrl.schema.format === "email") {
+      rule = rule.email();
     }
   }
 }

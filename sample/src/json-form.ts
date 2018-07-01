@@ -10,31 +10,37 @@ export const form: IForm = {
   age: {},
   phoneNumbers: {},
   address: {
-    "street": {},
+    street: {},
     "@div.row": [
       {
         "@div.col": [
           {
-            "city": {}
+            city: {}
           }
         ]
       },
       {
         "@div.col": [
           {
-            "state": {}
+            state: {}
           }
         ]
       },
       {
         "@div.col-2": [
           {
-            "zip": {
-              "$readOnly": true
+            zip: {
+              $readOnly: true
             }
           }
         ]
       }
     ]
+  },
+  references: {
+    $noTitle: true,
+    name: {},
+    relationship: {},
+    email: {}
   }
 }

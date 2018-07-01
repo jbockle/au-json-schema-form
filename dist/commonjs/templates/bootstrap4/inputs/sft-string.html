@@ -7,7 +7,16 @@
            value.bind="model & validateOnChange"
            class="form-control form-control-sm"
            id.one-time="id"
-           placeholder.bind="form.$placeholder || ''">
+           placeholder.bind="form.$placeholder || ''"
+           if.bind="!schema.enum">
+    <select value.bind="model & validateOnChange"
+            class="form-control form-control-sm"
+            id.one-time="id"
+            if.bind="schema.enum">
+      <option model.bind="null">Select an option..</option>
+      <option repeat.for="item of schema.enum"
+              model.bind="item">${item}</option>
+    </select>
     <small class="form-text text-muted"
            if.bind="schema.description"
            textcontent.bind="schema.description"></small>

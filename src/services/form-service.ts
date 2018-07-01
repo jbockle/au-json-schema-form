@@ -1,4 +1,4 @@
-import { IJsonSchemaObjectDefinition, IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
+import { IJsonSchemaObjectDefinition, IJsonSchemaArrayDefinition, IJsonSchemaStringDefinition, IJsonSchemaNumberDefinition, IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 import { IForm, IFormOverride } from "../interfaces/form";
 import { inject } from "aurelia-framework";
 import { SchemaFormLogger } from "../resources/logger";
@@ -10,6 +10,23 @@ export class FormService {
   readonly overrideMarker = "$";
 
   constructor(private logger: SchemaFormLogger) { }
+
+  buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IForm, formKey: string, model: any[]): string {
+    this.logger.info("buildArrayForm", { schema, form, model });
+
+    (form as IFormOverride)["$schema"] = schema.items;
+    (form as IFormOverride)["$arraySchema"] = schema;
+
+    schema.items.title = schema.items.title || this.getTitle(formKey);
+    let template =
+      `<sf-${schema.items.type} model.two-way="model[$index]" form.bind="form"`;
+    if ((form as IFormOverride)["$schema"].type === "object") {
+      template += ` schema.bind="form['$schema']"`;
+    }
+    template += `></sf-${schema.items.type}>`;
+    this.logger.info("sf-array-item template", { template, schema, form, model });
+    return template;
+  }
 
   buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment = ""): string {
     this.logger.info("buildObjectForm", arguments);
@@ -25,39 +42,63 @@ export class FormService {
           // do nothing
         } else if (this.isContainer(formKey)) {
           // inner emmet container
-
-          segment += `['${formKey}']`;
-          const innerForms = form[formKey] as IForm[];
-          for (let index = 0; index < innerForms.length; index++) {
-            template += this.buildObjectForm(schema, innerForms[index], model, segment + `[${index}]`);
-          }
-
+          ({ segment, template } = this.getContainerTemplate(segment, formKey, form, template, schema, model));
         } else {
           // object property
-
-          const override = this.getOverride(form, formKey, schema);
-          model = this.getObjectModelDefaults(model, schema);
-          // tslint:disable-next-line:max-line-length
-          template += `<sf-${override.$schema.type} model.two-way="model.${formKey}" form.bind="form${segment}.${formKey}"`;
-          if (override.$schema.type === "array") {
-            model[formKey] = [];
-            template += ` schema.bind="schema.properties.${formKey}"`;
-          }
-          if (override.$schema.type === "object") {
-            model[formKey] = {};
-            template += ` schema.bind="schema.properties.${formKey}"`;
-          }
-          template += `></sf-${override.$schema.type}>\r\n`;
+          ({ model, template } = this.getObjectPropertyTemplate(form, formKey, schema, model, template, segment));
         }
 
         template = this.applyEmmetEnd(wrapper, template);
       }
-      this.logger.info("created template", template, schema);
+      this.logger.info("created template", { template, schema });
       return template;
     } catch (ex) {
       this.logger.error("an error occurred building object view strategy", ex, schema, form, model, segment);
       throw ex;
     }
+  }
+
+  getContainerTemplate(
+    segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object
+  ) {
+    segment += `['${formKey}']`;
+    const innerForms = form[formKey] as IForm[];
+    for (let index = 0; index < innerForms.length; index++) {
+      template += this.buildObjectForm(schema, innerForms[index], model, segment + `[${index}]`);
+    }
+    return { segment, template };
+  }
+
+  getArrayItemDefault(schema: IJsonSchemaArrayDefinition, model) {
+    switch (schema.items.type) {
+      case "array":
+        return model || [];
+      case "number":
+        return model || schema.items.const || schema.items.default || "";
+      case "string":
+        return model || schema.items.const || schema.items.default || "";
+      case "object":
+        return this.getObjectModelDefaults({}, schema.items);
+    }
+  }
+
+  getObjectPropertyTemplate(
+    form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string
+  ) {
+    const override = this.getOverride(form, formKey, schema);
+    model = this.getObjectModelDefaults(model, schema);
+    // tslint:disable-next-line:max-line-length
+    template += `<sf-${override.$schema.type} model.two-way="model.${formKey}" form.bind="form${segment}.${formKey}"`;
+    if (override.$schema.type === "array") {
+      model[formKey] = model[formKey] || [];
+      template += ` schema.bind="schema.properties.${formKey}" key="${formKey}"`;
+    }
+    if (override.$schema.type === "object") {
+      model[formKey] = model[formKey] || {};
+      template += ` schema.bind="schema.properties.${formKey}"`;
+    }
+    template += `></sf-${override.$schema.type}>\r\n`;
+    return { model, template };
   }
 
   isOverride(key: string): boolean {

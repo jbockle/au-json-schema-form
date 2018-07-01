@@ -1,14 +1,22 @@
+import { InlineViewStrategy } from "aurelia-framework";
+import { IJsonSchemaArrayDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
-import { RulesFactory } from "../../rules/rules-factory";
+import { SchemaFormLogger } from "../../resources/logger";
+import { IForm } from "../../interfaces/form";
+import { FormService } from "../../services/form-service";
 export declare class SfArray {
     configuration: SchemaFormConfiguration;
-    rules: RulesFactory;
-    schema: any;
+    formService: FormService;
+    private logger;
+    form: IForm;
+    key: string;
     model: any[];
-    required: string;
-    title: string;
+    schema: IJsonSchemaArrayDefinition;
     id: string;
     kind: string;
-    constructor(configuration: SchemaFormConfiguration, rules: RulesFactory);
+    view: InlineViewStrategy;
+    constructor(configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger);
     bind(): void;
+    add(): void;
+    remove(index: any): void;
 }

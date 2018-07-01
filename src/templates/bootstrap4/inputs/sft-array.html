@@ -1,0 +1,16 @@
+<template>
+  <div class="d-inline">
+    <h5 class="d-inline"
+        if.bind="!form.$noArrayTitle">${schema.title}</h5>
+    <button class="btn btn-link btn-sm float-right"
+            click.delegate="add()">Add</button>
+  </div>
+  <div repeat.for="item of model"
+       class="border border-light p-2">
+    <div as-element="compose"
+         view.bind="view"
+         view-model.bind="'../../../form/array/sf-array-item'"
+         model.two-way="model[$index]"
+         schema.bind="schema.items"></div>
+  </div>
+</template>

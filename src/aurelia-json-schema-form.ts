@@ -63,6 +63,8 @@ function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: 
     PLATFORM.moduleName("./form/au-json-schema-form"),
     PLATFORM.moduleName("./value-converters/number-value-converter"),
 
+    PLATFORM.moduleName("./form/array/sf-array"),
+    PLATFORM.moduleName("./form/array/sf-array-item"),
     PLATFORM.moduleName("./form/object/sf-object"),
     PLATFORM.moduleName("./form/number/sf-number"),
     PLATFORM.moduleName("./form/text/sf-string")

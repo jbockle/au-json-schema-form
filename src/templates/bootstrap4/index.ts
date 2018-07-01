@@ -7,6 +7,7 @@ export function GetBootstrapTemplates(): ITemplates {
   return {
     number: `${rootPath}/sft-number.html`,
     text: `${rootPath}/sft-string.html`,
-    object: `${rootPath}/sft-object.html`
+    object: `${rootPath}/sft-object.html`,
+    array: `${rootPath}/sft-array.html`
   };
 }
