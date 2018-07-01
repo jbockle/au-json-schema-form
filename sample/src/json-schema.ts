@@ -44,7 +44,13 @@ export const schema: IJsonSchemaDefinition = {
           "type": "string",
           "const": "USA"
         }
-      }
+      },
+      required: [
+        "street",
+        "city",
+        "state",
+        "zip"
+      ]
     }
   },
   "required": [

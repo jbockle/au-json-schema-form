@@ -115,7 +115,13 @@ define('json-schema',["require", "exports"], function (require, exports) {
                         "type": "string",
                         "const": "USA"
                     }
-                }
+                },
+                required: [
+                    "street",
+                    "city",
+                    "state",
+                    "zip"
+                ]
             }
         },
         "required": [
