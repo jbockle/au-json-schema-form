@@ -16,7 +16,6 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .plugin(PLATFORM.moduleName("aurelia-json-schema-form"), (options: PluginOptions) => {
       options.logLevel = logLevel.debug;
-      options.validationMessages = { pattern: "Must start with j" };
     });
 
   // Uncomment the line below to enable animation.

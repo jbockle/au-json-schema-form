@@ -53,7 +53,6 @@ define('main',["require", "exports", "aurelia-logging-console", "aurelia-framewo
         aurelia.use
             .plugin(aurelia_pal_1.PLATFORM.moduleName("aurelia-json-schema-form"), function (options) {
             options.logLevel = aurelia_logging_1.logLevel.debug;
-            options.validationMessages = { pattern: "Must start with j" };
         });
         if (environment_1.default.debug) {
             aurelia.use.developmentLogging();
