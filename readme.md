@@ -23,7 +23,8 @@ to view a demo, clone and checkout the **sample/readme.md**
 ## Coming soon/Need help with..
 
 - clean up array handling
-- optionally override templats per form item
+- optionally override templates per form item
+- optionally delete items from model on destroy
 - bootstrap templates:
   - add date/time/date-time pickers
   - add alternate array template using tabs
