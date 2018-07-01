@@ -1,4 +1,6 @@
-export const schema = {
+import { IJsonSchemaDefinition } from "aurelia-json-schema-form";
+
+export const schema: IJsonSchemaDefinition = {
   "type": "object",
   "properties": {
     "firstName": {
@@ -21,29 +23,26 @@ export const schema = {
         "pattern": "^(\\d{3}-\\d{3}-\\d{4})|(\\d{10})$"
       }
     },
-    "addresses": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "street": {
-            "type": "string"
-          },
-          "city": {
-            "type": "string"
-          },
-          "state": {
-            "type": "string"
-          },
-          "zip": {
-            "type": "number",
-            "minimum": 10000,
-            "maximum": 99999
-          },
-          "country": {
-            "type": "string",
-            "const": "USA"
-          }
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "number",
+          "minimum": 10000,
+          "maximum": 99999
+        },
+        "country": {
+          "type": "string",
+          "const": "USA"
         }
       }
     }

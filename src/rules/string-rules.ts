@@ -1,7 +1,7 @@
 import { ValidationRules, validationMessages, FluentRuleCustomizer } from "aurelia-validation";
 import { inject } from "aurelia-framework";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
-import { SfText } from "../form/text/sf-text";
+import { SfString } from "../form/text/sf-string";
 
 @inject(SchemaFormConfiguration)
 export class StringRules {
@@ -85,7 +85,7 @@ export class StringRules {
       );
   }
 
-  bind(ctrl: SfText, rule: FluentRuleCustomizer<{}, any>) {
+  bind(ctrl: SfString, rule: FluentRuleCustomizer<{}, any>) {
     if (ctrl.schema.pattern) {
       rule = rule.matches(new RegExp(ctrl.schema.pattern));
     }

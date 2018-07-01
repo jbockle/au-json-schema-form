@@ -63,8 +63,9 @@ function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: 
     PLATFORM.moduleName("./form/au-json-schema-form"),
     PLATFORM.moduleName("./value-converters/number-value-converter"),
 
+    PLATFORM.moduleName("./form/object/sf-object"),
     PLATFORM.moduleName("./form/number/sf-number"),
-    PLATFORM.moduleName("./form/text/sf-text")
+    PLATFORM.moduleName("./form/text/sf-string")
   ]);
 
 }
@@ -94,6 +95,8 @@ function registerConfiguration(
   logger.info("registered configuration", configuration);
 }
 
+export * from "./interfaces/form";
+export * from "./interfaces/json-schema-definition";
 export {
   configure,
   ITemplates,

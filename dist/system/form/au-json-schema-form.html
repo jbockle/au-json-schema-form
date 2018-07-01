@@ -1,3 +1,7 @@
 <template>
-  <div as-element="compose" view-model.bind="formController" view.bind="formView" data.bind="model"></div>
+  <div as-element="compose"
+       view-model.bind="formController"
+       view.bind="formView"
+       model.two-way="model"
+       schema.bind="schema"></div>
 </template>

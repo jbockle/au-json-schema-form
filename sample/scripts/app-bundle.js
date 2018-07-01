@@ -94,29 +94,26 @@ define('json-schema',["require", "exports"], function (require, exports) {
                     "pattern": "^(\\d{3}-\\d{3}-\\d{4})|(\\d{10})$"
                 }
             },
-            "addresses": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "properties": {
-                        "street": {
-                            "type": "string"
-                        },
-                        "city": {
-                            "type": "string"
-                        },
-                        "state": {
-                            "type": "string"
-                        },
-                        "zip": {
-                            "type": "number",
-                            "minimum": 10000,
-                            "maximum": 99999
-                        },
-                        "country": {
-                            "type": "string",
-                            "const": "USA"
-                        }
+            "address": {
+                "type": "object",
+                "properties": {
+                    "street": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "zip": {
+                        "type": "number",
+                        "minimum": 10000,
+                        "maximum": 99999
+                    },
+                    "country": {
+                        "type": "string",
+                        "const": "USA"
                     }
                 }
             }
@@ -134,17 +131,15 @@ define('json-form',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.form = {
-        "firstName": {
-            "$title": "Given name"
+        firstName: {
+            $title: "Given name"
         },
-        "lastName": {
-            "$placeholder": "Last name"
+        lastName: {
+            $placeholder: "Last name"
         },
-        "age": {
-            "!widget": "alt-number"
-        },
-        "phoneNumbers": {},
-        "addresses": {
+        age: {},
+        phoneNumbers: {},
+        address: {
             "street": {},
             "@div.row": [
                 {

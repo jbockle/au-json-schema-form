@@ -16,7 +16,9 @@
   },
   "exclude": [
     "node_modules",
-    "aurelia_project"
+    "aurelia_project",
+    "dist",
+    "sample"
   ],
   "filesGlob": [
     "./src/**/*.ts",

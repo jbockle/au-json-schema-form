@@ -1,42 +1,108 @@
-export class FormService {
-  getSchemaTemplate(key: string, form: any, part: any) {
-    this.log("getSchemaTemplate", arguments);
-    let template: string;
-    const schema = part.properties[key];
-    switch (schema.type) {
-      case "number":
-        template = `<sf-number
-        schema.bind="schema.properties.${key}"
-        model.two-way="model.${key}"
-        title="${form.$title || schema.title || this.toTitle(key)}"
-        required.bind="${this.isRequired(key, part)}"></sf-number>\r\n`;
-        break;
-      case "string":
-        template = `<sf-text
-      schema.bind="schema.properties.${key}"
-      model.two-way="model.${key}"
-      title="${form.$title || schema.title || this.toTitle(key)}"
-      required.bind="${this.isRequired(key, part)}"></sf-text>\r\n`;
-        break;
-    }
-    return template;
-  }
+import { IJsonSchemaObjectDefinition, IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
+import { IForm, IFormOverride } from "../interfaces/form";
+import { inject } from "aurelia-framework";
+import { SchemaFormLogger } from "../resources/logger";
 
-  generate(schema: IJsonSchemaDefinition, form: IForm, model: object | object[]) {
-    if (schema.type === "object") {
-      form = this.buildObjectForm(schema, form, model);
-    } else if (schema.type === "array") {
-      form = this.buildArrayForm(schema, form, model);
-    }
-  }
+@inject(SchemaFormLogger)
+export class FormService {
 
   readonly containerMarker = "@";
+  readonly overrideMarker = "$";
+
+  constructor(private logger: SchemaFormLogger) { }
+
+  buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment = ""): string {
+    this.logger.info("buildObjectForm", arguments);
+    let template = "";
+    try {
+      let wrapper: { start?: string, end?: string };
+      // tslint:disable-next-line:forin
+      for (const formKey in form) {
+        wrapper = this.getEmmetWrapper(formKey, wrapper);
+        template = this.applyEmmetStart(wrapper, template);
+
+        if (this.isOverride(formKey)) {
+          // do nothing
+        } else if (this.isContainer(formKey)) {
+          // inner emmet container
+
+          segment += `['${formKey}']`;
+          const innerForms = form[formKey] as IForm[];
+          for (let index = 0; index < innerForms.length; index++) {
+            template += this.buildObjectForm(schema, innerForms[index], model, segment + `[${index}]`);
+          }
+
+        } else {
+          // object property
+
+          const override = this.getOverride(form, formKey, schema);
+          model = this.getObjectModelDefaults(model, schema);
+          // tslint:disable-next-line:max-line-length
+          template += `<sf-${override.$schema.type} model.two-way="model.${formKey}" form.bind="form${segment}.${formKey}"`;
+          if (override.$schema.type === "array") {
+            model[formKey] = [];
+            template += ` schema.bind="schema.properties.${formKey}"`;
+          }
+          if (override.$schema.type === "object") {
+            model[formKey] = {};
+            template += ` schema.bind="schema.properties.${formKey}"`;
+          }
+          template += `></sf-${override.$schema.type}>\r\n`;
+        }
+
+        template = this.applyEmmetEnd(wrapper, template);
+      }
+      this.logger.info("created template", template, schema);
+      return template;
+    } catch (ex) {
+      this.logger.error("an error occurred building object view strategy", ex, schema, form, model, segment);
+      throw ex;
+    }
+  }
+
+  isOverride(key: string): boolean {
+    this.logger.info("isOverride", arguments);
+    return key.charAt(0) === this.overrideMarker;
+  }
 
   isContainer(key: string): boolean {
+    this.logger.info("isContainer", arguments);
     return key.charAt(0) === this.containerMarker;
   }
 
+  getOverride(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition) {
+    this.logger.info("getOverride", { formKey, form, schema });
+    const override = form[formKey] as IFormOverride;
+    override.$schema = schema.properties[formKey];
+    override.$schema.title = override.$schema.title || this.getTitle(formKey);
+    override.$required = Array.isArray(schema.required) ? schema.required.indexOf(formKey) !== -1 : false;
+    return override;
+  }
+
+  getTitle(key: string) {
+    this.logger.info("getTitle", arguments);
+    if (key) {
+      return key
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (str) => str.toUpperCase());
+    }
+  }
+
+  getObjectModelDefaults(model: object, schema: IJsonSchemaObjectDefinition) {
+    this.logger.info("getObjectModelDefaults", arguments);
+    model = model || {};
+    if (schema.properties) {
+      for (const property in schema.properties) {
+        if (schema.properties[property].const || schema.properties[property].default) {
+          model[property] = model[property] || schema.properties[property].const || schema.properties[property].default;
+        }
+      }
+    }
+    return model;
+  }
+
   getEmmetContainer(key: string): { start: string, end: string } {
+    this.logger.info("getEmmetContainer", arguments);
     const regex = /^@([a-z-]+)(?:(?:(?:#(\w+))?)(?:((?:\.(?:[a-z\d-]+))+)?))$/;
 
     const matches = key.match(regex);
@@ -55,33 +121,8 @@ export class FormService {
     };
   }
 
-  buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object): SchemaForm {
-    const schemaForm = new SchemaForm(form);
-    let template = "";
-
-    const required = schema.required || [];
-    let wrapper: { start?: string, end?: string };
-    // tslint:disable-next-line:forin
-    for (const key in schemaForm) {
-      wrapper = this.getEmmetWrapper(key, wrapper);
-      template = this.applyEmmetStart(wrapper, template);
-
-      if (this.isContainer(key)) {
-
-      } else {
-        switch (schema.properties[key].type) {
-          case "string":
-            template += this.getStringTemplate()
-        }
-      }
-
-      template = this.applyEmmetEnd(wrapper, template);
-    }
-
-    return schemaForm;
-  }
-
-  private getEmmetWrapper(key: string, wrapper: { start?: string; end?: string; }) {
+  getEmmetWrapper(key: string, wrapper: { start?: string; end?: string; }) {
+    this.logger.info("getEmmetWrapper", arguments);
     if (this.isContainer(key)) {
       wrapper = this.getEmmetContainer(key);
     } else {
@@ -90,121 +131,19 @@ export class FormService {
     return wrapper;
   }
 
-  private applyEmmetEnd(wrapper: { start?: string; end?: string; }, template: string) {
+  applyEmmetEnd(wrapper: { start?: string; end?: string; }, template: string) {
+    this.logger.info("applyEmmetEnd", arguments);
     if (wrapper.end) {
       template += wrapper.end;
     }
     return template;
   }
 
-  private applyEmmetStart(wrapper: { start?: string; end?: string; }, template: string) {
+  applyEmmetStart(wrapper: { start?: string; end?: string; }, template: string) {
+    this.logger.info("applyEmmetStart", arguments);
     if (wrapper.start) {
       template += wrapper.start;
     }
     return template;
   }
-}
-export class FormTemplateBuilder {
-  stringTemplate() {
-
-  }
-}
-export declare type StringFormat = "date-time" | "date" | "time" | "ipv4" | "ipv6" | "";
-
-export declare type SchemaType = "object" | "array" | "string" | "number";
-
-// tslint:disable-next-line:max-classes-per-file
-export declare type PrimitiveType = number | boolean | string | null;
-
-export interface IJsonSchemaDefinition {
-  $schema?: string;
-  description?: string;
-  // no support
-  // allOf?: IJsonSchemaDefinition[];
-  // oneOf?: IJsonSchemaDefinition[];
-  // anyOf?: IJsonSchemaDefinition[];
-  title?: string;
-  type: SchemaType;
-  enum?: PrimitiveType[];
-  default?: PrimitiveType | object | object[];
-  const?: PrimitiveType | object | object[];
-  readOnly?: boolean;
-}
-
-export interface IJsonSchemaArrayDefinition extends IJsonSchemaDefinition {
-  items?: IJsonSchemaDefinition | IJsonSchemaDefinition[];
-  minItems?: number;
-  maxItems?: number;
-  uniqueItems?: boolean;
-  additionalItems?: {
-    anyOf: IJsonSchemaDefinition[];
-  };
-}
-
-export interface IJsonSchemaObjectDefinition extends IJsonSchemaDefinition {
-  propertyOrder?: string[];
-  properties?: {
-    [key: string]: IJsonSchemaDefinition;
-  };
-  additionalProperties?: IJsonSchemaDefinition | boolean;
-  patternProperties?: {
-    [key: string]: IJsonSchemaDefinition
-  };
-  minProperties?: number;
-  maxProperties?: number;
-  required?: string[];
-}
-
-export interface IJsonSchemaStringDefinition extends IJsonSchemaDefinition {
-  maxLength?: number;
-  minLength?: number;
-  pattern?: string;
-  format?: StringFormat;
-  examples?: PrimitiveType[] | object[];
-}
-
-export interface IJsonSchemaNumberDefinition extends IJsonSchemaDefinition {
-  multipleOf?: number;
-  minimum?: number;
-  maximum?: number;
-  exclusiveMinimum?: number;
-  exclusiveMaximum?: number;
-  examples?: PrimitiveType[] | object[];
-}
-
-export interface IForm {
-  [key: string]: IForm[] | IFormOverride;
-}
-
-// tslint:disable-next-line:max-classes-per-file
-export class SchemaForm implements IForm {
-  constructor(form: IForm) {
-    // tslint:disable-next-line:forin
-    for (const key in form) {
-      if ((form[key] as IFormOverride) === undefined) {
-        this[key] = toSchemaForms(form[key] as IForm[]);
-      } else {
-        this[key] = form[key] as ISchemaFormOverride;
-      }
-    }
-  }
-  [key: string]: SchemaForm[] | ISchemaFormOverride;
-}
-
-function toSchemaForms(forms: IForm[]): SchemaForm[] {
-  return forms.map((form) => new SchemaForm(form));
-}
-
-export interface IFormOverride {
-  $noTitle?: boolean;
-  $placeholder?: string;
-  $htmlClass?: string;
-  $altTemplate?: string;
-  $minDate?: string; // yyyy-MM-dd
-  $maxDate?: string; // yyyy-MM-dd
-}
-
-export interface ISchemaFormOverride extends IFormOverride {
-  _required?: boolean;
-  _schema: IJsonSchemaDefinition;
 }

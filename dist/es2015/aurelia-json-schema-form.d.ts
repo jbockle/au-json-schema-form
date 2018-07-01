@@ -28,4 +28,6 @@ declare class PluginOptions {
     constructor();
 }
 declare function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void): void;
+export * from "./interfaces/form";
+export * from "./interfaces/json-schema-definition";
 export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions, AuJsonSchemaForm };

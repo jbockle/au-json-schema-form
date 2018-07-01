@@ -3,7 +3,9 @@ import { inject, bindable, InlineViewStrategy, customElement, Container } from "
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
 import { IFormOptions } from "../interfaces/form-options";
 import { SchemaFormLogger } from "../resources/logger";
-import { FormObjectController } from "./form-object-controller";
+import { FormController } from "./form-controller";
+import { IForm } from "../interfaces/form";
+import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 
 @inject(
   ValidationControllerFactory,
@@ -12,9 +14,9 @@ import { FormObjectController } from "./form-object-controller";
 )
 @customElement("au-json-schema-form")
 export class AuJsonSchemaForm {
-  @bindable schema: any;
+  @bindable schema: IJsonSchemaDefinition;
 
-  @bindable form;
+  @bindable form: IForm;
 
   @bindable model;
 
@@ -24,7 +26,7 @@ export class AuJsonSchemaForm {
 
   formView: InlineViewStrategy;
 
-  formController: FormObjectController;
+  formController: FormController;
 
   private log: (message: string, ...rest: any[]) => void;
 
@@ -40,16 +42,9 @@ export class AuJsonSchemaForm {
 
   bind() {
     this.log("bind", arguments);
-    this.buildForm();
-  }
-
-  schemaChanged() {
-    this.log("schemaChanged", arguments);
-    this.buildForm();
-  }
-
-  formChanged() {
-    this.log("formChanged", arguments);
+    if (this.schema.type !== "object" && this.schema.type !== "array") {
+      throw new Error("The schema must start with an object or array");
+    }
     this.buildForm();
   }
 
@@ -63,40 +58,9 @@ export class AuJsonSchemaForm {
 
   buildViewStrategy() {
     this.log("buildViewStrategy");
-    let viewStrategy = "";
-    const keys = Object.keys(this.form);
-    keys.forEach((key) => {
-      switch (key[0]) {
-        case "@":
-          break;
-        case "$":
-          break;
-        default:
-          const template = this.getSchemaTemplate(key, this.form[key]);
-          if (template) { viewStrategy += template; }
-          break;
-      }
-    });
-    this.formView = new InlineViewStrategy(`<template>${viewStrategy}</template>`);
-    this.formController = new FormObjectController(this.logger, this.options, this.validationController);
-  }
-
-  isRequired(key: string, part: any): boolean {
-    this.log("isRequired", arguments);
-    let required = false;
-    if (Array.isArray(part.required)) {
-      required = part.required
-        .some((x) => x === key);
-    }
-    return required;
-  }
-
-  toTitle(key: string) {
-    this.log("toTitle", arguments);
-    if (key) {
-      return key
-        .replace(/([A-Z])/g, " $1")
-        .replace(/^./, (str) => str.toUpperCase());
-    }
+    this.formView = new InlineViewStrategy(
+      `<template><sf-${this.schema.type} form.bind="form" model.two-way="model" schema.bind="schema" /></template>`);
+    this.formController = new FormController(
+      this.logger, this.options, this.validationController);
   }
 }

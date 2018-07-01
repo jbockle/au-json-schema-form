@@ -1,15 +1,15 @@
-export const form = {
-  "firstName": {
-    "$title": "Given name"
+import { IForm } from "aurelia-json-schema-form";
+
+export const form: IForm = {
+  firstName: {
+    $title: "Given name"
   },
-  "lastName": {
-    "$placeholder": "Last name"
+  lastName: {
+    $placeholder: "Last name"
   },
-  "age": {
-    "!widget": "alt-number"
-  },
-  "phoneNumbers": {},
-  "addresses": {
+  age: {},
+  phoneNumbers: {},
+  address: {
     "street": {},
     "@div.row": [
       {

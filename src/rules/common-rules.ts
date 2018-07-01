@@ -31,7 +31,7 @@ export class CommonRules implements IRules {
   bind(ctrl: any): FluentRuleCustomizer<{}, any> {
     let rule = ValidationRules
       .ensure("model")
-      .displayName(ctrl.title)
+      .displayName(ctrl.schema.title)
       .satisfies(() => true);
     if (ctrl.schema.const) {
       rule = rule.equals(ctrl.schema.const);
@@ -39,7 +39,7 @@ export class CommonRules implements IRules {
     if (ctrl.schema.enum) {
       rule = rule.satisfiesRule("enum", ctrl.schema.enum);
     }
-    if (ctrl.required) {
+    if (ctrl.form.$required) {
       rule = rule.required();
     }
     return rule;
