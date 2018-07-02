@@ -4,6 +4,8 @@ import { ITemplates } from "./interfaces/templates";
 import { IValidationMessages } from "./interfaces/validation-messages";
 import { IFormOptions } from "./interfaces/form-options";
 import { AuJsonSchemaForm } from "./form/au-json-schema-form";
+import { IForm } from "./interfaces/form";
+import { IJsonSchemaDefinition } from "./interfaces/json-schema-definition";
 declare class PluginOptions {
     /**
      * @property modifies DOM to display error/success states
@@ -28,6 +30,4 @@ declare class PluginOptions {
     constructor();
 }
 declare function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void): void;
-export * from "./interfaces/form";
-export * from "./interfaces/json-schema-definition";
-export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions, AuJsonSchemaForm };
+export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions, AuJsonSchemaForm, IForm, IJsonSchemaDefinition };

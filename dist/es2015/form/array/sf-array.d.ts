@@ -1,10 +1,10 @@
-import { InlineViewStrategy } from "aurelia-framework";
+import { InlineViewStrategy, View } from "aurelia-framework";
 import { IJsonSchemaArrayDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form";
 import { FormService } from "../../services/form-service";
-import { Validator, ValidateResult } from "aurelia-validation";
+import { Validator, ValidateResult, ValidationController } from "aurelia-validation";
 import { EventAggregator } from "aurelia-event-aggregator";
 import { FormController } from "../form-controller";
 import { ArrayRules } from "../../rules/array-rules";
@@ -24,9 +24,10 @@ export declare class SfArray {
     view: InlineViewStrategy;
     results: ValidateResult[];
     controller: FormController;
-    constructor(arrayRules: ArrayRules, configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger, validator: Validator, eventAggregator: EventAggregator);
-    validate(): Promise<void>;
-    bind(bindingContext: object, overrideContext: object): void;
+    validationController: ValidationController;
+    constructor(arrayRules: ArrayRules, configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger, validator: Validator, eventAggregator: EventAggregator, vc: ValidationController);
+    created(owningView: View, myView: View): void;
+    bind(bindingContext: any, overrideContext: any): void;
     getFormController(overrideContext: any): any;
     add(): void;
     remove(index: any): void;

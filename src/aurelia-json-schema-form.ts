@@ -10,6 +10,8 @@ import { IValidationMessages } from "./interfaces/validation-messages";
 import { IFormOptions } from "./interfaces/form-options";
 import { AuJsonSchemaForm } from "./form/au-json-schema-form";
 import { RulesFactory } from "./rules/rules-factory";
+import { IForm } from "./interfaces/form";
+import { IJsonSchemaDefinition } from "./interfaces/json-schema-definition";
 
 class PluginOptions {
   /**
@@ -62,6 +64,7 @@ function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: 
   frameworkConfig.globalResources([
     PLATFORM.moduleName("./form/au-json-schema-form"),
     PLATFORM.moduleName("./value-converters/number-value-converter"),
+    PLATFORM.moduleName("./form/array/sf-array-binding-behavior"),
 
     PLATFORM.moduleName("./form/array/sf-array"),
     PLATFORM.moduleName("./form/array/sf-array-item"),
@@ -99,13 +102,13 @@ function registerConfiguration(
   logger.info("registered configuration", configuration);
 }
 
-export * from "./interfaces/form";
-export * from "./interfaces/json-schema-definition";
 export {
   configure,
   ITemplates,
   IValidationMessages,
   PluginOptions,
   IFormOptions,
-  AuJsonSchemaForm
+  AuJsonSchemaForm,
+  IForm,
+  IJsonSchemaDefinition
 };

@@ -3,7 +3,7 @@ import { observable, inject, useShadowDOM, BindingEngine } from "aurelia-framewo
 import { IFormOptions, IJsonSchemaDefinition, IForm, AuJsonSchemaForm } from "aurelia-json-schema-form";
 import { form } from "./json-form";
 import { schema } from "./json-schema";
-import { ValidateEvent } from "aurelia-validation";
+import { ValidateEvent, ControllerValidateResult } from "aurelia-validation";
 
 @useShadowDOM()
 @inject(BindingSignaler, BindingEngine)
@@ -68,5 +68,14 @@ export class App {
 
   refreshModel() {
     this.modelString = JSON.stringify(this.model, null, "\t");
+  }
+
+  async submit() {
+    const results = await this.schemaform.formController.validationController.validate();
+    if (results.valid) {
+      window.alert("everything looks good!");
+    } else {
+      window.alert("one or more errors: \r\n" + results.results.filter((r) => !r.valid).map((r) => r.message).join("\r\n"));
+    }
   }
 }

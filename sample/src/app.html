@@ -69,13 +69,16 @@
         <hr>
         <label>Form</label>
         <form class="p-2 border border-warning h-100"
-              style="overflow-y:auto;overflow-x: hidden">
+              style="overflow-y:auto;overflow-x: hidden"
+              submit.delegate="submit()">
           <au-json-schema-form schema.bind="schema"
                                form.bind="form"
                                model.two-way="model"
                                options.bind="options"
                                if.bind="formVisible"
                                view-model.ref="schemaform"></au-json-schema-form>
+          <button type="submit"
+                  class="btn btn-primary float-right">Submit</button>
         </form>
         <div class="p-2 border border-danger bg-danger text-light"
              if.bind="schemaform.formController.validationController.errors.length > 0">

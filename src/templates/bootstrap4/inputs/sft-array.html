@@ -7,12 +7,20 @@
              if.bind="schema.description">${schema.description}</small>
     </h5>
     <button class="btn btn-link btn-sm"
-            click.trigger="add()"
+            click.delegate="add()"
             disabled.bind="isDisabled || atCapacity">&plus; Add</button>
   </div>
   <em class="text-muted small d-block"
       if.bind="!model || model.length === 0">nothing here, click add above</em>
-  <div repeat.for="item of model"
+  <div class="text-danger">
+    <ul>
+      <li repeat.for="result of validationController.results"
+          if.bind="result.object === model && !result.valid">
+        <small>${result.message}</small>
+      </li>
+    </ul>
+  </div>
+  <div repeat.for="item of model & validateOnChangeOrBlur"
        class="border border-light p-2">
     <button type="button"
             class="close pb-1"
