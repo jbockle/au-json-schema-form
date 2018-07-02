@@ -26,7 +26,7 @@ export class StringRules {
       .customRule(
         "format_datetime",
         (val: string) => val !== undefined ? iso8601Datetime.test(val) : true,
-        this.configuration.messages.format_datetime || "${$displayName} is not a valid date/time"
+        this.configuration.messages.format_datetime || "${$displayName} is not a valid date/time."
       );
 
     // format date
@@ -35,7 +35,7 @@ export class StringRules {
       .customRule(
         "format_date",
         (val: string) => val !== undefined ? iso8601Date.test(val) : true,
-        this.configuration.messages.format_date || "${$displayName} is not a valid date"
+        this.configuration.messages.format_date || "${$displayName} is not a valid date."
       );
 
     // format time
@@ -44,7 +44,7 @@ export class StringRules {
       .customRule(
         "format_time",
         (val: string) => val !== undefined ? iso8601Time.test(val) : true,
-        this.configuration.messages.format_time || "${$displayName} is not a valid time"
+        this.configuration.messages.format_time || "${$displayName} is not a valid time."
       );
 
     // format ipv4
@@ -53,7 +53,7 @@ export class StringRules {
       .customRule(
         "format_ipv4",
         (val: string) => val !== undefined ? ipv4.test(val) : true,
-        this.configuration.messages.format_ipv4 || "${$displayName} is not a valid IPv4 address"
+        this.configuration.messages.format_ipv4 || "${$displayName} is not a valid IPv4 address."
       );
 
     // format ipv6
@@ -63,7 +63,7 @@ export class StringRules {
       .customRule(
         "format_ipv6",
         (val: string) => val !== undefined ? ipv4.test(val) : true,
-        this.configuration.messages.format_ipv6 || "${$displayName} is not a valid IPv6 address"
+        this.configuration.messages.format_ipv6 || "${$displayName} is not a valid IPv6 address."
       );
 
     // format hostname
@@ -72,7 +72,7 @@ export class StringRules {
       .customRule(
         "format_hostname",
         (val: string) => val !== undefined ? ipv4.test(val) : true,
-        this.configuration.messages.format_hostname || "${$displayName} is not a valid hostname"
+        this.configuration.messages.format_hostname || "${$displayName} is not a valid hostname."
       );
 
     // format uri
@@ -81,7 +81,7 @@ export class StringRules {
       .customRule(
         "format_uri",
         (val: string) => val !== undefined ? uri.test(val) : true,
-        this.configuration.messages.format_uri || "${$displayName} is not a valid URI"
+        this.configuration.messages.format_uri || "${$displayName} is not a valid URI."
       );
 
     // pattern
@@ -89,7 +89,7 @@ export class StringRules {
       .customRule(
         "pattern",
         (val, obj, pattern) => val !== undefined ? (new RegExp(pattern)).test(val) : true,
-        this.configuration.messages.pattern || "${$displayName} is not correctly formatted",
+        this.configuration.messages.pattern || "${$displayName} is not correctly formatted.",
         (pattern) => ({ pattern })
       );
   }

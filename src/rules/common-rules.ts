@@ -23,7 +23,7 @@ export class CommonRules implements IRules {
       .customRule(
         "enum",
         (val, obj, allowedValues: any[]) => val !== undefined ? allowedValues.indexOf(val) >= 0 : true,
-        this.configuration.messages.enum || "${$displayName} has an invalid selection",
+        this.configuration.messages.enum || "${$displayName} has an invalid selection.",
         (allowedValues) => ({ allowedValues })
       );
   }
