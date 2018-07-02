@@ -3,6 +3,7 @@ export interface ITemplates {
     text: string;
     object: string;
     array: string;
+    boolean: string;
     formats?: IFormatTemplates;
 }
 export interface IFormatTemplates {

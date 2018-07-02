@@ -8,15 +8,10 @@ export declare class FormService {
     constructor(logger: SchemaFormLogger);
     buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IForm, formKey: string, model: any[]): string;
     buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment?: string): string;
-    getContainerTemplate(segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object): {
-        segment: string;
-        template: string;
-    };
+    private getObjectFormTemplate;
+    getContainerTemplate(segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object): string;
     getArrayItemDefault(schema: IJsonSchemaArrayDefinition, model: any): any;
-    getObjectPropertyTemplate(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string): {
-        model: object;
-        template: string;
-    };
+    getObjectPropertyTemplate(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string): string;
     isOverride(key: string): boolean;
     isContainer(key: string): boolean;
     getOverride(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition): IFormOverride;

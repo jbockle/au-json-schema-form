@@ -1,12 +1,9 @@
 export declare type StringFormat = "date-time" | "date" | "time" | "ipv4" | "ipv6" | "email";
-export declare type SchemaType = "object" | "array" | "string" | "number";
+export declare type SchemaType = "object" | "array" | "string" | "number" | "boolean";
 export declare type PrimitiveType = number | boolean | string | null;
 export interface IJsonSchemaDefinition {
     $schema?: string;
     description?: string;
-    allOf?: IJsonSchemaDefinition[];
-    oneOf?: IJsonSchemaDefinition[];
-    anyOf?: IJsonSchemaDefinition[];
     title?: string;
     type: SchemaType;
     enum?: PrimitiveType[];
@@ -16,6 +13,7 @@ export interface IJsonSchemaDefinition {
     [key: string]: any;
 }
 export interface IJsonSchemaArrayDefinition extends IJsonSchemaDefinition {
+    type: "array";
     items?: IJsonSchemaDefinition;
     minItems?: number;
     maxItems?: number;
@@ -25,6 +23,7 @@ export interface IJsonSchemaArrayDefinition extends IJsonSchemaDefinition {
     };
 }
 export interface IJsonSchemaObjectDefinition extends IJsonSchemaDefinition {
+    type: "object";
     propertyOrder?: string[];
     properties?: {
         [key: string]: IJsonSchemaDefinition;
@@ -38,6 +37,7 @@ export interface IJsonSchemaObjectDefinition extends IJsonSchemaDefinition {
     required?: string[];
 }
 export interface IJsonSchemaStringDefinition extends IJsonSchemaDefinition {
+    type: "string";
     maxLength?: number;
     minLength?: number;
     pattern?: string;
@@ -45,10 +45,14 @@ export interface IJsonSchemaStringDefinition extends IJsonSchemaDefinition {
     examples?: PrimitiveType[] | object[];
 }
 export interface IJsonSchemaNumberDefinition extends IJsonSchemaDefinition {
+    type: "number";
     multipleOf?: number;
     minimum?: number;
     maximum?: number;
     exclusiveMinimum?: number;
     exclusiveMaximum?: number;
     examples?: PrimitiveType[] | object[];
+}
+export interface IJsonSchemaBooleanDefinition extends IJsonSchemaDefinition {
+    type: "boolean";
 }

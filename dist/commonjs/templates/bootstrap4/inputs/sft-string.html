@@ -8,11 +8,13 @@
            class="form-control form-control-sm"
            id.one-time="id"
            placeholder.bind="form.$placeholder || ''"
+           readonly.bind="schema.readonly || schema.const"
            if.bind="!schema.enum">
     <select value.bind="model & validateOnChange"
             class="form-control form-control-sm"
             id.one-time="id"
-            if.bind="schema.enum">
+            if.bind="schema.enum"
+            disabled.bind="schema.readonly || schema.const">
       <option model.bind="null">Select an option..</option>
       <option repeat.for="item of schema.enum"
               model.bind="item">${item}</option>

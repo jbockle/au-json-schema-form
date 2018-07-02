@@ -20,16 +20,34 @@ to view a demo, clone and checkout the **sample/readme.md**
     - change log level
 - create your schema and form (see **sample/readme.md** for an example, more documentation to follow later)
 
+## Features
+
+- Nested objects and arrays
+- Readonly fields
+- Default value population (even if not exposed in form) using default/const
+- Emmet-like custom element containers! Wrap form elements in an emmet key (supports @element#id.class.class syntax)
+  ```
+  "@div.col": [
+    {
+      state: {}
+    }
+  ]
+  ```
+
 ## Coming soon/Need help with..
 
 - clean up array handling
 - optionally override templates per form item
 - optionally delete items from model on destroy
+- add boolean schema support
 - bootstrap templates:
+  - add checkbox support
+  - add radio support
   - add date/time/date-time pickers
   - add alternate array template using tabs
 - add materialize templates
 - add additional schema validation (maybe ajv)
+- ability to declare keys you want to include/exclude for an easy, generic form
 
 ## Contributing
 

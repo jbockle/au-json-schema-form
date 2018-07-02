@@ -7,7 +7,8 @@
            value.bind="model | number & validateOnChange"
            class="form-control form-control-sm"
            id.one-time="id"
-           placeholder.bind="form.$placeholder || ''">
+           placeholder.bind="form.$placeholder || ''"
+           readonly.bind="schema.readonly || schema.const">
     <small class="form-text text-muted"
            if.bind="schema.description"
            textcontent.bind="schema.description"></small>

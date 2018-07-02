@@ -67,7 +67,8 @@ function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: 
     PLATFORM.moduleName("./form/array/sf-array-item"),
     PLATFORM.moduleName("./form/object/sf-object"),
     PLATFORM.moduleName("./form/number/sf-number"),
-    PLATFORM.moduleName("./form/text/sf-string")
+    PLATFORM.moduleName("./form/text/sf-string"),
+    PLATFORM.moduleName("./form/boolean/sf-boolean")
   ]);
 
 }

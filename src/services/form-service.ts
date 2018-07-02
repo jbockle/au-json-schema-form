@@ -1,4 +1,4 @@
-import { IJsonSchemaObjectDefinition, IJsonSchemaArrayDefinition, IJsonSchemaStringDefinition, IJsonSchemaNumberDefinition, IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
+import { IJsonSchemaObjectDefinition, IJsonSchemaArrayDefinition } from "../interfaces/json-schema-definition";
 import { IForm, IFormOverride } from "../interfaces/form";
 import { inject } from "aurelia-framework";
 import { SchemaFormLogger } from "../resources/logger";
@@ -32,30 +32,35 @@ export class FormService {
     this.logger.info("buildObjectForm", arguments);
     let template = "";
     try {
-      let wrapper: { start?: string, end?: string };
-      // tslint:disable-next-line:forin
-      for (const formKey in form) {
-        wrapper = this.getEmmetWrapper(formKey, wrapper);
-        template = this.applyEmmetStart(wrapper, template);
-
-        if (this.isOverride(formKey)) {
-          // do nothing
-        } else if (this.isContainer(formKey)) {
-          // inner emmet container
-          ({ segment, template } = this.getContainerTemplate(segment, formKey, form, template, schema, model));
-        } else {
-          // object property
-          ({ model, template } = this.getObjectPropertyTemplate(form, formKey, schema, model, template, segment));
-        }
-
-        template = this.applyEmmetEnd(wrapper, template);
-      }
+      template = this.getObjectFormTemplate(form, template, segment, schema, model);
       this.logger.info("created template", { template, schema });
       return template;
     } catch (ex) {
       this.logger.error("an error occurred building object view strategy", ex, schema, form, model, segment);
       throw ex;
     }
+  }
+
+  private getObjectFormTemplate(
+    form: IForm, template: string, segment: string, schema: IJsonSchemaObjectDefinition, model: object
+  ) {
+    let wrapper: { start?: string, end?: string };
+    // tslint:disable-next-line:forin
+    for (const formKey in form) {
+      wrapper = this.getEmmetWrapper(formKey, wrapper);
+      template = this.applyEmmetStart(wrapper, template);
+      if (this.isOverride(formKey)) {
+        // do nothing
+      } else if (this.isContainer(formKey)) {
+        // inner emmet container
+        template = this.getContainerTemplate(segment, formKey, form, template, schema, model);
+      } else {
+        // object property
+        template = this.getObjectPropertyTemplate(form, formKey, schema, model, template, segment);
+      }
+      template = this.applyEmmetEnd(wrapper, template);
+    }
+    return template;
   }
 
   getContainerTemplate(
@@ -66,7 +71,7 @@ export class FormService {
     for (let index = 0; index < innerForms.length; index++) {
       template += this.buildObjectForm(schema, innerForms[index], model, segment + `[${index}]`);
     }
-    return { segment, template };
+    return template;
   }
 
   getArrayItemDefault(schema: IJsonSchemaArrayDefinition, model) {
@@ -77,8 +82,10 @@ export class FormService {
         return model || schema.items.const || schema.items.default || "";
       case "string":
         return model || schema.items.const || schema.items.default || "";
+      case "boolean":
+        return model || false;
       case "object":
-        return this.getObjectModelDefaults({}, schema.items);
+        return this.getObjectModelDefaults({}, (schema.items as IJsonSchemaObjectDefinition));
     }
   }
 
@@ -98,7 +105,7 @@ export class FormService {
       template += ` schema.bind="schema.properties.${formKey}"`;
     }
     template += `></sf-${override.$schema.type}>\r\n`;
-    return { model, template };
+    return template;
   }
 
   isOverride(key: string): boolean {

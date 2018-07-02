@@ -86,6 +86,10 @@ define('json-schema',["require", "exports"], function (require, exports) {
                 type: "number",
                 minimum: 1
             },
+            termsOfService: {
+                type: "boolean",
+                description: "By checking this box, blah blah"
+            },
             phoneNumbers: {
                 type: "array",
                 items: {
@@ -174,7 +178,7 @@ define('json-schema',["require", "exports"], function (require, exports) {
                     },
                     country: {
                         type: "string",
-                        const: "USA"
+                        const: "United States of America"
                     }
                 },
                 required: [
@@ -247,11 +251,16 @@ define('json-form',["require", "exports"], function (require, exports) {
                     ]
                 },
                 {
+                    "@div.col": [
+                        {
+                            country: {}
+                        }
+                    ]
+                },
+                {
                     "@div.col-2": [
                         {
-                            zip: {
-                                $readOnly: true
-                            }
+                            zip: {}
                         }
                     ]
                 }
@@ -262,7 +271,9 @@ define('json-form',["require", "exports"], function (require, exports) {
             name: {},
             relationship: {},
             email: {}
-        }
+        },
+        termsOfService: {},
+        $noSeparator: true
     };
 });
 
@@ -361,6 +372,6 @@ define('app',["require", "exports", "aurelia-templating-resources", "aurelia-fra
 
 
 
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./navbar/navbar\"></require>\n  <require from=\"./app.css\"></require>\n  <div ref=\"styleDiv\"></div>\n  <div class=\"d-flex flex-column h-100\">\n    <navbar></navbar>\n    <div class=\"d-flex flex-row h-100\">\n      <div class=\"d-flex flex-column h-100 w-50 pr-2\">\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"schema\">\n            Schema\n            <span class=\"text-danger\" if.bind=\"schemaState\" textcontent.bind=\"schemaState\"></span>\n          </label>\n          <textarea id=\"schema\" value.bind=\"schemaString\" class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"form\">Form\n            <span class=\"text-danger\" if.bind=\"formState\" textcontent.bind=\"formState\"></span>\n          </label>\n          <textarea id=\"form\" value.bind=\"formString\" class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"model\">Model</label>\n          <textarea id=\"model\" value.to-view=\"modelString\" class=\"flex-fill border border-secondary no-resize\" readonly></textarea>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill h-100 pr-2\">\n        <label>Options</label>\n        <div class=\"border p-2 clearfix align-items-center bg-dark text-light\">\n          <div class=\"form-check float-left align-items-center\">\n            <input class=\"form-check-input\" type=\"checkbox\" checked.bind=\"options.validateOnRender\" id=\"validateOnRender\">\n            <label class=\"form-check-label\" for=\"validateOnRender\">\n              Validate on render\n            </label>\n          </div>\n          <button type=\"button\" class=\"btn btn-primary btn-sm float-right\" click.trigger=\"schemaform.buildForm()\" if.bind=\"schemaform\">Reload Form</button>\n        </div>\n        <hr>\n        <label>Form</label>\n        <form class=\"p-2 border border-warning\">\n          <au-json-schema-form schema.bind=\"schema\" form.bind=\"form\" model.two-way=\"model\" options.bind=\"options\" if.bind=\"formVisible\"\n            view-model.ref=\"schemaform\"></au-json-schema-form>\n        </form>\n      </div>\n    </div>\n  </div>\n</template>\n"; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./navbar/navbar\"></require>\n  <require from=\"./app.css\"></require>\n  <div ref=\"styleDiv\"></div>\n  <div class=\"d-flex flex-column h-100\">\n    <navbar></navbar>\n    <div class=\"d-flex flex-row h-100\">\n      <div class=\"d-flex flex-column h-100 w-50 pr-2\">\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"schema\">\n            Schema\n            <span class=\"text-danger\"\n                  if.bind=\"schemaState\"\n                  textcontent.bind=\"schemaState\"></span>\n          </label>\n          <textarea id=\"schema\"\n                    value.bind=\"schemaString\"\n                    class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"form\">Form\n            <span class=\"text-danger\"\n                  if.bind=\"formState\"\n                  textcontent.bind=\"formState\"></span>\n          </label>\n          <textarea id=\"form\"\n                    value.bind=\"formString\"\n                    class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"model\">Model</label>\n          <textarea id=\"model\"\n                    value.to-view=\"modelString\"\n                    class=\"flex-fill border border-secondary no-resize\"\n                    readonly></textarea>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill h-100 pr-2\">\n        <div class=\"border p-2 clearfix align-items-center bg-dark text-light\">\n          <h4>Options</h4>\n          <form>\n            <div class=\"form-group\">\n              <div class=\"form-check float-left\">\n                <input class=\"form-check-input\"\n                       type=\"checkbox\"\n                       checked.bind=\"options.validateOnRender\"\n                       id=\"validateOnRender\">\n                <label class=\"form-check-label\"\n                       for=\"validateOnRender\">\n                  Validate on render\n                </label>\n              </div>\n            </div>\n            <button type=\"button\"\n                    class=\"btn btn-primary btn-sm float-right\"\n                    click.trigger=\"schemaform.buildForm()\"\n                    if.bind=\"schemaform\">Reload Form</button>\n          </form>\n        </div>\n        <hr>\n        <label>Form</label>\n        <form class=\"p-2 border border-warning\">\n          <au-json-schema-form schema.bind=\"schema\"\n                               form.bind=\"form\"\n                               model.two-way=\"model\"\n                               options.bind=\"options\"\n                               if.bind=\"formVisible\"\n                               view-model.ref=\"schemaform\"></au-json-schema-form>\n        </form>\n      </div>\n    </div>\n  </div>\n</template>\n"; });
 define('text!app.css', ['module'], function(module) { module.exports = ".no-resize {\n  resize: none;\n}\n\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n\n::-webkit-scrollbar-track {\n  box-shadow: inset 0 0 10px var(--secondary);\n}\n\n::-webkit-scrollbar-track:hover {\n  box-shadow: inset 0 0 15px var(--secondary);\n}\n\n::-webkit-scrollbar-thumb {\n  box-shadow: inset 0 0 20px var(--primary);\n}\n\n::-webkit-scrollbar-thumb:hover {\n  box-shadow: inset 0 0 40px var(--primary);\n}\n"; });
 //# sourceMappingURL=app-bundle.js.map

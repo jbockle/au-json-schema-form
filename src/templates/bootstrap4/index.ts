@@ -8,6 +8,7 @@ export function GetBootstrapTemplates(): ITemplates {
     number: `${rootPath}/sft-number.html`,
     text: `${rootPath}/sft-string.html`,
     object: `${rootPath}/sft-object.html`,
-    array: `${rootPath}/sft-array.html`
+    array: `${rootPath}/sft-array.html`,
+    boolean: `${rootPath}/sft-boolean.html`
   };
 }

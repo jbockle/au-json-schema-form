@@ -27,11 +27,16 @@ export const form: IForm = {
         ]
       },
       {
+        "@div.col": [
+          {
+            country: {}
+          }
+        ]
+      },
+      {
         "@div.col-2": [
           {
-            zip: {
-              $readOnly: true
-            }
+            zip: {}
           }
         ]
       }
@@ -42,5 +47,7 @@ export const form: IForm = {
     name: {},
     relationship: {},
     email: {}
-  }
+  },
+  termsOfService: {},
+  $noSeparator: true
 }

@@ -9,37 +9,63 @@
         <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
           <label for="schema">
             Schema
-            <span class="text-danger" if.bind="schemaState" textcontent.bind="schemaState"></span>
+            <span class="text-danger"
+                  if.bind="schemaState"
+                  textcontent.bind="schemaState"></span>
           </label>
-          <textarea id="schema" value.bind="schemaString" class="flex-fill border border-secondary no-resize"></textarea>
+          <textarea id="schema"
+                    value.bind="schemaString"
+                    class="flex-fill border border-secondary no-resize"></textarea>
         </div>
         <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
           <label for="form">Form
-            <span class="text-danger" if.bind="formState" textcontent.bind="formState"></span>
+            <span class="text-danger"
+                  if.bind="formState"
+                  textcontent.bind="formState"></span>
           </label>
-          <textarea id="form" value.bind="formString" class="flex-fill border border-secondary no-resize"></textarea>
+          <textarea id="form"
+                    value.bind="formString"
+                    class="flex-fill border border-secondary no-resize"></textarea>
         </div>
         <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
           <label for="model">Model</label>
-          <textarea id="model" value.to-view="modelString" class="flex-fill border border-secondary no-resize" readonly></textarea>
+          <textarea id="model"
+                    value.to-view="modelString"
+                    class="flex-fill border border-secondary no-resize"
+                    readonly></textarea>
         </div>
       </div>
       <div class="d-flex flex-column flex-fill h-100 pr-2">
-        <label>Options</label>
         <div class="border p-2 clearfix align-items-center bg-dark text-light">
-          <div class="form-check float-left align-items-center">
-            <input class="form-check-input" type="checkbox" checked.bind="options.validateOnRender" id="validateOnRender">
-            <label class="form-check-label" for="validateOnRender">
-              Validate on render
-            </label>
-          </div>
-          <button type="button" class="btn btn-primary btn-sm float-right" click.trigger="schemaform.buildForm()" if.bind="schemaform">Reload Form</button>
+          <h4>Options</h4>
+          <form>
+            <div class="form-group">
+              <div class="form-check float-left">
+                <input class="form-check-input"
+                       type="checkbox"
+                       checked.bind="options.validateOnRender"
+                       id="validateOnRender">
+                <label class="form-check-label"
+                       for="validateOnRender">
+                  Validate on render
+                </label>
+              </div>
+            </div>
+            <button type="button"
+                    class="btn btn-primary btn-sm float-right"
+                    click.trigger="schemaform.buildForm()"
+                    if.bind="schemaform">Reload Form</button>
+          </form>
         </div>
         <hr>
         <label>Form</label>
         <form class="p-2 border border-warning">
-          <au-json-schema-form schema.bind="schema" form.bind="form" model.two-way="model" options.bind="options" if.bind="formVisible"
-            view-model.ref="schemaform"></au-json-schema-form>
+          <au-json-schema-form schema.bind="schema"
+                               form.bind="form"
+                               model.two-way="model"
+                               options.bind="options"
+                               if.bind="formVisible"
+                               view-model.ref="schemaform"></au-json-schema-form>
         </form>
       </div>
     </div>

@@ -2,8 +2,9 @@ import { inject } from "aurelia-framework";
 import { StringRules } from "./string-rules";
 import { NumberRules } from "./number-rules";
 import { CommonRules } from "./common-rules";
+import { BooleanRules } from "./boolean-rules";
 
-@inject(CommonRules, StringRules, NumberRules)
+@inject(CommonRules, StringRules, NumberRules, BooleanRules)
 export class RulesFactory {
   type = "factory";
 
@@ -12,12 +13,14 @@ export class RulesFactory {
   constructor(
     commonRules: CommonRules,
     stringRules: StringRules,
-    numberRules: NumberRules
+    numberRules: NumberRules,
+    booleanRules: BooleanRules
   ) {
     this.rules = {
       commonRules,
       stringRules,
       numberRules,
+      booleanRules
     };
   }
 

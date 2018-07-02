@@ -16,6 +16,10 @@ export const schema: IJsonSchemaDefinition = {
       type: "number",
       minimum: 1
     },
+    termsOfService: {
+      type: "boolean",
+      description: "By checking this box, blah blah"
+    },
     phoneNumbers: {
       type: "array",
       items: {
@@ -104,7 +108,7 @@ export const schema: IJsonSchemaDefinition = {
         },
         country: {
           type: "string",
-          const: "USA"
+          const: "United States of America"
         }
       },
       required: [
