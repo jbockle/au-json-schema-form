@@ -81,9 +81,14 @@ define('json-schema',["require", "exports"], function (require, exports) {
                 type: "string",
                 minLength: 3
             },
+            hiddenPropertyWithDefault: {
+                type: "string",
+                default: "I'm hidden but still populating the model!"
+            },
             termsOfService: {
                 type: "boolean",
-                description: "By checking this box, blah blah"
+                description: "By checking this box, blah blah",
+                default: true
             },
             phoneNumbers: {
                 type: "array",
@@ -192,7 +197,8 @@ define('json-schema',["require", "exports"], function (require, exports) {
                             type: "string"
                         },
                         relationship: {
-                            type: "string"
+                            type: "string",
+                            default: "manager"
                         },
                         email: {
                             type: "string",

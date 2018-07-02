@@ -141,7 +141,7 @@ export class FormService {
     model = model || {};
     if (schema.properties) {
       for (const property in schema.properties) {
-        if (schema.properties[property].const || schema.properties[property].default) {
+        if (schema.properties[property].const !== undefined || schema.properties[property].default !== undefined) {
           model[property] = model[property] || schema.properties[property].const || schema.properties[property].default;
         }
       }
