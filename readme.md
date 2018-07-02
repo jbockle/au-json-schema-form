@@ -43,7 +43,6 @@ to view a demo, clone and checkout the **sample/readme.md**
 - clean up array handling
 - optionally override templates per form item
 - optionally delete items from model on destroy
-- add boolean schema support
 - bootstrap templates:
   - add checkbox support
   - add radio support
