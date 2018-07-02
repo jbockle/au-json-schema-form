@@ -29,6 +29,7 @@ export declare class SfArray {
     private createView;
     private bindRules;
     getFormController(overrideContext: any): any;
+    validate(): void;
     add(): void;
     remove(index: any): void;
     readonly isDisabled: boolean;

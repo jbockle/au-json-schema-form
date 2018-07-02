@@ -1,0 +1,32 @@
+<template>
+  <require from="../styles.css"></require>
+  <div class="d-inline">
+    <h5 class="d-inline"
+        if.bind="!form.$noArrayTitle">${schema.title}
+      <small class="text-muted"
+             if.bind="schema.description">${schema.description}</small>
+    </h5>
+  </div>
+  <div class="text-danger">
+    <ul>
+      <li repeat.for="result of validationController.results"
+          if.bind="result.object === model && !result.valid">
+        <small>${result.message}</small>
+      </li>
+    </ul>
+  </div>
+  <div class="form-group">
+    <div class="form-check"
+         repeat.for="option of schema.items.enum">
+      <input type="checkbox"
+             id="${option+$index}"
+             class="form-check-input"
+             model.bind="option"
+             checked.bind="model"
+             change.trigger="validate()">
+      <label for="${option+$index}"
+             class="form-check-label">${option}</label>
+    </div>
+  </div>
+  <hr if.bind="!form.$noSeparator">
+</template>

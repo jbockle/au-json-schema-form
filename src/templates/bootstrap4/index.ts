@@ -9,6 +9,7 @@ export function GetBootstrapTemplates(): ITemplates {
     text: `${rootPath}/sft-string.html`,
     object: `${rootPath}/sft-object.html`,
     array: `${rootPath}/sft-array.html`,
-    boolean: `${rootPath}/sft-boolean.html`
+    boolean: `${rootPath}/sft-boolean.html`,
+    arrayStringEnum: `${rootPath}/sft-array-string-enum.html`
   };
 }

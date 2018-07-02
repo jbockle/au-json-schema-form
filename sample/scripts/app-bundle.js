@@ -85,6 +85,18 @@ define('json-schema',["require", "exports"], function (require, exports) {
                 type: "string",
                 default: "I'm hidden but still populating the model!"
             },
+            foodAllergies: {
+                type: "array",
+                items: {
+                    type: "string",
+                    enum: [
+                        "peanuts",
+                        "shellfish",
+                        "egg",
+                        "milk"
+                    ]
+                }
+            },
             termsOfService: {
                 type: "boolean",
                 description: "By checking this box, blah blah",
@@ -247,6 +259,7 @@ define('json-form',["require", "exports"], function (require, exports) {
         phoneNumbers: {
             $noTitle: true
         },
+        foodAllergies: {},
         address: {
             street: {},
             "@div.row": [

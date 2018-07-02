@@ -15,6 +15,18 @@ export const schema: IJsonSchemaDefinition = {
       type: "string",
       default: "I'm hidden but still populating the model!"
     },
+    foodAllergies: {
+      type: "array",
+      items: {
+        type: "string",
+        enum: [
+          "peanuts",
+          "shellfish",
+          "egg",
+          "milk"
+        ]
+      }
+    },
     termsOfService: {
       type: "boolean",
       description: "By checking this box, blah blah",

@@ -52,12 +52,19 @@ export class SfArray {
   bind() {
     this.logger.info("sf-array", { form: this.form, model: this.model, schema: this.schema.items }, arguments);
     this.bindRules();
-    this.determineViewStrategy();
     this.createView();
+    this.determineViewStrategy();
   }
 
   determineViewStrategy() {
-    const strategy = this.form.$altTemplate || this.configuration.templates.array;
+    let strategy;
+    if (this.form.$altTemplate) {
+      strategy = this.form.$altTemplate;
+    } else if (this.schema.items.type === "string" && this.schema.items.enum) {
+      strategy = this.configuration.templates.arrayStringEnum;
+    } else {
+      strategy = this.configuration.templates.array;
+    }
     this.viewStrategy = strategy;
   }
 
@@ -74,6 +81,10 @@ export class SfArray {
 
   getFormController(overrideContext: any) {
     return overrideContext.__parentOverrideContext.bindingContext;
+  }
+
+  validate() {
+    this.validationController.validate({ object: this.model });
   }
 
   add() {
