@@ -3,7 +3,7 @@ import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { RulesFactory } from "../../rules/rules-factory";
 import { IJsonSchemaStringDefinition } from "../../interfaces/json-schema-definition";
-import { IFormOverride } from "../../interfaces/form";
+import { IFormOverride } from "../../interfaces/form-override";
 import { SchemaFormLogger } from "../../resources/logger";
 
 @inject(SchemaFormConfiguration, RulesFactory, SchemaFormLogger)

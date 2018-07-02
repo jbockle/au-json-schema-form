@@ -4,12 +4,12 @@ import { SchemaFormConfiguration } from "../services/schema-form-configuration";
 import { IFormOptions } from "../interfaces/form-options";
 import { SchemaFormLogger } from "../resources/logger";
 import { FormController } from "./form-controller";
-import { IForm } from "../interfaces/form";
+import { IFormOverride } from "../interfaces/form-override";
 import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 export declare class AuJsonSchemaForm {
     private logger;
     schema: IJsonSchemaDefinition;
-    form: IForm;
+    form: IFormOverride;
     model: any;
     options: IFormOptions;
     validationController: ValidationController;

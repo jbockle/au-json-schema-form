@@ -2,13 +2,13 @@ import { InlineViewStrategy } from "aurelia-framework";
 import { IJsonSchemaObjectDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
-import { IForm } from "../../interfaces/form";
+import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
 export declare class SfObject {
     configuration: SchemaFormConfiguration;
     formService: FormService;
     private logger;
-    form: IForm;
+    form: IFormOverride;
     model: object;
     schema: IJsonSchemaObjectDefinition;
     id: string;

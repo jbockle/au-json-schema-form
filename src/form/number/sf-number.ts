@@ -4,7 +4,7 @@ import { SchemaFormConfiguration } from "../../services/schema-form-configuratio
 import { RulesFactory } from "../../rules/rules-factory";
 import { IJsonSchemaNumberDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormLogger } from "../../resources/logger";
-import { IFormOverride } from "../../interfaces/form";
+import { IFormOverride } from "../../interfaces/form-override";
 
 @inject(SchemaFormConfiguration, RulesFactory, SchemaFormLogger)
 @customElement("sf-number")

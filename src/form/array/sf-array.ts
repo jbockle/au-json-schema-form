@@ -1,14 +1,12 @@
-import { customElement, bindable, inject, InlineViewStrategy, Optional, View, NewInstance } from "aurelia-framework";
+import { customElement, bindable, inject, InlineViewStrategy, View, Optional } from "aurelia-framework";
 import { IJsonSchemaArrayDefinition } from "../../interfaces/json-schema-definition";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
-import { IFormOverride } from "../../interfaces/form";
+import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
-import { RulesFactory } from "../../rules/rules-factory";
 import { Validator, ValidateResult, ValidationController } from "aurelia-validation";
 import { EventAggregator } from "aurelia-event-aggregator";
-import { FormController } from "../form-controller";
 import { ArrayRules } from "../../rules/array-rules";
 
 @inject(
@@ -17,8 +15,7 @@ import { ArrayRules } from "../../rules/array-rules";
   FormService,
   SchemaFormLogger,
   Validator,
-  EventAggregator,
-  ValidationController
+  EventAggregator
 )
 @customElement("sf-array")
 export class SfArray {
@@ -33,10 +30,9 @@ export class SfArray {
 
   view: InlineViewStrategy;
 
+  viewStrategy: string;
+
   results: ValidateResult[];
-
-  controller: FormController;
-
   validationController: ValidationController;
 
   constructor(
@@ -44,24 +40,36 @@ export class SfArray {
     public configuration: SchemaFormConfiguration,
     public formService: FormService,
     private logger: SchemaFormLogger,
-    public validator: Validator,
-    private eventAggregator: EventAggregator,
-    vc: ValidationController
+    public validator: Validator
   ) {
-    this.validationController = vc;
+
   }
 
   created(owningView: View, myView: View) {
-    // this.validationController = myView.container.get(Optional.of(ValidationController));
+    this.validationController = myView.container.get(Optional.of(ValidationController));
   }
 
-  bind(bindingContext: any, overrideContext: any) {
-    this.arrayRules.bind(this);
-    this.validationController.addObject(this.model);
+  bind() {
     this.logger.info("sf-array", { form: this.form, model: this.model, schema: this.schema.items }, arguments);
+    this.bindRules();
+    this.determineViewStrategy();
+    this.createView();
+  }
+
+  determineViewStrategy() {
+    const strategy = this.form.$altTemplate || this.configuration.templates.array;
+    this.viewStrategy = strategy;
+  }
+
+  private createView() {
     let template = this.formService.buildArrayForm(this.schema, this.form, this.key, this.model);
     template = `<template>${template}</template>`;
     this.view = new InlineViewStrategy(template);
+  }
+
+  private bindRules() {
+    this.arrayRules.bind(this);
+    this.validationController.addObject(this.model);
   }
 
   getFormController(overrideContext: any) {

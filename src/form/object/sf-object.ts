@@ -3,13 +3,13 @@ import { IJsonSchemaObjectDefinition } from "../../interfaces/json-schema-defini
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
-import { IForm } from "../../interfaces/form";
+import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
 
 @inject(SchemaFormConfiguration, FormService, SchemaFormLogger)
 @customElement("sf-object")
 export class SfObject {
-  @bindable form: IForm;
+  @bindable form: IFormOverride;
   @bindable model: object;
   @bindable schema: IJsonSchemaObjectDefinition;
 

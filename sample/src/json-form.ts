@@ -1,6 +1,6 @@
-import { IForm } from "aurelia-json-schema-form";
+import { IFormOverride } from "aurelia-json-schema-form";
 
-export const form: IForm = {
+export const form: IFormOverride = {
   "@div.row": [
     {
       "@div.col": [

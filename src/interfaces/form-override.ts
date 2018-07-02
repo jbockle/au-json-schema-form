@@ -1,20 +1,10 @@
 import {
   IJsonSchemaDefinition,
-  IJsonSchemaArrayDefinition,
-  IJsonSchemaObjectDefinition,
-  IJsonSchemaNumberDefinition,
-  IJsonSchemaStringDefinition,
-  IJsonSchemaBooleanDefinition
+  IJsonSchemaArrayDefinition
 } from "./json-schema-definition";
 
-// tslint:disable:max-line-length
-
-export interface IForm {
-  [key: string]: IForm[] | IFormOverride;
-}
-
 export interface IFormOverride {
-  [key: string]: IForm[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
+  [key: string]: IFormOverride[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
   $noArrayTitle?: boolean;
   $noTitle?: boolean;
   $placeholder?: string;

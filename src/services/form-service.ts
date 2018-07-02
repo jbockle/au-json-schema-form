@@ -1,5 +1,5 @@
 import { IJsonSchemaObjectDefinition, IJsonSchemaArrayDefinition } from "../interfaces/json-schema-definition";
-import { IForm, IFormOverride } from "../interfaces/form";
+import { IFormOverride } from "../interfaces/form-override";
 import { inject } from "aurelia-framework";
 import { SchemaFormLogger } from "../resources/logger";
 
@@ -28,7 +28,7 @@ export class FormService {
     return template;
   }
 
-  buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment = ""): string {
+  buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IFormOverride, model: object, segment = ""): string {
     this.logger.info("buildObjectForm", arguments);
     let template = "";
     try {
@@ -42,7 +42,7 @@ export class FormService {
   }
 
   private getObjectFormTemplate(
-    form: IForm, template: string, segment: string, schema: IJsonSchemaObjectDefinition, model: object
+    form: IFormOverride, template: string, segment: string, schema: IJsonSchemaObjectDefinition, model: object
   ) {
     let wrapper: { start?: string, end?: string };
     // tslint:disable-next-line:forin
@@ -64,10 +64,15 @@ export class FormService {
   }
 
   getContainerTemplate(
-    segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object
+    segment: string,
+    formKey: string,
+    form: IFormOverride,
+    template: string,
+    schema: IJsonSchemaObjectDefinition,
+    model: object
   ) {
     segment += `['${formKey}']`;
-    const innerForms = form[formKey] as IForm[];
+    const innerForms = form[formKey] as IFormOverride[];
     for (let index = 0; index < innerForms.length; index++) {
       template += this.buildObjectForm(schema, innerForms[index], model, segment + `[${index}]`);
     }
@@ -90,7 +95,12 @@ export class FormService {
   }
 
   getObjectPropertyTemplate(
-    form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string
+    form: IFormOverride,
+    formKey: string,
+    schema: IJsonSchemaObjectDefinition,
+    model: object,
+    template: string,
+    segment: string
   ) {
     const override = this.getOverride(form, formKey, schema);
     model = this.getObjectModelDefaults(model, schema);
@@ -118,7 +128,7 @@ export class FormService {
     return key.charAt(0) === this.containerMarker;
   }
 
-  getOverride(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition) {
+  getOverride(form: IFormOverride, formKey: string, schema: IJsonSchemaObjectDefinition) {
     this.logger.info("getOverride", { formKey, form, schema });
     const override = form[formKey] as IFormOverride;
     override.$schema = schema.properties[formKey];

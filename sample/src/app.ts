@@ -1,6 +1,6 @@
 import { BindingSignaler } from "aurelia-templating-resources";
 import { observable, inject, useShadowDOM, BindingEngine } from "aurelia-framework";
-import { IFormOptions, IJsonSchemaDefinition, IForm, AuJsonSchemaForm } from "aurelia-json-schema-form";
+import { IFormOptions, IJsonSchemaDefinition, IFormOverride, AuJsonSchemaForm } from "aurelia-json-schema-form";
 import { form } from "./json-form";
 import { schema } from "./json-schema";
 import { ValidateEvent, ControllerValidateResult } from "aurelia-validation";
@@ -8,7 +8,7 @@ import { ValidateEvent, ControllerValidateResult } from "aurelia-validation";
 @useShadowDOM()
 @inject(BindingSignaler, BindingEngine)
 export class App {
-  form: IForm = form;
+  form: IFormOverride = form;
 
   schema: IJsonSchemaDefinition = schema;
 

@@ -10,8 +10,8 @@ import { IValidationMessages } from "./interfaces/validation-messages";
 import { IFormOptions } from "./interfaces/form-options";
 import { AuJsonSchemaForm } from "./form/au-json-schema-form";
 import { RulesFactory } from "./rules/rules-factory";
-import { IForm } from "./interfaces/form";
-import { IJsonSchemaDefinition } from "./interfaces/json-schema-definition";
+import { IJsonSchemaDefinition, IJsonSchemaArrayDefinition, IJsonSchemaObjectDefinition, IJsonSchemaNumberDefinition, IJsonSchemaStringDefinition, IJsonSchemaBooleanDefinition } from "./interfaces/json-schema-definition";
+import { IFormOverride } from "./interfaces/form-override";
 
 class PluginOptions {
   /**
@@ -109,6 +109,11 @@ export {
   PluginOptions,
   IFormOptions,
   AuJsonSchemaForm,
-  IForm,
-  IJsonSchemaDefinition
+  IFormOverride,
+  IJsonSchemaDefinition,
+  IJsonSchemaArrayDefinition,
+  IJsonSchemaObjectDefinition,
+  IJsonSchemaNumberDefinition,
+  IJsonSchemaStringDefinition,
+  IJsonSchemaBooleanDefinition
 };

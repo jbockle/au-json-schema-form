@@ -1,9 +1,6 @@
 import { IJsonSchemaDefinition, IJsonSchemaArrayDefinition } from "./json-schema-definition";
-export interface IForm {
-    [key: string]: IForm[] | IFormOverride;
-}
 export interface IFormOverride {
-    [key: string]: IForm[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
+    [key: string]: IFormOverride[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
     $noArrayTitle?: boolean;
     $noTitle?: boolean;
     $placeholder?: string;

@@ -4,7 +4,7 @@ import { SchemaFormConfiguration } from "../services/schema-form-configuration";
 import { IFormOptions } from "../interfaces/form-options";
 import { SchemaFormLogger } from "../resources/logger";
 import { FormController } from "./form-controller";
-import { IForm } from "../interfaces/form";
+import { IFormOverride } from "../interfaces/form-override";
 import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 
 @inject(
@@ -16,7 +16,7 @@ import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 export class AuJsonSchemaForm {
   @bindable schema: IJsonSchemaDefinition;
 
-  @bindable form: IForm;
+  @bindable form: IFormOverride;
 
   @bindable model;
 

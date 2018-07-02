@@ -1,5 +1,5 @@
 import { IJsonSchemaObjectDefinition, IJsonSchemaArrayDefinition } from "../interfaces/json-schema-definition";
-import { IForm, IFormOverride } from "../interfaces/form";
+import { IFormOverride } from "../interfaces/form-override";
 import { SchemaFormLogger } from "../resources/logger";
 export declare class FormService {
     private logger;
@@ -7,14 +7,14 @@ export declare class FormService {
     readonly overrideMarker: string;
     constructor(logger: SchemaFormLogger);
     buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IFormOverride, formKey: string, model: any[]): string;
-    buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment?: string): string;
+    buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IFormOverride, model: object, segment?: string): string;
     private getObjectFormTemplate;
-    getContainerTemplate(segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object): string;
+    getContainerTemplate(segment: string, formKey: string, form: IFormOverride, template: string, schema: IJsonSchemaObjectDefinition, model: object): string;
     getArrayItemDefault(schema: IJsonSchemaArrayDefinition, model: any): any;
-    getObjectPropertyTemplate(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string): string;
+    getObjectPropertyTemplate(form: IFormOverride, formKey: string, schema: IJsonSchemaObjectDefinition, model: object, template: string, segment: string): string;
     isOverride(key: string): boolean;
     isContainer(key: string): boolean;
-    getOverride(form: IForm, formKey: string, schema: IJsonSchemaObjectDefinition): IFormOverride;
+    getOverride(form: IFormOverride, formKey: string, schema: IJsonSchemaObjectDefinition): IFormOverride;
     getTitle(key: string): string;
     getObjectModelDefaults(model: object, schema: IJsonSchemaObjectDefinition): object;
     getEmmetContainer(key: string): {
