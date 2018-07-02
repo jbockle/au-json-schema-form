@@ -44,7 +44,6 @@ to view a demo, clone and checkout the **sample/readme.md**
 - optionally override templates per form item
 - optionally delete items from model on destroy
 - bootstrap templates:
-  - add checkbox support
   - add radio support
   - add date/time/date-time pickers
   - add alternate array template using tabs
