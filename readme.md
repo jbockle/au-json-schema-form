@@ -19,6 +19,10 @@ to view a demo, clone and checkout the **sample/readme.md**
     - change validation messages
     - change log level
 - create your schema and form (see **sample/readme.md** for an example, more documentation to follow later)
+- add an `<au-json-schema-form/>` element:
+  ```
+  <au-json-schema-form schema.bind="schema" form.bind="form" model.two-way="model" options.bind="{validateOnRender: true}"></au-json-schema-form>
+  ```
 
 ## Features
 
