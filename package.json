@@ -9,10 +9,16 @@
   "license": "MIT",
   "dependencies": {
     "aurelia-framework": "1.2.0",
-    "aurelia-validation": "^1.2.0"
+    "aurelia-validation": "^1.2.0",
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
   },
   "peerDependencies": {
-    "aurelia-validation": "^1.2.0"
+    "aurelia-validation": "^1.2.0",
+    "bootstrap": "^4.1.1",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
     "aurelia-cli": "^0.33.1",

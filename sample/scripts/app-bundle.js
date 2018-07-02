@@ -92,6 +92,8 @@ define('json-schema',["require", "exports"], function (require, exports) {
             },
             phoneNumbers: {
                 type: "array",
+                minItems: 1,
+                maxItems: 3,
                 items: {
                     type: "string",
                     title: "Phone number",

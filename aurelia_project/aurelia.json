@@ -40,10 +40,10 @@
     "source": "src/**/*.html"
   },
   "cssProcessor": {
-    "id": "sass",
-    "displayName": "Sass",
-    "fileExtension": ".scss",
-    "source": "src/**/*.scss"
+    "id": "css",
+    "displayName": "Css",
+    "fileExtension": ".css",
+    "source": "src/**/*.css"
   },
   "editor": {
     "id": "vscode",

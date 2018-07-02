@@ -3,7 +3,8 @@ import {
   IJsonSchemaArrayDefinition,
   IJsonSchemaObjectDefinition,
   IJsonSchemaNumberDefinition,
-  IJsonSchemaStringDefinition
+  IJsonSchemaStringDefinition,
+  IJsonSchemaBooleanDefinition
 } from "./json-schema-definition";
 
 // tslint:disable:max-line-length
@@ -13,8 +14,7 @@ export interface IForm {
 }
 
 export interface IFormOverride {
-  [key: string]: IForm[] | IFormOverride | boolean | string |
-  IJsonSchemaDefinition | IJsonSchemaArrayDefinition | IJsonSchemaObjectDefinition | IJsonSchemaNumberDefinition | IJsonSchemaStringDefinition;
+  [key: string]: IForm[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
   $noArrayTitle?: boolean;
   $noTitle?: boolean;
   $placeholder?: string;
@@ -22,7 +22,8 @@ export interface IFormOverride {
   $altTemplate?: string;
   $minDate?: string; // yyyy-MM-dd
   $maxDate?: string; // yyyy-MM-dd
-  $arraySchema?: IJsonSchemaDefinition | IJsonSchemaArrayDefinition | IJsonSchemaObjectDefinition | IJsonSchemaNumberDefinition | IJsonSchemaStringDefinition;
-  $schema?: IJsonSchemaDefinition | IJsonSchemaArrayDefinition | IJsonSchemaObjectDefinition | IJsonSchemaNumberDefinition | IJsonSchemaStringDefinition;
+  $arraySchema?: IJsonSchemaArrayDefinition;
+  $schema?: IJsonSchemaDefinition;
   $required?: boolean;
+  $noSeparator?: boolean;
 }

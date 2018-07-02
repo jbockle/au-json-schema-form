@@ -9,10 +9,10 @@
       <label for.one-time="id"
              class="form-check-label"
              if.bind="!form.$noTitle">${schema.title}</label>
+      <small class="form-text text-muted"
+             if.bind="schema.description"
+             textcontent.bind="schema.description"></small>
     </div>
-    <small class="form-text text-muted"
-           if.bind="schema.description"
-           textcontent.bind="schema.description"></small>
     <div class="invalid-feedback"></div>
   </div>
 </template>

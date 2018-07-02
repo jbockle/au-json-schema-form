@@ -1,9 +1,9 @@
-import { IJsonSchemaDefinition, IJsonSchemaArrayDefinition, IJsonSchemaObjectDefinition, IJsonSchemaNumberDefinition, IJsonSchemaStringDefinition } from "./json-schema-definition";
+import { IJsonSchemaDefinition, IJsonSchemaArrayDefinition } from "./json-schema-definition";
 export interface IForm {
     [key: string]: IForm[] | IFormOverride;
 }
 export interface IFormOverride {
-    [key: string]: IForm[] | IFormOverride | boolean | string | IJsonSchemaDefinition | IJsonSchemaArrayDefinition | IJsonSchemaObjectDefinition | IJsonSchemaNumberDefinition | IJsonSchemaStringDefinition;
+    [key: string]: IForm[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
     $noArrayTitle?: boolean;
     $noTitle?: boolean;
     $placeholder?: string;
@@ -11,7 +11,8 @@ export interface IFormOverride {
     $altTemplate?: string;
     $minDate?: string;
     $maxDate?: string;
-    $arraySchema?: IJsonSchemaDefinition | IJsonSchemaArrayDefinition | IJsonSchemaObjectDefinition | IJsonSchemaNumberDefinition | IJsonSchemaStringDefinition;
-    $schema?: IJsonSchemaDefinition | IJsonSchemaArrayDefinition | IJsonSchemaObjectDefinition | IJsonSchemaNumberDefinition | IJsonSchemaStringDefinition;
+    $arraySchema?: IJsonSchemaArrayDefinition;
+    $schema?: IJsonSchemaDefinition;
     $required?: boolean;
+    $noSeparator?: boolean;
 }

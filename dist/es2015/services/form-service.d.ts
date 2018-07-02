@@ -6,7 +6,7 @@ export declare class FormService {
     readonly containerMarker: string;
     readonly overrideMarker: string;
     constructor(logger: SchemaFormLogger);
-    buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IForm, formKey: string, model: any[]): string;
+    buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IFormOverride, formKey: string, model: any[]): string;
     buildObjectForm(schema: IJsonSchemaObjectDefinition, form: IForm, model: object, segment?: string): string;
     private getObjectFormTemplate;
     getContainerTemplate(segment: string, formKey: string, form: IForm, template: string, schema: IJsonSchemaObjectDefinition, model: object): string;

@@ -6,6 +6,7 @@ import { logLevel } from "aurelia-logging";
 import { PLATFORM } from "aurelia-pal";
 import environment from "./environment";
 import "bootstrap";
+import $ from "jquery";
 
 export function configure(aurelia: Aurelia) {
   aurelia.use

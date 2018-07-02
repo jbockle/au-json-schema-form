@@ -11,16 +11,16 @@ export class FormService {
 
   constructor(private logger: SchemaFormLogger) { }
 
-  buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IForm, formKey: string, model: any[]): string {
+  buildArrayForm(schema: IJsonSchemaArrayDefinition, form: IFormOverride, formKey: string, model: any[]): string {
     this.logger.info("buildArrayForm", { schema, form, model });
 
-    (form as IFormOverride)["$schema"] = schema.items;
-    (form as IFormOverride)["$arraySchema"] = schema;
+    form["$schema"] = schema.items;
+    form["$arraySchema"] = schema;
 
     schema.items.title = schema.items.title || this.getTitle(formKey);
     let template =
       `<sf-${schema.items.type} model.two-way="model[$index]" form.bind="form"`;
-    if ((form as IFormOverride)["$schema"].type === "object") {
+    if (form["$schema"].type === "object") {
       template += ` schema.bind="form['$schema']"`;
     }
     template += `></sf-${schema.items.type}>`;
