@@ -1,14 +1,25 @@
 import { IForm } from "aurelia-json-schema-form";
 
 export const form: IForm = {
-  firstName: {
-    $title: "Given name"
+  "@div.row": [
+    {
+      "@div.col": [
+        {
+          firstName: {}
+        }
+      ]
+    },
+    {
+      "@div.col": [
+        {
+          lastName: {}
+        }
+      ]
+    }
+  ],
+  phoneNumbers: {
+    $noTitle: true
   },
-  lastName: {
-    $placeholder: "Last name"
-  },
-  age: {},
-  phoneNumbers: {},
   address: {
     street: {},
     "@div.row": [

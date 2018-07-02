@@ -75,16 +75,11 @@ define('json-schema',["require", "exports"], function (require, exports) {
         properties: {
             firstName: {
                 type: "string",
-                pattern: "^j",
-                minLength: 2
+                minLength: 3
             },
             lastName: {
                 type: "string",
                 minLength: 3
-            },
-            age: {
-                type: "number",
-                minimum: 1
             },
             termsOfService: {
                 type: "boolean",
@@ -225,14 +220,25 @@ define('json-form',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.form = {
-        firstName: {
-            $title: "Given name"
+        "@div.row": [
+            {
+                "@div.col": [
+                    {
+                        firstName: {}
+                    }
+                ]
+            },
+            {
+                "@div.col": [
+                    {
+                        lastName: {}
+                    }
+                ]
+            }
+        ],
+        phoneNumbers: {
+            $noTitle: true
         },
-        lastName: {
-            $placeholder: "Last name"
-        },
-        age: {},
-        phoneNumbers: {},
         address: {
             street: {},
             "@div.row": [

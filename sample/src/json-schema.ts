@@ -5,16 +5,11 @@ export const schema: IJsonSchemaDefinition = {
   properties: {
     firstName: {
       type: "string",
-      pattern: "^j",
-      minLength: 2
+      minLength: 3
     },
     lastName: {
       type: "string",
       minLength: 3
-    },
-    age: {
-      type: "number",
-      minimum: 1
     },
     termsOfService: {
       type: "boolean",
