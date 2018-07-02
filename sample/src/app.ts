@@ -1,9 +1,8 @@
 import { BindingSignaler } from "aurelia-templating-resources";
 import { observable, inject, useShadowDOM, BindingEngine } from "aurelia-framework";
-import { IFormOptions, IJsonSchemaDefinition, IForm } from "aurelia-json-schema-form";
+import { IFormOptions, IJsonSchemaDefinition, IForm, AuJsonSchemaForm } from "aurelia-json-schema-form";
 import { form } from "./json-form";
 import { schema } from "./json-schema";
-import { AuJsonSchemaForm } from "aurelia-json-schema-form";
 import { ValidateEvent } from "aurelia-validation";
 
 @useShadowDOM()
@@ -25,6 +24,8 @@ export class App {
 
   modelString: string;
 
+  resultString: string;
+
   schemaform: AuJsonSchemaForm
 
   options: IFormOptions = {
@@ -39,6 +40,7 @@ export class App {
     this.refreshModel();
     this.schemaform.validationController.subscribe((event: ValidateEvent) => {
       this.refreshModel();
+      this.resultString = JSON.stringify(this.schemaform.formController.validationController.errors, null, "\t");
     });
   }
 

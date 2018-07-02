@@ -3,9 +3,8 @@ import { StringRules } from "./string-rules";
 import { NumberRules } from "./number-rules";
 import { CommonRules } from "./common-rules";
 import { BooleanRules } from "./boolean-rules";
-import { ArrayRules } from "./array-rules";
 
-@inject(CommonRules, StringRules, NumberRules, BooleanRules, ArrayRules)
+@inject(CommonRules, StringRules, NumberRules, BooleanRules)
 export class RulesFactory {
   type = "factory";
 
@@ -15,15 +14,13 @@ export class RulesFactory {
     commonRules: CommonRules,
     stringRules: StringRules,
     numberRules: NumberRules,
-    booleanRules: BooleanRules,
-    arrayRules: ArrayRules
+    booleanRules: BooleanRules
   ) {
     this.rules = {
       commonRules,
       stringRules,
       numberRules,
-      booleanRules,
-      arrayRules
+      booleanRules
     };
   }
 

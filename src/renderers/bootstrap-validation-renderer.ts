@@ -1,4 +1,5 @@
 import { RenderInstruction, ValidateResult, ValidationRenderer } from "aurelia-validation";
+import { getLogger, Logger } from "aurelia-logging";
 
 enum State {
   valid = "is-valid",
@@ -6,6 +7,7 @@ enum State {
 }
 
 export class BootstrapValidationRenderer implements ValidationRenderer {
+  private logger: Logger;
   private messageSelector: string = ".invalid-feedback";
   private parentSelector: string = ".form-group";
 
@@ -13,13 +15,16 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
    * BootrapValidationRenderer - Sets validation state/error messages on bootstrap v4 form-groups
    */
   // tslint:disable-next-line:no-empty
-  constructor() { }
+  constructor() {
+    this.logger = getLogger("BootstrapValidationRenderer");
+  }
 
   /**
    * renderer entry point
    * @param instruction list of instructions from validation controller
    */
   render(instruction: RenderInstruction) {
+    this.logger.info("render", instruction);
     if (!instruction) {
       return;
     }

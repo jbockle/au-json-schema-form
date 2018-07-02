@@ -7,8 +7,11 @@ import { IFormOverride } from "../../interfaces/form";
 import { FormService } from "../../services/form-service";
 import { RulesFactory } from "../../rules/rules-factory";
 import { Validator, ValidateResult } from "aurelia-validation";
+import { EventAggregator } from "aurelia-event-aggregator";
+import { FormController } from "../form-controller";
+import { ArrayRules } from "../../rules/array-rules";
 
-@inject(RulesFactory, SchemaFormConfiguration, FormService, SchemaFormLogger, Validator)
+@inject(ArrayRules, SchemaFormConfiguration, FormService, SchemaFormLogger, Validator, EventAggregator)
 @customElement("sf-array")
 export class SfArray {
   @bindable form: IFormOverride;
@@ -24,35 +27,46 @@ export class SfArray {
 
   results: ValidateResult[];
 
+  controller: FormController;
+
   constructor(
-    public rulesFactory: RulesFactory,
+    public arrayRules: ArrayRules,
     public configuration: SchemaFormConfiguration,
     public formService: FormService,
     private logger: SchemaFormLogger,
-    public validator: Validator
+    public validator: Validator,
+    private eventAggregator: EventAggregator
   ) { }
 
   async validate() {
     this.results = await this.validator.validateProperty(this, "model");
   }
 
-  bind() {
-    this.rulesFactory.bind(this);
+  bind(bindingContext: object, overrideContext: object) {
+    this.arrayRules.bind(this);
+    this.controller = this.getFormController(overrideContext) as FormController;
+    this.controller.validationController.addObject(this.model);
     this.logger.info("sf-array", { form: this.form, model: this.model, schema: this.schema.items }, arguments);
-    const template =
-      `<template>${this.formService.buildArrayForm(this.schema, this.form, this.key, this.model)}</template>`;
+    let template = this.formService.buildArrayForm(this.schema, this.form, this.key, this.model);
+    template = `<template>${template}</template>`;
     this.view = new InlineViewStrategy(template);
     this.validate();
   }
 
+  getFormController(overrideContext: any) {
+    return overrideContext.__parentOverrideContext.bindingContext;
+  }
+
   add() {
     this.model.push(this.formService.getArrayItemDefault(this.schema, null));
-    this.validate();
+    this.controller.validateOnRender();
+    this.eventAggregator.publish("form-array-modified");
   }
 
   remove(index) {
     this.model.splice(index, 1);
     this.validate();
+    this.eventAggregator.publish("form-array-modified");
   }
 
   get isDisabled(): boolean {

@@ -83,11 +83,20 @@ export class StringRules {
         (val: string) => val !== undefined ? uri.test(val) : true,
         this.configuration.messages.format_uri || "${$displayName} is not a valid URI"
       );
+
+    // pattern
+    ValidationRules
+      .customRule(
+        "pattern",
+        (val, obj, pattern) => val !== undefined ? (new RegExp(pattern)).test(val) : true,
+        this.configuration.messages.pattern || "${$displayName} is not correctly formatted",
+        (pattern) => ({ pattern })
+      );
   }
 
   bind(ctrl: SfString, rule: FluentRuleCustomizer<{}, any>) {
     if (ctrl.schema.pattern) {
-      rule = rule.matches(new RegExp(ctrl.schema.pattern));
+      rule = rule.satisfiesRule("pattern", ctrl.schema.pattern);
     }
     if (ctrl.schema.minLength) {
       rule = rule.minLength(ctrl.schema.minLength);

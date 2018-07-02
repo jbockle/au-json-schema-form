@@ -2,20 +2,16 @@
   <require from="../styles.css"></require>
   <div class="d-inline">
     <h5 class="d-inline"
-        if.bind="!form.$noArrayTitle">${schema.title}</h5>
+        if.bind="!form.$noArrayTitle">${schema.title}
+      <small class="text-muted"
+             if.bind="schema.description">${schema.description}</small>
+    </h5>
     <button class="btn btn-link btn-sm"
             click.trigger="add()"
             disabled.bind="isDisabled || atCapacity">&plus; Add</button>
   </div>
   <em class="text-muted small d-block"
       if.bind="!model || model.length === 0">nothing here, click add above</em>
-  <small class="text-muted"
-         if.bind="schema.description">${schema.description}</small>
-  <small class="text-danger"
-         if.bind="results.length > 0">
-    <span repeat.for="result of results"
-          if.bind="!result.valid">${result.message}</span>
-  </small>
   <div repeat.for="item of model"
        class="border border-light p-2">
     <button type="button"

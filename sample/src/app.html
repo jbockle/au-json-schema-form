@@ -27,12 +27,21 @@
                     value.bind="formString"
                     class="flex-fill border border-secondary no-resize"></textarea>
         </div>
-        <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
-          <label for="model">Model</label>
-          <textarea id="model"
-                    value.to-view="modelString"
-                    class="flex-fill border border-secondary no-resize"
-                    readonly></textarea>
+        <div class="d-flex flex-row flex-fill w-100 h-100">
+          <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
+            <label for="model">Model</label>
+            <textarea id="model"
+                      value.to-view="modelString"
+                      class="flex-fill border border-secondary no-resize"
+                      readonly></textarea>
+          </div>
+          <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
+            <label for="result">Result</label>
+            <textarea id="result"
+                      value.to-view="resultString"
+                      class="flex-fill border border-secondary no-resize"
+                      readonly></textarea>
+          </div>
         </div>
       </div>
       <div class="d-flex flex-column flex-fill h-100 pr-2">
@@ -59,7 +68,8 @@
         </div>
         <hr>
         <label>Form</label>
-        <form class="p-2 border border-warning">
+        <form class="p-2 border border-warning h-100"
+              style="overflow-y:auto;overflow-x: hidden">
           <au-json-schema-form schema.bind="schema"
                                form.bind="form"
                                model.two-way="model"
@@ -67,6 +77,14 @@
                                if.bind="formVisible"
                                view-model.ref="schemaform"></au-json-schema-form>
         </form>
+        <div class="p-2 border border-danger bg-danger text-light"
+             if.bind="schemaform.formController.validationController.errors.length > 0">
+          <ul>
+            <li repeat.for="error of schemaform.formController.validationController.errors">
+              ${error.message}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

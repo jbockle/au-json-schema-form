@@ -4,6 +4,7 @@ declare enum State {
     invalid = "is-invalid"
 }
 export declare class BootstrapValidationRenderer implements ValidationRenderer {
+    private logger;
     private messageSelector;
     private parentSelector;
     /**

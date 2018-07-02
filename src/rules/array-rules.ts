@@ -15,8 +15,14 @@ export class ArrayRules {
     // uniqueItems
   }
 
-  bind(ctrl: SfArray, rule: FluentRuleCustomizer<{}, any>) {
-    rule = rule.ensureObject().satisfies(() => true);
+  bind(ctrl: SfArray) {
+    let rule = ValidationRules
+      .ensureObject()
+      .displayName(ctrl.schema.title)
+      .satisfies(() => true);
+    if (ctrl.form.$required) {
+      rule = rule.required();
+    }
     if (Number.isInteger(ctrl.schema.maxItems)) {
       rule = rule.maxItems(ctrl.schema.maxItems);
     }

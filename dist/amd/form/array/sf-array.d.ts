@@ -4,14 +4,17 @@ import { SchemaFormConfiguration } from "../../services/schema-form-configuratio
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form";
 import { FormService } from "../../services/form-service";
-import { RulesFactory } from "../../rules/rules-factory";
 import { Validator, ValidateResult } from "aurelia-validation";
+import { EventAggregator } from "aurelia-event-aggregator";
+import { FormController } from "../form-controller";
+import { ArrayRules } from "../../rules/array-rules";
 export declare class SfArray {
-    rulesFactory: RulesFactory;
+    arrayRules: ArrayRules;
     configuration: SchemaFormConfiguration;
     formService: FormService;
     private logger;
     validator: Validator;
+    private eventAggregator;
     form: IFormOverride;
     key: string;
     model: any[];
@@ -20,9 +23,11 @@ export declare class SfArray {
     kind: string;
     view: InlineViewStrategy;
     results: ValidateResult[];
-    constructor(rulesFactory: RulesFactory, configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger, validator: Validator);
+    controller: FormController;
+    constructor(arrayRules: ArrayRules, configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger, validator: Validator, eventAggregator: EventAggregator);
     validate(): Promise<void>;
-    bind(): void;
+    bind(bindingContext: object, overrideContext: object): void;
+    getFormController(overrideContext: any): any;
     add(): void;
     remove(index: any): void;
     readonly isDisabled: boolean;

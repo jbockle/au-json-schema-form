@@ -1,6 +1,6 @@
 import { SchemaFormLogger } from "../resources/logger";
 import { IFormOptions } from "../interfaces/form-options";
-import { ValidationController } from "aurelia-validation";
+import { ValidationController, ValidateEvent } from "aurelia-validation";
 import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 
 export class FormController {
@@ -23,6 +23,10 @@ export class FormController {
     this.logger.debug("schemaform-activate", { params, routeConfig, navigationInstruction });
   }
 
+  bind(bindingContext: object, overrideContext: object) {
+    this.logger.info("form-controller binded", { bindingContext, overrideContext });
+  }
+
   attached() {
     this.logger.info("schemaform-attached");
     this.validateOnRender();
@@ -32,14 +36,10 @@ export class FormController {
     this.logger.info("schemaform-detached");
   }
 
-  private validateOnRender() {
+  validateOnRender() {
     if (this.options.validateOnRender) {
       this.logger.info("schemaform-attached:validate");
       this.validationController.validate();
     }
-  }
-
-  bind() {
-    this.logger.info("form-controller binded", arguments);
   }
 }

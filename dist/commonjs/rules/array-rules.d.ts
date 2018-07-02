@@ -1,4 +1,3 @@
-import { FluentRuleCustomizer } from "aurelia-validation";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
 import { SfArray } from "../form/array/sf-array";
 export declare class ArrayRules {
@@ -6,5 +5,5 @@ export declare class ArrayRules {
     constructor(configuration: SchemaFormConfiguration);
     register(): void;
     add(): void;
-    bind(ctrl: SfArray, rule: FluentRuleCustomizer<{}, any>): void;
+    bind(ctrl: SfArray): void;
 }
