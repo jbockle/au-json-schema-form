@@ -4,7 +4,7 @@ import {
 } from "./json-schema-definition";
 
 export interface IFormOverride {
-  [key: string]: IFormOverride[] | IFormOverride | boolean | string | IJsonSchemaDefinition;
+  [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition;
   $noArrayTitle?: boolean;
   $noTitle?: boolean;
   $placeholder?: string;
@@ -16,4 +16,5 @@ export interface IFormOverride {
   $schema?: IJsonSchemaDefinition;
   $required?: boolean;
   $noSeparator?: boolean;
+  $step?: number; // range slider steps
 }

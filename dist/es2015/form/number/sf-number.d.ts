@@ -11,7 +11,11 @@ export declare class SfNumber {
     model: number;
     schema: IJsonSchemaNumberDefinition;
     id: string;
+    view: any;
     kind: string;
     constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger);
     bind(): void;
+    determineViewStrategy(): void;
+    readonly minimum: number;
+    readonly maximum: number;
 }

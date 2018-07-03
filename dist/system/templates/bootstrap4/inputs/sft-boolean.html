@@ -5,7 +5,7 @@
              type="checkbox"
              id.one-time="id"
              checked.bind="model & validateOnChange"
-             readonly.bind="schema.readonly || schema.const">
+             readonly.bind="schema.readOnly || schema.const">
       <label for.one-time="id"
              class="form-check-label"
              if.bind="!form.$noTitle">${schema.title}</label>

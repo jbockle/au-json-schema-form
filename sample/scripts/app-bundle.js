@@ -97,6 +97,12 @@ define('json-schema',["require", "exports"], function (require, exports) {
                     ]
                 }
             },
+            averageDailyCoffeeConsumption: {
+                type: "number",
+                description: "probably not enough",
+                minimum: 0,
+                exclusiveMaximum: 20
+            },
             favoritePet: {
                 type: "string",
                 enum: [
@@ -237,7 +243,8 @@ define('json-schema',["require", "exports"], function (require, exports) {
         },
         required: [
             "firstName",
-            "lastName"
+            "lastName",
+            "averageDailyCoffeeConsumption"
         ]
     };
 });
@@ -269,6 +276,7 @@ define('json-form',["require", "exports"], function (require, exports) {
         },
         favoritePet: {},
         foodAllergies: {},
+        averageDailyCoffeeConsumption: {},
         address: {
             street: {},
             "@div.row": [

@@ -6,7 +6,7 @@
     <select value.bind="model & validateOnChange"
             class="form-control form-control-sm"
             id.one-time="id"
-            disabled.bind="schema.readonly || schema.const">
+            disabled.bind="schema.readOnly || schema.const">
       <option model.bind="null">Select an option..</option>
       <option repeat.for="item of schema.enum"
               model.bind="item">${item}</option>

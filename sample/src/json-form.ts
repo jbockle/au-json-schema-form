@@ -22,6 +22,9 @@ export const form: IFormOverride = {
   },
   favoritePet: {},
   foodAllergies: {},
+  averageDailyCoffeeConsumption: {
+    //$step: 2
+  },
   address: {
     street: {},
     "@div.row": [

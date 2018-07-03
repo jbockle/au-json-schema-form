@@ -16,17 +16,45 @@ export class SfNumber {
 
   id: string = Guid.newGuid();
 
+  view;
+
   kind = "number";
 
   constructor(
     public configuration: SchemaFormConfiguration,
     public rules: RulesFactory,
     private logger: SchemaFormLogger
-  ) { }
+  ) {
+    this.view = configuration.templates.number;
+  }
 
   bind() {
     this.logger.info("sf-number", this.form, this.model, arguments);
     this.schema = this.form.$schema as IJsonSchemaNumberDefinition;
     this.rules.bind(this);
+    this.form.$step = this.form.$step || 1;
+    this.determineViewStrategy();
+  }
+
+  determineViewStrategy() {
+    if (this.minimum !== undefined && this.maximum !== undefined) {
+      this.view = this.configuration.templates.numberRange;
+    }
+  }
+
+  get minimum() {
+    if (Number.isInteger(this.schema.minimum)) {
+      return this.schema.minimum;
+    } else if (Number.isInteger(this.schema.exclusiveMinimum)) {
+      return this.schema.exclusiveMinimum + this.form.$step;
+    }
+  }
+
+  get maximum() {
+    if (Number.isInteger(this.schema.maximum)) {
+      return this.schema.maximum;
+    } else if (Number.isInteger(this.schema.exclusiveMaximum)) {
+      return this.schema.exclusiveMaximum - this.form.$step;
+    }
   }
 }

@@ -27,6 +27,12 @@ export const schema: IJsonSchemaDefinition = {
         ]
       }
     },
+    averageDailyCoffeeConsumption: {
+      type: "number",
+      description: "probably not enough",
+      minimum: 0,
+      exclusiveMaximum: 20
+    },
     favoritePet: {
       type: "string",
       enum: [
@@ -167,6 +173,7 @@ export const schema: IJsonSchemaDefinition = {
   },
   required: [
     "firstName",
-    "lastName"
+    "lastName",
+    "averageDailyCoffeeConsumption"
   ]
 }

@@ -1,13 +1,19 @@
 <template>
+  <require from="../styles.css"></require>
   <div class="form-group">
     <label for.one-time="id"
            class="col-form-label-sm"
-           if.bind="!form.$noTitle">${schema.title}</label>
-    <input type="number"
+           if.bind="!form.$noTitle">${schema.title}:
+      <strong>${model === undefined ? "make a selection" : model}</strong>
+    </label>
+    <input type="range"
            value.bind="model | number & validateOnChange"
-           class="form-control form-control-sm"
+           class="form-control custom-range"
            id.one-time="id"
            placeholder.bind="form.$placeholder || ''"
+           min.bind="minimum"
+           max.bind="maximum"
+           step.bind="form.$step"
            readonly.bind="schema.readOnly || schema.const">
     <small class="form-text text-muted"
            if.bind="schema.description"

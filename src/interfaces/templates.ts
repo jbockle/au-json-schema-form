@@ -1,5 +1,6 @@
 export interface ITemplates {
   number: string;
+  numberRange: string;
   string: string;
   stringRadioEnum: string;
   stringSelectEnum: string;
