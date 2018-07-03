@@ -27,23 +27,34 @@
                     value.bind="formString"
                     class="flex-fill border border-secondary no-resize"></textarea>
         </div>
-        <div class="d-flex flex-row flex-fill w-100 h-100">
-          <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
-            <label for="model">Model</label>
-            <textarea id="model"
-                      value.to-view="modelString"
-                      class="flex-fill border border-secondary no-resize"
-                      readonly></textarea>
-          </div>
-          <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
-            <label for="result">Result</label>
-            <textarea id="result"
-                      value.to-view="resultString"
-                      class="flex-fill border border-secondary no-resize"
-                      readonly></textarea>
-          </div>
+      </div>
+
+      <div class="d-flex flex-column flex-fill w-50 h-100 p-2">
+        <div class="d-flex flex-column flex-fill h-50">
+          <label for="model">Model</label>
+          <textarea id="model"
+                    value.to-view="modelString"
+                    class="flex-fill border border-secondary no-resize"
+                    readonly></textarea>
+        </div>
+        <div class="p-2 border border-danger bg-danger text-light"
+             if.bind="schemaform.formController.validationController.errors.length > 0">
+          <ul>
+            <li repeat.for="error of schemaform.formController.validationController.errors">
+              ${error.message}
+            </li>
+          </ul>
         </div>
       </div>
+      <!-- <div class="d-flex flex-row flex-fill w-100 h-100">
+        <div class="d-flex flex-column flex-fill w-100 h-100 p-2">
+          <label for="result">Result</label>
+          <textarea id="result"
+                    value.to-view="resultString"
+                    class="flex-fill border border-secondary no-resize"
+                    readonly></textarea>
+        </div>
+      </div> -->
       <div class="d-flex flex-column flex-fill h-100 pr-2">
         <div class="border p-2 clearfix align-items-center bg-dark text-light">
           <h4>Options</h4>
@@ -80,14 +91,6 @@
           <button type="submit"
                   class="btn btn-primary float-right">Submit</button>
         </form>
-        <div class="p-2 border border-danger bg-danger text-light"
-             if.bind="schemaform.formController.validationController.errors.length > 0">
-          <ul>
-            <li repeat.for="error of schemaform.formController.validationController.errors">
-              ${error.message}
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </div>

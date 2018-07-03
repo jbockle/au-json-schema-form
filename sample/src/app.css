@@ -1,4 +1,9 @@
 .no-resize {
+  font-size: .8em;
+  overflow: auto;
+  max-width: 100%;
+  max-height: 100%;
+  white-space: pre;
   resize: none;
 }
 
