@@ -25,14 +25,24 @@ export class SfString {
     public rules: RulesFactory,
     private logger: SchemaFormLogger
   ) {
-    this.view = configuration.templates.text;
+    this.view = configuration.templates.string;
   }
 
   bind() {
     this.logger.info("sf-string", { form: this.form, model: this.model }, arguments);
     this.schema = this.form.$schema as IJsonSchemaStringDefinition;
     this.rules.bind(this);
-    if (["date-time", "date", "time"].indexOf(this.schema.format) > -1) {
+    this.determineViewStrategy();
+  }
+
+  private determineViewStrategy() {
+    if (this.form.$altTemplate) {
+      this.view = this.form.$altTemplate;
+    } else if (this.schema.enum && this.schema.enum.length <= 5) {
+      this.view = this.configuration.templates.stringRadioEnum;
+    } else if (this.schema.enum) {
+      this.view = this.configuration.templates.stringSelectEnum;
+    } else if (["date-time", "date", "time"].indexOf(this.schema.format) > -1) {
       if (this.configuration.templates.formats
         && this.configuration.templates.formats[this.schema.format]) {
         this.view = this.configuration.templates.formats[this.schema.format];

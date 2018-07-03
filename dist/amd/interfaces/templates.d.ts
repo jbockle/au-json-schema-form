@@ -1,6 +1,8 @@
 export interface ITemplates {
     number: string;
-    text: string;
+    string: string;
+    stringRadioEnum: string;
+    stringSelectEnum: string;
     object: string;
     array: string;
     arrayStringEnum: string;

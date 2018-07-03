@@ -20,6 +20,7 @@ export const form: IFormOverride = {
   phoneNumbers: {
     $noTitle: true
   },
+  favoritePet: {},
   foodAllergies: {},
   address: {
     street: {},

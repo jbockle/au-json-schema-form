@@ -15,4 +15,5 @@ export declare class SfString {
     view: any;
     constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger);
     bind(): void;
+    private determineViewStrategy;
 }

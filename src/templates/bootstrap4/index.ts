@@ -6,7 +6,9 @@ const rootPath = "aurelia-json-schema-form/templates/bootstrap4/inputs";
 export function GetBootstrapTemplates(): ITemplates {
   return {
     number: `${rootPath}/sft-number.html`,
-    text: `${rootPath}/sft-string.html`,
+    string: `${rootPath}/sft-string.html`,
+    stringRadioEnum: `${rootPath}/sft-string-radio-enum.html`,
+    stringSelectEnum: `${rootPath}/sft-string-select-enum.html`,
     object: `${rootPath}/sft-object.html`,
     array: `${rootPath}/sft-array.html`,
     boolean: `${rootPath}/sft-boolean.html`,

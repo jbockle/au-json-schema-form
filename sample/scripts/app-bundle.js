@@ -97,6 +97,14 @@ define('json-schema',["require", "exports"], function (require, exports) {
                     ]
                 }
             },
+            favoritePet: {
+                type: "string",
+                enum: [
+                    "Dogs",
+                    "Cats",
+                    "Goldfish"
+                ]
+            },
             termsOfService: {
                 type: "boolean",
                 description: "By checking this box, blah blah",
@@ -259,6 +267,7 @@ define('json-form',["require", "exports"], function (require, exports) {
         phoneNumbers: {
             $noTitle: true
         },
+        favoritePet: {},
         foodAllergies: {},
         address: {
             street: {},

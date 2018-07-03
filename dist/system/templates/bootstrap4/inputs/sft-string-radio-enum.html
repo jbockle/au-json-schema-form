@@ -1,0 +1,22 @@
+<template>
+  <div class="form-group">
+    <div class="form-check"
+         repeat.for="item of schema.enum">
+      <input class="form-check-input"
+             name="schema.title"
+             type="radio"
+             id.one-time="id+$index"
+             value.bind="item"
+             checked.bind="model & validateOnChange"
+             disabled.bind="schema.const || schema.readOnly">
+      <label class="form-check-label"
+             for.one-time="id+$index">
+        ${item}
+      </label>
+    </div>
+    <small class="form-text text-muted"
+           if.bind="schema.description"
+           textcontent.bind="schema.description"></small>
+    <div class="invalid-feedback"></div>
+  </div>
+</template>
