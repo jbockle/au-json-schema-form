@@ -1,17 +1,13 @@
 <template>
   <require from="../styles.css"></require>
-  <div class="d-inline">
-    <h5 class="d-inline"
-        if.bind="!form.$noArrayTitle">${schema.title}
-      <small class="text-muted"
-             if.bind="schema.description">${schema.description}</small>
-    </h5>
-  </div>
-  <div class="text-danger">
+  <h6 if.bind="!form.$noArrayTitle">${schema.title}</h6>
+  <small class="text-muted"
+         if.bind="schema.description">${schema.description}</small>
+  <div class="text-danger"
+       if.bind="getErrors().length">
     <ul>
-      <li repeat.for="result of validationController.results"
-          if.bind="result.object === model && !result.valid">
-        <small>${result.message}</small>
+      <li repeat.for="error of getErrors()">
+        <small>${error}</small>
       </li>
     </ul>
   </div>

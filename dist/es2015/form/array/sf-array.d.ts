@@ -35,4 +35,5 @@ export declare class SfArray {
     readonly isDisabled: boolean;
     readonly atCapacity: boolean;
     readonly atMinimumCapacity: boolean;
+    getErrors(): Promise<string[]>;
 }

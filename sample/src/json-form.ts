@@ -21,7 +21,9 @@ export const form: IFormOverride = {
     $noTitle: true
   },
   favoritePet: {},
-  foodAllergies: {},
+  foodAllergies: {
+    $noSeparator: true
+  },
   averageDailyCoffeeConsumption: {
     //$step: 2
   },
@@ -52,7 +54,9 @@ export const form: IFormOverride = {
       {
         "@div.col-2": [
           {
-            zip: {}
+            zip: {
+              $altTemplate: "aurelia-json-schema-form/templates/bootstrap4/inputs/sft-number.html"
+            }
           }
         ]
       }

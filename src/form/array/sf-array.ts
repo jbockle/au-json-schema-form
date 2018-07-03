@@ -114,4 +114,14 @@ export class SfArray {
     return Number.isInteger(this.form.$arraySchema.minItems)
       ? this.model.length === this.form.$arraySchema.minItems : false;
   }
+
+  async getErrors() {
+    const result = await this.validationController.validate({ object: this.model });
+    if (!result.valid) {
+      return result.results
+        .filter((r) => !r.valid)
+        .map((r) => r.message);
+    }
+    return [];
+  }
 }

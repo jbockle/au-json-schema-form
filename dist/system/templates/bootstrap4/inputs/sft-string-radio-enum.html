@@ -1,4 +1,5 @@
 <template>
+  <h6 if.bind="!form.$noTitle">${schema.title}</h6>
   <div class="form-group">
     <div class="form-check"
          repeat.for="item of schema.enum">

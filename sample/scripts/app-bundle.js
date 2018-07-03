@@ -275,7 +275,9 @@ define('json-form',["require", "exports"], function (require, exports) {
             $noTitle: true
         },
         favoritePet: {},
-        foodAllergies: {},
+        foodAllergies: {
+            $noSeparator: true
+        },
         averageDailyCoffeeConsumption: {},
         address: {
             street: {},
@@ -304,7 +306,9 @@ define('json-form',["require", "exports"], function (require, exports) {
                 {
                     "@div.col-2": [
                         {
-                            zip: {}
+                            zip: {
+                                $altTemplate: "aurelia-json-schema-form/templates/bootstrap4/inputs/sft-number.html"
+                            }
                         }
                     ]
                 }

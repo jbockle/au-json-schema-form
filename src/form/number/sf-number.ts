@@ -37,7 +37,9 @@ export class SfNumber {
   }
 
   determineViewStrategy() {
-    if (this.minimum !== undefined && this.maximum !== undefined) {
+    if (this.form.$altTemplate) {
+      this.view = this.form.$altTemplate;
+    } else if (this.minimum !== undefined && this.maximum !== undefined) {
       this.view = this.configuration.templates.numberRange;
     }
   }

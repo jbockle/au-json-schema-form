@@ -1,11 +1,11 @@
 <template>
   <require from="../styles.css"></require>
   <div class="d-inline">
-    <h5 class="d-inline"
+    <h6 class="d-inline"
         if.bind="!form.$noArrayTitle">${schema.title}
       <small class="text-muted"
              if.bind="schema.description">${schema.description}</small>
-    </h5>
+    </h6>
     <button class="btn btn-link btn-sm"
             click.delegate="add()"
             disabled.bind="isDisabled || atCapacity">&plus; Add</button>
