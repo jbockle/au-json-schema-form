@@ -17,6 +17,8 @@ export declare class AuJsonSchemaForm {
     formController: FormController;
     private log;
     constructor(validationControllerFactory: ValidationControllerFactory, configuration: SchemaFormConfiguration, logger: SchemaFormLogger);
+    schemaChanged(): void;
+    formChanged(): void;
     bind(): void;
     buildForm(): void;
     buildViewStrategy(): void;

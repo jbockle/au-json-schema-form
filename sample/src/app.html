@@ -39,7 +39,7 @@
         <div class="p-2 border border-danger bg-danger text-light"
              if.bind="schemaform.formController.validationController.errors.length > 0">
           <ul>
-            <li repeat.for="error of schemaform.formController.validationController.errors">
+            <li repeat.for="error of schemaform.formController.validationController.errors & throttle">
               ${error.message}
             </li>
           </ul>

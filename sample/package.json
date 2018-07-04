@@ -6,11 +6,12 @@
   "dependencies": {
     "aurelia-animator-css": "^1.0.4",
     "aurelia-bootstrapper": "^2.2.0",
-    "aurelia-validation": "^1.2.0",
     "aurelia-event-aggregator": "^1.0.1",
+    "aurelia-validation": "^1.2.0",
     "bluebird": "^3.5.1",
     "bootstrap": "^4.1.1",
     "bootswatch": "^4.1.1",
+    "element-closest": "^2.0.2",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
     "requirejs": "^2.3.5",

@@ -1,5 +1,5 @@
 import { RenderInstruction, ValidateResult, ValidationRenderer } from "aurelia-validation";
-import { getLogger, Logger } from "aurelia-logging";
+import { getLogger, Logger, logLevel } from "aurelia-logging";
 
 enum State {
   valid = "is-valid",
@@ -17,6 +17,7 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
   // tslint:disable-next-line:no-empty
   constructor() {
     this.logger = getLogger("BootstrapValidationRenderer");
+    this.logger.setLevel(logLevel.none);
   }
 
   /**
@@ -24,7 +25,7 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
    * @param instruction list of instructions from validation controller
    */
   render(instruction: RenderInstruction) {
-    this.logger.info("render", instruction);
+    // this.logger.info("render", instruction);
     if (!instruction) {
       return;
     }
@@ -83,7 +84,11 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
    * @param element the element to find parent from
    */
   getParentElement(element: Element) {
-    return Promise.resolve(element.closest(this.parentSelector));
+    const parent = element.parentElement;
+    if (parent.classList.contains("form-group")) {
+      return Promise.resolve(parent);
+    }
+    return this.getParentElement(parent);
   }
 
   /**

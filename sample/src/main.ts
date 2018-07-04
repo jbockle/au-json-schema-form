@@ -7,6 +7,14 @@ import { PLATFORM } from "aurelia-pal";
 import environment from "./environment";
 import "bootstrap";
 import $ from "jquery";
+import * as bluebird from "bluebird";
+
+(<any>Promise).config({
+  longStackTraces: false,  // <----- I added this.
+  warnings: {
+    wForgottenReturn: false
+  }
+});
 
 export function configure(aurelia: Aurelia) {
   aurelia.use
@@ -16,7 +24,7 @@ export function configure(aurelia: Aurelia) {
   LogManager.addAppender(new ConsoleAppender());
   aurelia.use
     .plugin(PLATFORM.moduleName("aurelia-json-schema-form"), (options: PluginOptions) => {
-      options.logLevel = logLevel.debug;
+      options.logLevel = logLevel.none;
     });
 
   // Uncomment the line below to enable animation.

@@ -1,6 +1,7 @@
 <template>
   <require from="../styles.css"></require>
-  <h6 if.bind="!form.$noArrayTitle">${schema.title}</h6>
+  <h6 if.bind="!form.$noArrayTitle"
+      textcontent.to-view="schema.title"></h6>
   <small class="text-muted"
          if.bind="schema.description">${schema.description}</small>
   <div class="text-danger"

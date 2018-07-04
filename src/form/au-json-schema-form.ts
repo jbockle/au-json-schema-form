@@ -40,6 +40,16 @@ export class AuJsonSchemaForm {
     this.validationController.addRenderer(configuration.validationRenderer);
   }
 
+  schemaChanged() {
+    this.log("schemaChanged");
+    this.buildForm();
+  }
+
+  formChanged() {
+    this.log("formChanged");
+    this.buildForm();
+  }
+
   bind() {
     this.log("bind", arguments);
     if (this.schema.type !== "object" && this.schema.type !== "array") {
