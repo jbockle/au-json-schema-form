@@ -1,27 +1,31 @@
-System.register([], function (exports_1, context_1) {
+System.register(["aurelia-framework"], function (exports_1, context_1) {
     "use strict";
-    var rootPath;
+    var aurelia_framework_1;
     var __moduleName = context_1 && context_1.id;
+    // tslint:disable:max-line-length
     function GetBootstrapTemplates() {
         return {
-            number: rootPath + "/sft-number.html",
-            numberRange: rootPath + "/sft-number-range.html",
-            string: rootPath + "/sft-string.html",
-            stringRadioEnum: rootPath + "/sft-string-radio-enum.html",
-            stringSelectEnum: rootPath + "/sft-string-select-enum.html",
-            object: rootPath + "/sft-object.html",
-            array: rootPath + "/sft-array.html",
-            boolean: rootPath + "/sft-boolean.html",
-            arrayStringEnum: rootPath + "/sft-array-string-enum.html"
+            number: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-number.html"),
+            numberRange: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-number-range.html"),
+            string: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-string.html"),
+            stringRadioEnum: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-string-radio-enum.html"),
+            stringSelectEnum: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-string-select-enum.html"),
+            object: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-object.html"),
+            array: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-array.html"),
+            boolean: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-boolean.html"),
+            arrayStringEnum: aurelia_framework_1.PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-array-string-enum.html")
         };
     }
     exports_1("GetBootstrapTemplates", GetBootstrapTemplates);
     return {
-        setters: [],
+        setters: [
+            function (aurelia_framework_1_1) {
+                aurelia_framework_1 = aurelia_framework_1_1;
+            }
+        ],
         execute: function () {
-            rootPath = "aurelia-json-schema-form/templates/bootstrap4/inputs";
         }
     };
 });
 
-//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlbXBsYXRlcy9ib290c3RyYXA0L2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7SUFLQTtRQUNFLE9BQU87WUFDTCxNQUFNLEVBQUssUUFBUSxxQkFBa0I7WUFDckMsV0FBVyxFQUFLLFFBQVEsMkJBQXdCO1lBQ2hELE1BQU0sRUFBSyxRQUFRLHFCQUFrQjtZQUNyQyxlQUFlLEVBQUssUUFBUSxnQ0FBNkI7WUFDekQsZ0JBQWdCLEVBQUssUUFBUSxpQ0FBOEI7WUFDM0QsTUFBTSxFQUFLLFFBQVEscUJBQWtCO1lBQ3JDLEtBQUssRUFBSyxRQUFRLG9CQUFpQjtZQUNuQyxPQUFPLEVBQUssUUFBUSxzQkFBbUI7WUFDdkMsZUFBZSxFQUFLLFFBQVEsZ0NBQTZCO1NBQzFELENBQUM7SUFDSixDQUFDOzs7OztZQWRLLFFBQVEsR0FBRyxzREFBc0QsQ0FBQztRQWV4RSxDQUFDIiwiZmlsZSI6InRlbXBsYXRlcy9ib290c3RyYXA0L2luZGV4LmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSVRlbXBsYXRlcyB9IGZyb20gXCIuLi8uLi9pbnRlcmZhY2VzL3RlbXBsYXRlc1wiO1xuaW1wb3J0IHsgRnJhbWV3b3JrQ29uZmlndXJhdGlvbiB9IGZyb20gXCJhdXJlbGlhLWZyYW1ld29ya1wiO1xuXG5jb25zdCByb290UGF0aCA9IFwiYXVyZWxpYS1qc29uLXNjaGVtYS1mb3JtL3RlbXBsYXRlcy9ib290c3RyYXA0L2lucHV0c1wiO1xuXG5leHBvcnQgZnVuY3Rpb24gR2V0Qm9vdHN0cmFwVGVtcGxhdGVzKCk6IElUZW1wbGF0ZXMge1xuICByZXR1cm4ge1xuICAgIG51bWJlcjogYCR7cm9vdFBhdGh9L3NmdC1udW1iZXIuaHRtbGAsXG4gICAgbnVtYmVyUmFuZ2U6IGAke3Jvb3RQYXRofS9zZnQtbnVtYmVyLXJhbmdlLmh0bWxgLFxuICAgIHN0cmluZzogYCR7cm9vdFBhdGh9L3NmdC1zdHJpbmcuaHRtbGAsXG4gICAgc3RyaW5nUmFkaW9FbnVtOiBgJHtyb290UGF0aH0vc2Z0LXN0cmluZy1yYWRpby1lbnVtLmh0bWxgLFxuICAgIHN0cmluZ1NlbGVjdEVudW06IGAke3Jvb3RQYXRofS9zZnQtc3RyaW5nLXNlbGVjdC1lbnVtLmh0bWxgLFxuICAgIG9iamVjdDogYCR7cm9vdFBhdGh9L3NmdC1vYmplY3QuaHRtbGAsXG4gICAgYXJyYXk6IGAke3Jvb3RQYXRofS9zZnQtYXJyYXkuaHRtbGAsXG4gICAgYm9vbGVhbjogYCR7cm9vdFBhdGh9L3NmdC1ib29sZWFuLmh0bWxgLFxuICAgIGFycmF5U3RyaW5nRW51bTogYCR7cm9vdFBhdGh9L3NmdC1hcnJheS1zdHJpbmctZW51bS5odG1sYFxuICB9O1xufVxuIl0sInNvdXJjZVJvb3QiOiJzcmMifQ==
+//# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInRlbXBsYXRlcy9ib290c3RyYXA0L2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7SUFFQSxpQ0FBaUM7SUFDakM7UUFDRSxPQUFPO1lBQ0wsTUFBTSxFQUFFLDRCQUFRLENBQUMsVUFBVSxDQUFDLHNFQUFzRSxDQUFDO1lBQ25HLFdBQVcsRUFBRSw0QkFBUSxDQUFDLFVBQVUsQ0FBQyw0RUFBNEUsQ0FBQztZQUM5RyxNQUFNLEVBQUUsNEJBQVEsQ0FBQyxVQUFVLENBQUMsc0VBQXNFLENBQUM7WUFDbkcsZUFBZSxFQUFFLDRCQUFRLENBQUMsVUFBVSxDQUFDLGlGQUFpRixDQUFDO1lBQ3ZILGdCQUFnQixFQUFFLDRCQUFRLENBQUMsVUFBVSxDQUFDLGtGQUFrRixDQUFDO1lBQ3pILE1BQU0sRUFBRSw0QkFBUSxDQUFDLFVBQVUsQ0FBQyxzRUFBc0UsQ0FBQztZQUNuRyxLQUFLLEVBQUUsNEJBQVEsQ0FBQyxVQUFVLENBQUMscUVBQXFFLENBQUM7WUFDakcsT0FBTyxFQUFFLDRCQUFRLENBQUMsVUFBVSxDQUFDLHVFQUF1RSxDQUFDO1lBQ3JHLGVBQWUsRUFBRSw0QkFBUSxDQUFDLFVBQVUsQ0FBQyxpRkFBaUYsQ0FBQztTQUN4SCxDQUFDO0lBQ0osQ0FBQzs7Ozs7Ozs7O1FBQ0QsQ0FBQyIsImZpbGUiOiJ0ZW1wbGF0ZXMvYm9vdHN0cmFwNC9pbmRleC5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IElUZW1wbGF0ZXMgfSBmcm9tIFwiLi4vLi4vaW50ZXJmYWNlcy90ZW1wbGF0ZXNcIjtcbmltcG9ydCB7IFBMQVRGT1JNIH0gZnJvbSBcImF1cmVsaWEtZnJhbWV3b3JrXCI7XG4vLyB0c2xpbnQ6ZGlzYWJsZTptYXgtbGluZS1sZW5ndGhcbmV4cG9ydCBmdW5jdGlvbiBHZXRCb290c3RyYXBUZW1wbGF0ZXMoKTogSVRlbXBsYXRlcyB7XG4gIHJldHVybiB7XG4gICAgbnVtYmVyOiBQTEFURk9STS5tb2R1bGVOYW1lKFwiYXVyZWxpYS1qc29uLXNjaGVtYS1mb3JtL3RlbXBsYXRlcy9ib290c3RyYXA0L2lucHV0cy9zZnQtbnVtYmVyLmh0bWxcIiksXG4gICAgbnVtYmVyUmFuZ2U6IFBMQVRGT1JNLm1vZHVsZU5hbWUoXCJhdXJlbGlhLWpzb24tc2NoZW1hLWZvcm0vdGVtcGxhdGVzL2Jvb3RzdHJhcDQvaW5wdXRzL3NmdC1udW1iZXItcmFuZ2UuaHRtbFwiKSxcbiAgICBzdHJpbmc6IFBMQVRGT1JNLm1vZHVsZU5hbWUoXCJhdXJlbGlhLWpzb24tc2NoZW1hLWZvcm0vdGVtcGxhdGVzL2Jvb3RzdHJhcDQvaW5wdXRzL3NmdC1zdHJpbmcuaHRtbFwiKSxcbiAgICBzdHJpbmdSYWRpb0VudW06IFBMQVRGT1JNLm1vZHVsZU5hbWUoXCJhdXJlbGlhLWpzb24tc2NoZW1hLWZvcm0vdGVtcGxhdGVzL2Jvb3RzdHJhcDQvaW5wdXRzL3NmdC1zdHJpbmctcmFkaW8tZW51bS5odG1sXCIpLFxuICAgIHN0cmluZ1NlbGVjdEVudW06IFBMQVRGT1JNLm1vZHVsZU5hbWUoXCJhdXJlbGlhLWpzb24tc2NoZW1hLWZvcm0vdGVtcGxhdGVzL2Jvb3RzdHJhcDQvaW5wdXRzL3NmdC1zdHJpbmctc2VsZWN0LWVudW0uaHRtbFwiKSxcbiAgICBvYmplY3Q6IFBMQVRGT1JNLm1vZHVsZU5hbWUoXCJhdXJlbGlhLWpzb24tc2NoZW1hLWZvcm0vdGVtcGxhdGVzL2Jvb3RzdHJhcDQvaW5wdXRzL3NmdC1vYmplY3QuaHRtbFwiKSxcbiAgICBhcnJheTogUExBVEZPUk0ubW9kdWxlTmFtZShcImF1cmVsaWEtanNvbi1zY2hlbWEtZm9ybS90ZW1wbGF0ZXMvYm9vdHN0cmFwNC9pbnB1dHMvc2Z0LWFycmF5Lmh0bWxcIiksXG4gICAgYm9vbGVhbjogUExBVEZPUk0ubW9kdWxlTmFtZShcImF1cmVsaWEtanNvbi1zY2hlbWEtZm9ybS90ZW1wbGF0ZXMvYm9vdHN0cmFwNC9pbnB1dHMvc2Z0LWJvb2xlYW4uaHRtbFwiKSxcbiAgICBhcnJheVN0cmluZ0VudW06IFBMQVRGT1JNLm1vZHVsZU5hbWUoXCJhdXJlbGlhLWpzb24tc2NoZW1hLWZvcm0vdGVtcGxhdGVzL2Jvb3RzdHJhcDQvaW5wdXRzL3NmdC1hcnJheS1zdHJpbmctZW51bS5odG1sXCIpXG4gIH07XG59XG4iXSwic291cmNlUm9vdCI6InNyYyJ9

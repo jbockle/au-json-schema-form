@@ -1,18 +1,16 @@
 import { ITemplates } from "../../interfaces/templates";
-import { FrameworkConfiguration } from "aurelia-framework";
-
-const rootPath = "aurelia-json-schema-form/templates/bootstrap4/inputs";
-
+import { PLATFORM } from "aurelia-framework";
+// tslint:disable:max-line-length
 export function GetBootstrapTemplates(): ITemplates {
   return {
-    number: `${rootPath}/sft-number.html`,
-    numberRange: `${rootPath}/sft-number-range.html`,
-    string: `${rootPath}/sft-string.html`,
-    stringRadioEnum: `${rootPath}/sft-string-radio-enum.html`,
-    stringSelectEnum: `${rootPath}/sft-string-select-enum.html`,
-    object: `${rootPath}/sft-object.html`,
-    array: `${rootPath}/sft-array.html`,
-    boolean: `${rootPath}/sft-boolean.html`,
-    arrayStringEnum: `${rootPath}/sft-array-string-enum.html`
+    number: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-number.html"),
+    numberRange: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-number-range.html"),
+    string: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-string.html"),
+    stringRadioEnum: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-string-radio-enum.html"),
+    stringSelectEnum: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-string-select-enum.html"),
+    object: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-object.html"),
+    array: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-array.html"),
+    boolean: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-boolean.html"),
+    arrayStringEnum: PLATFORM.moduleName("aurelia-json-schema-form/templates/bootstrap4/inputs/sft-array-string-enum.html")
   };
 }

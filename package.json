@@ -1,7 +1,7 @@
 {
   "name": "aurelia-json-schema-form",
   "description": "Create dynamic forms using json schema",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "keywords": [
     "json schema",
     "json-schema",
@@ -14,7 +14,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aurelia-event-aggregator": "^1.0.1",
     "aurelia-framework": "1.2.0",
     "aurelia-validation": "^1.2.0",
     "bootstrap": "^4.1.1",
@@ -25,8 +24,7 @@
     "aurelia-validation": "^1.2.0",
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.3",
-    "aurelia-event-aggregator": "^1.0.1"
+    "popper.js": "^1.14.3"
   },
   "devDependencies": {
     "aurelia-cli": "^0.33.1",
