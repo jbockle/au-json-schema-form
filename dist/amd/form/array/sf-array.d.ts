@@ -4,7 +4,7 @@ import { SchemaFormConfiguration } from "../../services/schema-form-configuratio
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
-import { Validator, ValidateResult, ValidationController } from "aurelia-validation";
+import { Validator, ValidationController } from "aurelia-validation";
 import { ArrayRules } from "../../rules/array-rules";
 export declare class SfArray {
     arrayRules: ArrayRules;
@@ -20,20 +20,21 @@ export declare class SfArray {
     kind: string;
     view: InlineViewStrategy;
     viewStrategy: string;
-    results: ValidateResult[];
+    validationErrors: string[];
     validationController: ValidationController;
     constructor(arrayRules: ArrayRules, configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger, validator: Validator);
     created(owningView: View, myView: View): void;
     bind(): void;
+    attached(): void;
     determineViewStrategy(): void;
     private createView;
     private bindRules;
     getFormController(overrideContext: any): any;
-    validate(): void;
     add(): void;
     remove(index: any): void;
     readonly isDisabled: boolean;
     readonly atCapacity: boolean;
     readonly atMinimumCapacity: boolean;
-    getErrors(): Promise<string[]>;
+    validate(): Promise<import("../../../node_modules/aurelia-validation/dist/commonjs/controller-validate-result").ControllerValidateResult>;
+    getErrors(): Promise<any[]>;
 }

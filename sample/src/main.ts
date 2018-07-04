@@ -16,7 +16,7 @@ export function configure(aurelia: Aurelia) {
   LogManager.addAppender(new ConsoleAppender());
   aurelia.use
     .plugin(PLATFORM.moduleName("aurelia-json-schema-form"), (options: PluginOptions) => {
-      options.logLevel = logLevel.none;
+      options.logLevel = logLevel.debug;
     });
 
   // Uncomment the line below to enable animation.

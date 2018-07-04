@@ -32,7 +32,7 @@ export class SfArray {
 
   viewStrategy: string;
 
-  results: ValidateResult[];
+  validationErrors: string[];
   validationController: ValidationController;
 
   constructor(
@@ -54,6 +54,10 @@ export class SfArray {
     this.bindRules();
     this.createView();
     this.determineViewStrategy();
+  }
+
+  attached() {
+    this.getErrors();
   }
 
   determineViewStrategy() {
@@ -83,22 +87,18 @@ export class SfArray {
     return overrideContext.__parentOverrideContext.bindingContext;
   }
 
-  validate() {
-    this.validationController.validate({ object: this.model });
-  }
-
   add() {
     this.model.push(this.formService.getArrayItemDefault(this.schema, null));
     this.validationController.validate({ object: this.model });
     if (this.configuration.validationRenderer) {
       this.logger.warn("validating");
-      this.validationController.validate();
+      this.validate();
     }
   }
 
   remove(index) {
     this.model.splice(index, 1);
-    this.validationController.validate({ object: this.model });
+    this.validate();
   }
 
   get isDisabled(): boolean {
@@ -115,10 +115,16 @@ export class SfArray {
       ? this.model.length === this.form.$arraySchema.minItems : false;
   }
 
-  async getErrors() {
+  async validate() {
     const result = await this.validationController.validate({ object: this.model });
+    this.logger.info("validated array", result);
+    return result;
+  }
+
+  async getErrors() {
+    const result = await this.validate();
     if (!result.valid) {
-      return result.results
+      this.validationErrors = result.results
         .filter((r) => !r.valid)
         .map((r) => r.message);
     }

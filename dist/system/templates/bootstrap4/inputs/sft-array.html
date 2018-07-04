@@ -12,13 +12,9 @@
   </div>
   <em class="text-muted small d-block"
       if.bind="!model || model.length === 0">nothing here, click add above</em>
-  <div class="text-danger">
-    <ul>
-      <li repeat.for="result of validationController.results"
-          if.bind="result.object === model && !result.valid">
-        <small>${result.message}</small>
-      </li>
-    </ul>
+  <div class="text-danger"
+       if.bind="validationErrors.length > 0">
+    <small repeat.for="error of validationErrors">${error}</small>
   </div>
   <div repeat.for="item of model & validateOnChangeOrBlur"
        class="border border-light p-2">
