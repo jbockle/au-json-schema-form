@@ -52,13 +52,13 @@ export class AuJsonSchemaForm {
 
   bind() {
     this.log("bind", arguments);
-    if (this.schema.type !== "object" && this.schema.type !== "array") {
-      throw new Error("The schema must start with an object or array");
-    }
     this.buildForm();
   }
 
   buildForm() {
+    if (this.schema.type !== "object" && this.schema.type !== "array") {
+      throw new Error("The schema must start with an object or array");
+    }
     if (this.formView) {
       this.formView = null;
     }

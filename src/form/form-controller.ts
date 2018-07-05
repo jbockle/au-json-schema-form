@@ -6,7 +6,7 @@ import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
 export class FormController {
 
   public schema: IJsonSchemaDefinition;
-  public model;
+  public model: any;
 
   private log: (message: string, ...rest: any[]) => void;
 

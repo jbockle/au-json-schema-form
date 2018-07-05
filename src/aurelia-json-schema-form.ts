@@ -1,7 +1,4 @@
-
-import { numberPolyfill } from "./resources/number";
-numberPolyfill();
-
+import "./resources/number";
 import { BootstrapValidationRenderer } from "./renderers/bootstrap-validation-renderer";
 import { SchemaFormConfiguration } from "./services/schema-form-configuration";
 import { FrameworkConfiguration, PLATFORM, LogManager } from "aurelia-framework";
