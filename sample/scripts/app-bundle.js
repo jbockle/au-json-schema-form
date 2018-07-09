@@ -58,7 +58,7 @@ define('main',["require", "exports", "aurelia-logging-console", "aurelia-framewo
         aurelia_framework_1.LogManager.addAppender(new aurelia_logging_console_1.ConsoleAppender());
         aurelia.use
             .plugin(aurelia_pal_1.PLATFORM.moduleName("aurelia-json-schema-form"), function (options) {
-            options.logLevel = aurelia_logging_1.logLevel.none;
+            options.logLevel = aurelia_logging_1.logLevel.debug;
         });
         if (environment_1.default.debug) {
             aurelia.use.developmentLogging();
@@ -410,7 +410,7 @@ define('app',["require", "exports", "aurelia-templating-resources", "aurelia-fra
             this.refreshModel();
             this.schemaform.validationController.subscribe(function (event) {
                 _this.refreshModel();
-                _this.resultString = JSON.stringify(_this.schemaform.formController.validationController.errors, null, "\t");
+                _this.resultString = JSON.stringify(_this.schemaform.formInstance.formController.validationController.errors, null, "\t");
             });
         };
         App.prototype.formStringChanged = function (newValue, oldValue) {
@@ -447,7 +447,7 @@ define('app',["require", "exports", "aurelia-templating-resources", "aurelia-fra
                 var results;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4, this.schemaform.formController.validationController.validate()];
+                        case 0: return [4, this.schemaform.formInstance.formController.validationController.validate()];
                         case 1:
                             results = _a.sent();
                             if (results.valid) {

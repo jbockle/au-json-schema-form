@@ -18,18 +18,18 @@ export class ArrayRules {
   bind(ctrl: SfArray) {
     let rule = ValidationRules
       .ensureObject()
-      .displayName(ctrl.schema.title)
+      .displayName(ctrl.form.$schema.title)
       .satisfies(() => true);
     if (ctrl.form.$required) {
       rule = rule.required();
     }
-    if (Number.isInteger(ctrl.schema.maxItems)) {
-      rule = rule.maxItems(ctrl.schema.maxItems);
+    if (Number.isInteger(ctrl.form.$schema.maxItems)) {
+      rule = rule.maxItems(ctrl.form.$schema.maxItems);
     }
-    if (Number.isInteger(ctrl.schema.minItems)) {
-      rule = rule.minItems(ctrl.schema.minItems);
+    if (Number.isInteger(ctrl.form.$schema.minItems)) {
+      rule = rule.minItems(ctrl.form.$schema.minItems);
     }
-    if (ctrl.schema.uniqueItems) {
+    if (ctrl.form.$schema.uniqueItems) {
       // TODO: add unique items rule
     }
     rule.on(ctrl.model);

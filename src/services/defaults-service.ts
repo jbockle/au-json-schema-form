@@ -16,7 +16,7 @@ export class DefaultsService {
       case "array":
         model = await this.getArrayDefaultAsync(model, schema.items);
       case "object":
-        model = await this.getObjectDefaultAsync(model, (schema.items as IJsonSchemaObjectDefinition));
+        model = await this.getObjectDefaultAsync(model, (schema as IJsonSchemaObjectDefinition));
       default:
         model = await this.getPrimitiveDefaultAsync(model, schema);
     }

@@ -1,16 +1,17 @@
-import { IJsonSchemaDefinition, IJsonSchemaArrayDefinition } from "./json-schema-definition";
+import { IJsonSchemaDefinition } from "./json-schema-definition";
 export interface IFormOverride {
     [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition;
-    $noArrayTitle?: boolean;
     $noTitle?: boolean;
     $placeholder?: string;
     $htmlClass?: string;
     $altTemplate?: string;
     $minDate?: string;
     $maxDate?: string;
-    $arraySchema?: IJsonSchemaArrayDefinition;
     $schema?: IJsonSchemaDefinition;
     $required?: boolean;
     $noSeparator?: boolean;
     $step?: number;
+    $parentForm?: IFormOverride;
 }
+export declare function isOverride(key: string): boolean;
+export declare function setFormOverrides(form: IFormOverride, parentSchema: IJsonSchemaDefinition, formKey: string, schema: IJsonSchemaDefinition): void;

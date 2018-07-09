@@ -40,7 +40,7 @@ export class App {
     this.refreshModel();
     this.schemaform.validationController.subscribe((event: ValidateEvent) => {
       this.refreshModel();
-      this.resultString = JSON.stringify(this.schemaform.formController.validationController.errors, null, "\t");
+      this.resultString = JSON.stringify(this.schemaform.formInstance.formController.validationController.errors, null, "\t");
     });
   }
 
@@ -71,7 +71,7 @@ export class App {
   }
 
   async submit() {
-    const results = await this.schemaform.formController.validationController.validate();
+    const results = await this.schemaform.formInstance.formController.validationController.validate();
     if (results.valid) {
       window.alert("everything looks good!");
     } else {

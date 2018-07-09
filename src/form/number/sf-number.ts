@@ -12,8 +12,6 @@ export class SfNumber {
   @bindable form: IFormOverride;
   @bindable model: number;
 
-  schema: IJsonSchemaNumberDefinition;
-
   id: string = Guid.newGuid();
 
   view;
@@ -30,7 +28,7 @@ export class SfNumber {
 
   bind() {
     this.logger.info("sf-number", this.form, this.model, arguments);
-    this.schema = this.form.$schema as IJsonSchemaNumberDefinition;
+    this.form.$schema = this.form.$schema as IJsonSchemaNumberDefinition;
     this.rules.bind(this);
     this.form.$step = this.form.$step || 1;
     this.determineViewStrategy();
@@ -45,18 +43,18 @@ export class SfNumber {
   }
 
   get minimum() {
-    if (Number.isInteger(this.schema.minimum)) {
-      return this.schema.minimum;
-    } else if (Number.isInteger(this.schema.exclusiveMinimum)) {
-      return this.schema.exclusiveMinimum + this.form.$step;
+    if (Number.isInteger(this.form.$schema.minimum)) {
+      return this.form.$schema.minimum;
+    } else if (Number.isInteger(this.form.$schema.exclusiveMinimum)) {
+      return this.form.$schema.exclusiveMinimum + this.form.$step;
     }
   }
 
   get maximum() {
-    if (Number.isInteger(this.schema.maximum)) {
-      return this.schema.maximum;
-    } else if (Number.isInteger(this.schema.exclusiveMaximum)) {
-      return this.schema.exclusiveMaximum - this.form.$step;
+    if (Number.isInteger(this.form.$schema.maximum)) {
+      return this.form.$schema.maximum;
+    } else if (Number.isInteger(this.form.$schema.exclusiveMaximum)) {
+      return this.form.$schema.exclusiveMaximum - this.form.$step;
     }
   }
 }

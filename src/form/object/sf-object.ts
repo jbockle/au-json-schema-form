@@ -11,7 +11,7 @@ import { FormService } from "../../services/form-service";
 export class SfObject {
   @bindable form: IFormOverride;
   @bindable model: object;
-  @bindable schema: IJsonSchemaObjectDefinition;
+  @bindable formInstance: string;
 
   id: string = Guid.newGuid();
 
@@ -25,9 +25,11 @@ export class SfObject {
     private logger: SchemaFormLogger,
   ) { }
 
-  bind() {
-    this.logger.info("sf-object", { form: this.form, model: this.model, schema: this.schema }, arguments);
+  async bind() {
+    this.logger.info("sf-object", { form: this.form, model: this.model });
+    const template = await this.formService
+      .getFormTemplateAsync(this.form, this.form.$schema, this.model, this.formInstance);
     this.view = new InlineViewStrategy(
-      `<template>${this.formService.buildObjectForm(this.schema, this.form, this.model)}</template>`);
+      `<template>${template.content}</template>`);
   }
 }

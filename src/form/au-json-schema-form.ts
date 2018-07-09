@@ -6,11 +6,17 @@ import { SchemaFormLogger } from "../resources/logger";
 import { FormController } from "./form-controller";
 import { IFormOverride } from "../interfaces/form-override";
 import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
+import { FormService } from "../services/form-service";
+import { Guid } from "../resources/guid";
+import { IFormInstance } from "../interfaces/form-instance";
+import { FormInstances } from "../services/form-instances";
 
 @inject(
   ValidationControllerFactory,
   SchemaFormConfiguration,
-  SchemaFormLogger
+  SchemaFormLogger,
+  FormService,
+  FormInstances
 )
 @customElement("au-json-schema-form")
 export class AuJsonSchemaForm {
@@ -26,14 +32,18 @@ export class AuJsonSchemaForm {
 
   formView: InlineViewStrategy;
 
-  formController: FormController;
+  formInstance: IFormInstance;
+
+  id: string = Guid.newGuid();
 
   private log: (message: string, ...rest: any[]) => void;
 
   constructor(
     validationControllerFactory: ValidationControllerFactory,
     configuration: SchemaFormConfiguration,
-    private logger: SchemaFormLogger
+    private logger: SchemaFormLogger,
+    private formService: FormService,
+    private formInstances: FormInstances
   ) {
     this.log = logger.info;
     this.validationController = validationControllerFactory.createForCurrentScope();
@@ -57,7 +67,8 @@ export class AuJsonSchemaForm {
 
   buildForm() {
     if (this.schema.type !== "object" && this.schema.type !== "array") {
-      throw new Error("The schema must start with an object or array");
+      this.logger.error("The schema must start with an object or an array");
+      return;
     }
     if (this.formView) {
       this.formView = null;
@@ -68,9 +79,17 @@ export class AuJsonSchemaForm {
 
   buildViewStrategy() {
     this.log("buildViewStrategy");
+    this.form.$schema = this.schema;
     this.formView = new InlineViewStrategy(
-      `<template><sf-${this.schema.type} form.bind="form" model.two-way="model" schema.bind="schema" /></template>`);
-    this.formController = new FormController(
-      this.logger, this.options, this.validationController);
+      `<template>${this.formService.getTemplate("model", "form", this.schema.type, this.id)}</template>`);
+    this.formInstance = {
+      schema: this.schema,
+      form: this.form,
+      formController: new FormController(this.logger, this.options, this.validationController),
+      validationController: this.validationController,
+      formOptions: this.options
+    };
+    this.logger.warn("buildViewStrategy completed", this.formInstance);
+    this.formInstances.set(this.id, this.formInstance);
   }
 }

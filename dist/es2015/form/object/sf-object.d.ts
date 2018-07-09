@@ -1,5 +1,4 @@
 import { InlineViewStrategy } from "aurelia-framework";
-import { IJsonSchemaObjectDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
@@ -10,10 +9,10 @@ export declare class SfObject {
     private logger;
     form: IFormOverride;
     model: object;
-    schema: IJsonSchemaObjectDefinition;
+    formInstance: string;
     id: string;
     kind: string;
     view: InlineViewStrategy;
     constructor(configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger);
-    bind(): void;
+    bind(): Promise<void>;
 }

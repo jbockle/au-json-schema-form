@@ -2,10 +2,11 @@ import { SchemaFormLogger } from "../resources/logger";
 import { IFormOptions } from "../interfaces/form-options";
 import { ValidationController, ValidateEvent } from "aurelia-validation";
 import { IJsonSchemaDefinition } from "../interfaces/json-schema-definition";
+import { IFormOverride } from "../interfaces/form-override";
 
 export class FormController {
 
-  public schema: IJsonSchemaDefinition;
+  public form: IFormOverride;
   public model: any;
 
   private log: (message: string, ...rest: any[]) => void;

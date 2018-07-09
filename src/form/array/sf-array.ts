@@ -6,8 +6,8 @@ import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
 import { Validator, ValidateResult, ValidationController } from "aurelia-validation";
-import { EventAggregator } from "aurelia-event-aggregator";
 import { ArrayRules } from "../../rules/array-rules";
+import { DefaultsService } from "../../services/defaults-service";
 
 @inject(
   ArrayRules,
@@ -15,14 +15,13 @@ import { ArrayRules } from "../../rules/array-rules";
   FormService,
   SchemaFormLogger,
   Validator,
-  EventAggregator
+  DefaultsService
 )
 @customElement("sf-array")
 export class SfArray {
   @bindable form: IFormOverride;
-  @bindable key: string;
   @bindable model: any[];
-  @bindable schema: IJsonSchemaArrayDefinition;
+  @bindable formInstance: string;
 
   id: string = Guid.newGuid();
 
@@ -40,7 +39,8 @@ export class SfArray {
     public configuration: SchemaFormConfiguration,
     public formService: FormService,
     private logger: SchemaFormLogger,
-    public validator: Validator
+    public validator: Validator,
+    public defaultsService: DefaultsService
   ) {
 
   }
@@ -49,10 +49,10 @@ export class SfArray {
     this.validationController = myView.container.get(Optional.of(ValidationController));
   }
 
-  bind() {
-    this.logger.info("sf-array", { form: this.form, model: this.model, schema: this.schema.items }, arguments);
+  async bind() {
+    this.logger.info("sf-array", { form: this.form, model: this.model });
     this.bindRules();
-    this.createView();
+    await this.createView();
     this.determineViewStrategy();
   }
 
@@ -64,7 +64,7 @@ export class SfArray {
     let strategy;
     if (this.form.$altTemplate) {
       strategy = this.form.$altTemplate;
-    } else if (this.schema.items.type === "string" && this.schema.items.enum) {
+    } else if (this.form.$schema.items.type === "string" && this.form.$schema.items.enum) {
       strategy = this.configuration.templates.arrayStringEnum;
     } else {
       strategy = this.configuration.templates.array;
@@ -72,10 +72,10 @@ export class SfArray {
     this.viewStrategy = strategy;
   }
 
-  private createView() {
-    let template = this.formService.buildArrayForm(this.schema, this.form, this.key, this.model);
-    template = `<template>${template}</template>`;
-    this.view = new InlineViewStrategy(template);
+  async createView() {
+    const template = await this.formService
+      .getFormTemplateAsync(this.form, this.form.$schema, this.model, this.formInstance);
+    this.view = new InlineViewStrategy(`<template>${template.content}</template>`);
   }
 
   private bindRules() {
@@ -88,7 +88,7 @@ export class SfArray {
   }
 
   add() {
-    this.model.push(this.formService.getArrayItemDefault(this.schema, null));
+    this.model.push(this.defaultsService.getSchemaDefaultAsync(this.form.$schema.items, null));
     this.validationController.validate({ object: this.model });
     if (this.configuration.validationRenderer) {
       this.logger.warn("validating");
@@ -102,17 +102,17 @@ export class SfArray {
   }
 
   get isDisabled(): boolean {
-    return this.form.$arraySchema.readOnly || !!this.form.$arraySchema.const;
+    return this.form.$schema.readOnly || !!this.form.$schema.const;
   }
 
   get atCapacity(): boolean {
-    return Number.isInteger(this.form.$arraySchema.maxItems)
-      ? this.model.length >= this.form.$arraySchema.maxItems : false;
+    return Number.isInteger(this.form.$schema.maxItems)
+      ? this.model.length >= this.form.$schema.maxItems : false;
   }
 
   get atMinimumCapacity(): boolean {
-    return Number.isInteger(this.form.$arraySchema.minItems)
-      ? this.model.length === this.form.$arraySchema.minItems : false;
+    return Number.isInteger(this.form.$schema.minItems)
+      ? this.model.length === this.form.$schema.minItems : false;
   }
 
   async validate() {
