@@ -40,11 +40,9 @@ to view a demo, clone and checkout the **sample/readme.md**
 
 ## Coming soon/Need help with..
 
-- clean up array handling
 - optionally delete items from model on destroy
 - bootstrap templates:
   - add date/time/date-time pickers
-  - add alternate array template using tabs
 - add materialize templates
 - add additional schema validation (maybe ajv)
 - ability to declare keys you want to include/exclude for an easy, generic form
