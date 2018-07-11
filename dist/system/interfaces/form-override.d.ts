@@ -4,6 +4,9 @@ export interface IFormOverride {
     $noTitle?: boolean;
     $arrayItem?: IFormOverride;
     $noEmptyArrayInitialization?: boolean;
+    $notRemovable?: boolean;
+    $arrayAsTabs?: boolean;
+    $tabTitle?: string;
     $placeholder?: string;
     $htmlClass?: string;
     $altTemplate?: string;

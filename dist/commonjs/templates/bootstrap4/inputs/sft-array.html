@@ -24,7 +24,8 @@
             data-placement="left"
             title="remove"
             click.trigger="remove($index,true)"
-            disabled.bind="isDisabled || atMinimumCapacity">
+            disabled.bind="isDisabled || atMinimumCapacity"
+            if.bind="!form.$notRemovable">
       <span>&times;</span>
     </button>
     <div as-element="compose"

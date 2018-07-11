@@ -17,6 +17,17 @@ export const form: IFormOverride = {
       ]
     }
   ],
+  references: {
+    $arrayAsTabs: true,
+    $tabTitle: "${model[$index].name || 'Item ' + ($index + 1)}",
+    $arrayItem: {
+      $noTitle: true,
+      name: {},
+      relationship: {},
+      email: {},
+      $noSeparator: true
+    }
+  },
   phoneNumbers: {
     $noEmptyArrayInitialization: true,
     $arrayItem: {
@@ -66,15 +77,6 @@ export const form: IFormOverride = {
         ]
       }
     ]
-  },
-  references: {
-    $arrayItem: {
-      $noTitle: true,
-      name: {},
-      relationship: {},
-      email: {},
-      $noSeparator: true
-    }
   },
   termsOfService: {},
   $noSeparator: true

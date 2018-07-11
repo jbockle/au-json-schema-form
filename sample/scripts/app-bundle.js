@@ -277,6 +277,17 @@ define('json-form',["require", "exports"], function (require, exports) {
                 ]
             }
         ],
+        references: {
+            $arrayAsTabs: true,
+            $tabTitle: "${model[$index].name || 'Item ' + ($index + 1)}",
+            $arrayItem: {
+                $noTitle: true,
+                name: {},
+                relationship: {},
+                email: {},
+                $noSeparator: true
+            }
+        },
         phoneNumbers: {
             $noEmptyArrayInitialization: true,
             $arrayItem: {
@@ -324,15 +335,6 @@ define('json-form',["require", "exports"], function (require, exports) {
                     ]
                 }
             ]
-        },
-        references: {
-            $arrayItem: {
-                $noTitle: true,
-                name: {},
-                relationship: {},
-                email: {},
-                $noSeparator: true
-            }
         },
         termsOfService: {},
         $noSeparator: true

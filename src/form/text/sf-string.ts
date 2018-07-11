@@ -38,7 +38,7 @@ export class SfString {
   attached() {
     this.logger.info("sf-string-attached");
     if (this.formCtrl.formOptions.validateOnRender) {
-      this.formCtrl.validationController.validate({ object: this });
+      this.formCtrl.validationController.validate({ object: this, propertyName: "model" });
     }
   }
 

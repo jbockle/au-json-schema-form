@@ -1,4 +1,4 @@
-import { customElement, bindable, inject, InlineViewStrategy, View, Optional } from "aurelia-framework";
+import { customElement, bindable, inject, InlineViewStrategy } from "aurelia-framework";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
@@ -9,7 +9,7 @@ import { ArrayRules } from "../../rules/array-rules";
 import { DefaultsService } from "../../services/defaults-service";
 import { FormInstances } from "../../services/form-instances";
 import { IFormInstance } from "../../interfaces/form-instance";
-
+import * as $ from "jquery";
 @inject(
   ArrayRules,
   SchemaFormConfiguration,
@@ -26,11 +26,15 @@ export class SfArray {
 
   id: string = Guid.newGuid();
 
+  selectedIndex: number = -1;
+
   kind = "array";
 
   viewStrategy: string;
 
   itemViewStrategy: InlineViewStrategy;
+
+  tabTitleTemplate: InlineViewStrategy;
 
   validationErrors: string[];
 
@@ -57,8 +61,10 @@ export class SfArray {
       this.formCtrl = this.formInstances.get(this.formInstance);
       this.bindRules();
       this.form.$arrayItem.$schema = this.form.$schema.items;
+      await this.createItemView();
       await this.determineViewStrategy();
       await this.initializeArray();
+      this.selectedIndex = this.model ? this.model.length - 1 : -1;
       this.binded = true;
     }
   }
@@ -67,7 +73,8 @@ export class SfArray {
     if (
       this.form.$arrayItem.$schema.enum ||
       (this.model && this.model.length > 0) ||
-      this.form.$noEmptyArrayInitialization || this.formCtrl.formOptions.noEmptyArrayInitialization
+      this.form.$noEmptyArrayInitialization ||
+      this.formCtrl.formOptions.noEmptyArrayInitialization
     ) {
       return;
     }
@@ -85,16 +92,19 @@ export class SfArray {
     let strategy;
     if (this.form.$altTemplate) {
       strategy = this.form.$altTemplate;
+    } else if (this.form.$arrayAsTabs) {
+      const content = !!this.form.$tabTitle ? `${this.form.$tabTitle}` : "${'Item ' + ($index + 1)}";
+      this.tabTitleTemplate = new InlineViewStrategy(`<template>${content}</template>`);
+      strategy = this.configuration.templates.arrayTabs;
     } else if (this.form.$schema.items.type === "string" && this.form.$schema.items.enum) {
       strategy = this.configuration.templates.arrayStringEnum;
     } else {
       strategy = this.configuration.templates.array;
-      await this.createView();
     }
     this.viewStrategy = strategy;
   }
 
-  async createView() {
+  async createItemView() {
     this.logger.info("createView", { form: this.form.$arrayItem });
     const template = this.formService
       .getTemplate(
@@ -114,7 +124,8 @@ export class SfArray {
 
   async add(validate: boolean) {
     const item = await this.defaultsService.getSchemaDefaultAsync(this.form.$schema.items, null);
-    this.model.push(item);
+    const index = this.model.push(item) - 1;
+    this.selectTab(index);
     if (validate) {
       await this.validate();
     }
@@ -122,8 +133,17 @@ export class SfArray {
 
   async remove(index: number, validate: boolean) {
     this.model.splice(index, 1);
+    this.selectTab(this.model.length - 1);
     if (validate) {
       await this.validate();
+    }
+  }
+
+  private selectTab(index: number) {
+    if (this.tabTitleTemplate) {
+      setTimeout(() => {
+        $(`a[href="#tab_${this.id}_${index}"]`).tab("show");
+      }, 50);
     }
   }
 

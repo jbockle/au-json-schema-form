@@ -36,10 +36,7 @@ export class SfObject {
   ) { }
 
   attached() {
-    this.logger.info("sf-array-attached");
-    if (this.formCtrl.formOptions.validateOnRender) {
-      this.formCtrl.validationController.validate({ object: this.model });
-    }
+    this.logger.info("sf-object-attached");
   }
 
   async bind() {

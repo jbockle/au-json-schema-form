@@ -1,0 +1,54 @@
+<template>
+  <require from="../styles.css"></require>
+  <div class="d-inline">
+    <h6 class="d-inline"
+        if.bind="!form.$noTitle">${form.$schema.title}
+      <small class="text-muted"
+             if.bind="form.$schema.description">${form.$schema.description}</small>
+    </h6>
+    <button class="btn btn-link btn-sm"
+            click.delegate="add(true)"
+            disabled.bind="isDisabled || atCapacity">&plus; Add</button>
+  </div>
+  <div class="text-danger"
+       if.bind="!!errors">
+    <small repeat.for="error of errors">${error.message}</small>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item"
+        repeat.for="item of model">
+      <a class="nav-link ${($index === 0 ? 'active': '') & oneTime}"
+         data-toggle="tab"
+         role="tab"
+         href="${'#tab_' + id +'_'+$index}">
+        <compose view.bind="tabTitleTemplate"
+                 containerless></compose>
+      </a>
+    </li>
+  </ul>
+  <em class="text-muted small d-block"
+      if.bind="!model || model.length === 0">nothing here, click add above</em>
+  <div class="tab-content">
+    <div repeat.for="item of model"
+         id="${'tab_' + id +'_'+$index}"
+         role="tabpanel"
+         class="tab-pane fade ${($index === 0 ? 'show active' : '') & oneTime}">
+      <button type="button"
+              class="close pb-1"
+              bootstrap-tooltip
+              data-placement="left"
+              title="remove"
+              click.trigger="remove($index,true)"
+              disabled.bind="isDisabled || atMinimumCapacity"
+              if.bind="!form.$notRemovable">
+        <span>&times;</span>
+      </button>
+      <div as-element="compose"
+           view.bind="itemViewStrategy"
+           containerless>
+      </div>
+    </div>
+  </div>
+  </div>
+  <hr if.bind="!form.$noSeparator">
+</template>

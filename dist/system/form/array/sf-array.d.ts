@@ -18,9 +18,11 @@ export declare class SfArray {
     model: any[];
     formInstance: string;
     id: string;
+    selectedIndex: number;
     kind: string;
     viewStrategy: string;
     itemViewStrategy: InlineViewStrategy;
+    tabTitleTemplate: InlineViewStrategy;
     validationErrors: string[];
     errors: ValidateResult[];
     binded: boolean;
@@ -30,10 +32,11 @@ export declare class SfArray {
     initializeArray(): Promise<void>;
     attached(): void;
     determineViewStrategy(): Promise<void>;
-    createView(): Promise<void>;
+    createItemView(): Promise<void>;
     private bindRules;
     add(validate: boolean): Promise<void>;
     remove(index: number, validate: boolean): Promise<void>;
+    private selectTab;
     readonly isDisabled: boolean;
     readonly atCapacity: boolean;
     readonly atMinimumCapacity: boolean;
