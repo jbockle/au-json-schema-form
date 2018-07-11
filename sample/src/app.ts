@@ -24,15 +24,19 @@ export class App {
 
   modelString: string;
 
-  resultString: string;
-
   schemaform: AuJsonSchemaForm
 
   options: IFormOptions = {
-    validateOnRender: true
+    validateOnRender: true,
+    noEmptyArrayInitialization: false
   }
 
-  model: any = {};
+  model: any = {
+    foodAllergies: [
+      "egg"
+    ],
+    averageDailyCoffeeConsumption: 1
+  };
 
   constructor(private signaler: BindingSignaler, private engine: BindingEngine) { }
 
@@ -40,7 +44,6 @@ export class App {
     this.refreshModel();
     this.schemaform.validationController.subscribe((event: ValidateEvent) => {
       this.refreshModel();
-      this.resultString = JSON.stringify(this.schemaform.formController.validationController.errors, null, "\t");
     });
   }
 
@@ -70,12 +73,17 @@ export class App {
     this.modelString = JSON.stringify(this.model, null, "\t");
   }
 
-  async submit() {
-    const results = await this.schemaform.formController.validationController.validate();
+  async submit($event: Event) {
+    $event.preventDefault();
+    const results = await this.schemaform.formInstance.formController.validationController.validate();
     if (results.valid) {
       window.alert("everything looks good!");
     } else {
       window.alert("one or more errors: \r\n" + results.results.filter((r) => !r.valid).map((r) => r.message).join("\r\n"));
     }
+  }
+
+  reload() {
+    this.schemaform.buildForm();
   }
 }

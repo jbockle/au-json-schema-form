@@ -2,36 +2,35 @@
   <require from="../styles.css"></require>
   <div class="d-inline">
     <h6 class="d-inline"
-        if.bind="!form.$noArrayTitle">${schema.title}
+        if.bind="!form.$noTitle">${form.$schema.title}
       <small class="text-muted"
-             if.bind="schema.description">${schema.description}</small>
+             if.bind="form.$schema.description">${form.$schema.description}</small>
     </h6>
     <button class="btn btn-link btn-sm"
-            click.delegate="add()"
+            click.delegate="add(true)"
             disabled.bind="isDisabled || atCapacity">&plus; Add</button>
   </div>
   <em class="text-muted small d-block"
       if.bind="!model || model.length === 0">nothing here, click add above</em>
   <div class="text-danger"
-       if.bind="validationErrors.length > 0">
-    <small repeat.for="error of validationErrors">${error}</small>
+       if.bind="!!errors">
+    <small repeat.for="error of errors">${error.message}</small>
   </div>
-  <div repeat.for="item of model & validateOnChangeOrBlur"
+  <div repeat.for="item of model"
        class="border border-light p-2">
     <button type="button"
             class="close pb-1"
             bootstrap-tooltip
             data-placement="left"
             title="remove"
-            click.trigger="remove($index)"
-            disabled.bind="isDisabled || atMinimumCapacity">
+            click.trigger="remove($index,true)"
+            disabled.bind="isDisabled || atMinimumCapacity"
+            if.bind="!form.$notRemovable">
       <span>&times;</span>
     </button>
     <div as-element="compose"
-         view.bind="view"
-         view-model="../../../form/array/sf-array-item"
-         model.two-way="model[$index]"
-         schema.bind="schema.items"></div>
+         view.bind="itemViewStrategy">
+    </div>
   </div>
   <hr if.bind="!form.$noSeparator">
 </template>

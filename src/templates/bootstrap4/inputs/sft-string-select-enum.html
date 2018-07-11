@@ -2,18 +2,18 @@
   <div class="form-group">
     <label for.one-time="id"
            class="col-form-label-sm"
-           if.bind="!form.$noTitle">${schema.title}</label>
+           if.bind="!form.$noTitle">${form.$schema.title}</label>
     <select value.bind="model & validateOnChange"
             class="form-control form-control-sm"
             id.one-time="id"
-            disabled.bind="schema.readOnly || schema.const">
-      <option model.bind="null">Select an option..</option>
-      <option repeat.for="item of schema.enum"
+            disabled.bind="form.$schema.readOnly || form.$schema.const">
+      <option model.bind="''">Select an option..</option>
+      <option repeat.for="item of form.$schema.enum"
               model.bind="item">${item}</option>
     </select>
     <small class="form-text text-muted"
-           if.bind="schema.description"
-           textcontent.bind="schema.description"></small>
+           if.bind="form.$schema.description"
+           textcontent.bind="form.$schema.description"></small>
     <div class="invalid-feedback"></div>
   </div>
 </template>

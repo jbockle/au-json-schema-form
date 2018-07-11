@@ -4,15 +4,15 @@
       <input class="form-check-input"
              type="checkbox"
              id.one-time="id"
-             checked.bind="model & validateOnChange"
-             readonly.bind="schema.readOnly || schema.const">
+             checked.bind="model & validateOnChange:formCtrl.validationController"
+             readonly.bind="form.$schema.readOnly || form.$schema.const">
       <label for.one-time="id"
              class="form-check-label"
              if.bind="!form.$noTitle">${schema.title}</label>
     </div>
     <small class="form-text text-muted"
-           if.bind="schema.description"
-           textcontent.bind="schema.description"></small>
+           if.bind="form.$schema.description"
+           textcontent.bind="form.$schema.description"></small>
     <div class="invalid-feedback"></div>
   </div>
 </template>

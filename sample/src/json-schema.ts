@@ -17,6 +17,7 @@ export const schema: IJsonSchemaDefinition = {
     },
     foodAllergies: {
       type: "array",
+      minItems: 1,
       items: {
         type: "string",
         enum: [
@@ -43,8 +44,7 @@ export const schema: IJsonSchemaDefinition = {
     },
     termsOfService: {
       type: "boolean",
-      description: "By checking this box, blah blah",
-      default: true
+      description: "By checking this box, blah blah"
     },
     phoneNumbers: {
       type: "array",

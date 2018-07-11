@@ -7,3 +7,7 @@ button:disabled.close:hover,button:disabled.close:focus {
 .form-control.custom-range {
   border: none;
 }
+
+a.nav-link {
+  cursor: pointer;
+}

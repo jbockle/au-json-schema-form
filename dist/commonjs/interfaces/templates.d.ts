@@ -6,6 +6,7 @@ export interface ITemplates {
     stringSelectEnum: string;
     object: string;
     array: string;
+    arrayTabs: string;
     arrayStringEnum: string;
     boolean: string;
     formats?: IFormatTemplates;

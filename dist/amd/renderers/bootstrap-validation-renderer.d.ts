@@ -4,7 +4,6 @@ declare enum State {
     invalid = "is-invalid"
 }
 export declare class BootstrapValidationRenderer implements ValidationRenderer {
-    private logger;
     private messageSelector;
     private parentSelector;
     /**
@@ -38,7 +37,7 @@ export declare class BootstrapValidationRenderer implements ValidationRenderer {
      * finds closest parent element with parentSelector class
      * @param element the element to find parent from
      */
-    getParentElement(element: Element): any;
+    getParentElement(element: Element): Promise<Element>;
     /**
      * sets element class(state) and error message
      * @param element the input element

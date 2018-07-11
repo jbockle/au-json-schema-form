@@ -1,3 +1,4 @@
+import "./resources/number";
 import { FrameworkConfiguration } from "aurelia-framework";
 import { ValidationRenderer } from "aurelia-validation";
 import { ITemplates } from "./interfaces/templates";

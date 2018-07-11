@@ -1,7 +1,7 @@
 import { IRules } from "../interfaces/rules";
 import { inject } from "aurelia-framework";
 import { SchemaFormConfiguration } from "../services/schema-form-configuration";
-import { ValidationRules, validationMessages, FluentRuleCustomizer } from "aurelia-validation";
+import { ValidationRules, validationMessages, FluentRuleCustomizer, PropertyAccessorParser } from "aurelia-validation";
 
 @inject(SchemaFormConfiguration)
 export class CommonRules implements IRules {
@@ -31,13 +31,13 @@ export class CommonRules implements IRules {
   bind(ctrl: any): FluentRuleCustomizer<{}, any> {
     let rule = ValidationRules
       .ensure("model")
-      .displayName(ctrl.schema.title)
+      .displayName(ctrl.form.$schema.title)
       .satisfies(() => true);
-    if (ctrl.schema.const) {
-      rule = rule.equals(ctrl.schema.const);
+    if (ctrl.form.$schema.const) {
+      rule = rule.equals(ctrl.form.$schema.const);
     }
-    if (ctrl.schema.enum) {
-      rule = rule.satisfiesRule("enum", ctrl.schema.enum);
+    if (ctrl.form.$schema.enum) {
+      rule = rule.satisfiesRule("enum", ctrl.form.$schema.enum);
     }
     if (ctrl.form.$required) {
       rule = rule.required();

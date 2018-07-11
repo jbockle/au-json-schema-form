@@ -17,12 +17,28 @@ export const form: IFormOverride = {
       ]
     }
   ],
+  references: {
+    $arrayAsTabs: true,
+    $tabTitle: "${model[$index].name || 'Item ' + ($index + 1)}",
+    $arrayItem: {
+      $noTitle: true,
+      name: {},
+      relationship: {},
+      email: {},
+      $noSeparator: true
+    }
+  },
   phoneNumbers: {
-    $noTitle: true
+    $noEmptyArrayInitialization: true,
+    $arrayItem: {
+      $required: true,
+      $noTitle: true
+    }
   },
   favoritePet: {},
   foodAllergies: {
-    $noSeparator: true
+    $noSeparator: true,
+    $arrayItem: {}
   },
   averageDailyCoffeeConsumption: {
     //$step: 2
@@ -61,12 +77,6 @@ export const form: IFormOverride = {
         ]
       }
     ]
-  },
-  references: {
-    $noTitle: true,
-    name: {},
-    relationship: {},
-    email: {}
   },
   termsOfService: {},
   $noSeparator: true

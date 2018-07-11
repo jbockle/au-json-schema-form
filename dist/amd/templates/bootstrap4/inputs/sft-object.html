@@ -1,5 +1,5 @@
 <template>
-  <h6 if.bind="!form.$noTitle">${schema.title}</h6>
+  <h6 if.bind="!form.$noTitle">${form.$schema.title}</h6>
   <compose view.bind="view"></compose>
   <hr if.bind="!form.$noSeparator">
 </template>

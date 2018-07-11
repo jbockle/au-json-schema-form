@@ -1,23 +1,22 @@
 <template>
-  <h6 if.bind="!form.$noTitle">${schema.title}</h6>
-  <div class="form-group">
+  <h6 if.bind="!form.$noTitle">${form.$schema.title}</h6>
+  <div class="form-group"
+       validation-errors.bind="errors">
+    <div class="invalid-feedback ${errors.length > 0 ? 'd-block' : ''}"></div>
     <div class="form-check"
-         repeat.for="item of schema.enum">
-      <input class="form-check-input"
-             name="schema.title"
-             type="radio"
-             id.one-time="id+$index"
-             value.bind="item"
-             checked.bind="model & validateOnChange"
-             disabled.bind="schema.const || schema.readOnly">
-      <label class="form-check-label"
-             for.one-time="id+$index">
-        ${item}
+         repeat.for="item of form.$schema.enum">
+      <label class="form-check-label">
+        <input class="form-check-input"
+               name="form.$schema.title"
+               type="radio"
+               id.one-time="id+$index"
+               value.bind="item"
+               checked.bind="model & validateOnChange:formCtrl.validationController"
+               disabled.bind="form.$schema.const || form.$schema.readOnly"> ${item}
       </label>
     </div>
     <small class="form-text text-muted"
-           if.bind="schema.description"
-           textcontent.bind="schema.description"></small>
-    <div class="invalid-feedback"></div>
+           if.bind="form.$schema.description"
+           textcontent.bind="form.$schema.description"></small>
   </div>
 </template>

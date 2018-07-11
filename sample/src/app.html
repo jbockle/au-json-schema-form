@@ -37,9 +37,9 @@
                     readonly></textarea>
         </div>
         <div class="p-2 border border-danger bg-danger text-light"
-             if.bind="schemaform.formController.validationController.errors.length > 0">
+             if.bind="schemaform.validationController.errors.length > 0">
           <ul>
-            <li repeat.for="error of schemaform.formController.validationController.errors & throttle">
+            <li repeat.for="error of schemaform.validationController.errors & throttle">
               ${error.message}
             </li>
           </ul>
@@ -49,29 +49,42 @@
         <div class="border p-2 clearfix align-items-center bg-dark text-light">
           <h4>Options</h4>
           <form>
-            <div class="form-group">
-              <div class="form-check float-left">
-                <input class="form-check-input"
-                       type="checkbox"
-                       checked.bind="options.validateOnRender"
-                       id="validateOnRender">
-                <label class="form-check-label"
-                       for="validateOnRender">
-                  Validate on render
-                </label>
+            <div class="form-row">
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input"
+                         type="checkbox"
+                         checked.bind="options.validateOnRender"
+                         id="validateOnRender">
+                  <label class="form-check-label"
+                         for="validateOnRender">
+                    Validate on render
+                  </label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           checked.bind="options.noEmptyArrayInitialization"> Don't initialize arrays
+                  </label>
+                </div>
+              </div>
+              <div class="col-auto">
+                <button type="button"
+                        class="btn btn-primary btn-sm"
+                        click.trigger="reload()"
+                        if.bind="schemaform">Reload Form</button>
               </div>
             </div>
-            <button type="button"
-                    class="btn btn-primary btn-sm float-right"
-                    click.trigger="schemaform.buildForm()"
-                    if.bind="schemaform">Reload Form</button>
           </form>
         </div>
         <hr>
         <label>Form</label>
         <form class="p-2 border border-warning h-100"
               style="overflow-y:auto;overflow-x: hidden"
-              submit.delegate="submit()">
+              submit.delegate="submit($event)">
           <au-json-schema-form schema.bind="schema"
                                form.bind="form"
                                model.two-way="model"

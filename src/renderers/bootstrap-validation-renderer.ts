@@ -1,5 +1,4 @@
 import { RenderInstruction, ValidateResult, ValidationRenderer } from "aurelia-validation";
-import { getLogger, Logger, logLevel } from "aurelia-logging";
 
 enum State {
   valid = "is-valid",
@@ -7,7 +6,6 @@ enum State {
 }
 
 export class BootstrapValidationRenderer implements ValidationRenderer {
-  private logger: Logger;
   private messageSelector: string = ".invalid-feedback";
   private parentSelector: string = ".form-group";
 
@@ -15,10 +13,7 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
    * BootrapValidationRenderer - Sets validation state/error messages on bootstrap v4 form-groups
    */
   // tslint:disable-next-line:no-empty
-  constructor() {
-    this.logger = getLogger("BootstrapValidationRenderer");
-    this.logger.setLevel(logLevel.none);
-  }
+  constructor() { }
 
   /**
    * renderer entry point
@@ -32,7 +27,9 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
     for (const { result, elements } of instruction.unrender) {
       for (const element of elements) {
         if (!result.valid) {
-          this.remove(element, result);
+          try {
+            this.remove(element, result);
+          } catch { /*do nothing*/ }
         }
       }
     }
@@ -40,7 +37,9 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
     for (const { result, elements } of instruction.render) {
       for (const element of elements) {
         if (!result.valid) {
-          this.add(element, result);
+          try {
+            this.add(element, result);
+          } catch { /*do nothing*/ }
         }
       }
     }
@@ -74,7 +73,7 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
    * @param className the class name to remove
    */
   removeClass(element: Element, className: State) {
-    if (element.classList.contains(className)) {
+    if (element && element.classList.contains(className)) {
       element.classList.remove(className);
     }
   }
@@ -84,11 +83,7 @@ export class BootstrapValidationRenderer implements ValidationRenderer {
    * @param element the element to find parent from
    */
   getParentElement(element: Element) {
-    const parent = element.parentElement;
-    if (parent.classList.contains("form-group")) {
-      return Promise.resolve(parent);
-    }
-    return this.getParentElement(parent);
+    return Promise.resolve(element.closest(this.parentSelector));
   }
 
   /**

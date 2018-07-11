@@ -1,21 +1,24 @@
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { RulesFactory } from "../../rules/rules-factory";
-import { IJsonSchemaNumberDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
+import { FormInstances } from "../../services/form-instances";
 export declare class SfNumber {
     configuration: SchemaFormConfiguration;
     rules: RulesFactory;
     private logger;
+    private formInstances;
     form: IFormOverride;
     model: number;
-    schema: IJsonSchemaNumberDefinition;
+    formInstance: string;
     id: string;
     view: any;
     kind: string;
-    constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger);
+    private formCtrl;
+    constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger, formInstances: FormInstances);
+    attached(): void;
     bind(): void;
     determineViewStrategy(): void;
-    readonly minimum: number;
-    readonly maximum: number;
+    readonly minimum: any;
+    readonly maximum: any;
 }

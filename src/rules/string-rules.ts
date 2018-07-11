@@ -95,20 +95,20 @@ export class StringRules {
   }
 
   bind(ctrl: SfString, rule: FluentRuleCustomizer<{}, any>) {
-    if (ctrl.schema.pattern) {
-      rule = rule.satisfiesRule("pattern", ctrl.schema.pattern);
+    if (ctrl.form.$schema.pattern) {
+      rule = rule.satisfiesRule("pattern", ctrl.form.$schema.pattern);
     }
-    if (ctrl.schema.minLength) {
-      rule = rule.minLength(ctrl.schema.minLength);
+    if (ctrl.form.$schema.minLength) {
+      rule = rule.minLength(ctrl.form.$schema.minLength);
     }
-    if (ctrl.schema.maxLength) {
-      rule = rule.maxLength(ctrl.schema.maxLength);
+    if (ctrl.form.$schema.maxLength) {
+      rule = rule.maxLength(ctrl.form.$schema.maxLength);
     }
-    if (ctrl.schema.format && ctrl.schema.format !== "email") {
-      const rulename = `format_${ctrl.schema.format.replace("-", "")}`;
+    if (ctrl.form.$schema.format && ctrl.form.$schema.format !== "email") {
+      const rulename = `format_${ctrl.form.$schema.format.replace("-", "")}`;
       rule = rule.satisfiesRule(rulename);
     }
-    if (ctrl.schema.format === "email") {
+    if (ctrl.form.$schema.format === "email") {
       rule = rule.email();
     }
   }

@@ -66,8 +66,8 @@ export class NumberRules {
       "exclusiveMaximum",
       "multipleOf"
     ].forEach((r) => {
-      if (Number.isInteger(ctrl.schema[r])) {
-        rule = rule.satisfiesRule(r, ctrl.schema[r]);
+      if (Number.isInteger(ctrl.form.$schema[r])) {
+        rule = rule.satisfiesRule(r, ctrl.form.$schema[r]);
       }
     });
   }
