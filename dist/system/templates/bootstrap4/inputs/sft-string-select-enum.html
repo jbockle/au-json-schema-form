@@ -7,7 +7,7 @@
             class="form-control form-control-sm"
             id.one-time="id"
             disabled.bind="form.$schema.readOnly || form.$schema.const">
-      <option model.bind="null">Select an option..</option>
+      <option model.bind="''">Select an option..</option>
       <option repeat.for="item of form.$schema.enum"
               model.bind="item">${item}</option>
     </select>

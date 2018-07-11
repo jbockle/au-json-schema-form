@@ -18,7 +18,7 @@ export const form: IFormOverride = {
     }
   ],
   phoneNumbers: {
-    $arrayStartEmpty: true,
+    $noEmptyArrayInitialization: true,
     $arrayItem: {
       $required: true,
       $noTitle: true

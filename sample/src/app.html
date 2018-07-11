@@ -67,14 +67,14 @@
                   <label class="form-check-label">
                     <input class="form-check-input"
                            type="checkbox"
-                           checked.bind="options.arrayStartEmpty"> Arrays Start Empty
+                           checked.bind="options.noEmptyArrayInitialization"> Don't initialize arrays
                   </label>
                 </div>
               </div>
               <div class="col-auto">
                 <button type="button"
                         class="btn btn-primary btn-sm"
-                        click.trigger="schemaform.buildForm()"
+                        click.trigger="reload()"
                         if.bind="schemaform">Reload Form</button>
               </div>
             </div>

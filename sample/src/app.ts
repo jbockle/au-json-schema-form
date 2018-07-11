@@ -28,7 +28,7 @@ export class App {
 
   options: IFormOptions = {
     validateOnRender: true,
-    arrayStartEmpty: false
+    noEmptyArrayInitialization: false
   }
 
   model: any = {
@@ -81,5 +81,9 @@ export class App {
     } else {
       window.alert("one or more errors: \r\n" + results.results.filter((r) => !r.valid).map((r) => r.message).join("\r\n"));
     }
+  }
+
+  reload() {
+    this.schemaform.buildForm();
   }
 }

@@ -9,7 +9,7 @@ export interface IFormOverride {
   [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition;
   $noTitle?: boolean;
   $arrayItem?: IFormOverride;
-  $arrayStartEmpty?: boolean;
+  $noEmptyArrayInitialization?: boolean;
   $placeholder?: string;
   $htmlClass?: string;
   $altTemplate?: string;

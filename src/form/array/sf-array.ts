@@ -67,7 +67,7 @@ export class SfArray {
     if (
       this.form.$arrayItem.$schema.enum ||
       (this.model && this.model.length > 0) ||
-      this.form.$arrayStartEmpty || this.formCtrl.formOptions.arrayStartEmpty
+      this.form.$noEmptyArrayInitialization || this.formCtrl.formOptions.noEmptyArrayInitialization
     ) {
       return;
     }

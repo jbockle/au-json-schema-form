@@ -4,7 +4,7 @@
       <input class="form-check-input"
              type="checkbox"
              id.one-time="id"
-             checked.bind="model & validateOnChange"
+             checked.bind="model & validateOnChange:formCtrl.validationController"
              readonly.bind="form.$schema.readOnly || form.$schema.const">
       <label for.one-time="id"
              class="form-check-label"
