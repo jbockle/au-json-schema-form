@@ -25,7 +25,7 @@ export class DefaultsService {
   }
 
   async getPrimitiveDefaultAsync(model: any, schema: IJsonSchemaDefinition) {
-    let value: any;
+    let value: any = "";
     if (schema.type === "boolean") {
       value = false;
     }

@@ -23,6 +23,7 @@ export declare class SfArray {
     itemViewStrategy: InlineViewStrategy;
     validationErrors: string[];
     errors: ValidateResult[];
+    binded: boolean;
     private formCtrl;
     constructor(arrayRules: ArrayRules, configuration: SchemaFormConfiguration, formService: FormService, logger: SchemaFormLogger, defaultsService: DefaultsService, formInstances: FormInstances);
     bind(): Promise<void>;

@@ -36,6 +36,8 @@ export class SfArray {
 
   errors: ValidateResult[];
 
+  binded: boolean = false;
+
   private formCtrl: IFormInstance;
 
   constructor(
@@ -50,12 +52,15 @@ export class SfArray {
   }
 
   async bind() {
-    this.logger.info("sf-array", { form: this.form, model: this.model });
-    this.formCtrl = this.formInstances.get(this.formInstance);
-    this.bindRules();
-    this.form.$arrayItem.$schema = this.form.$schema.items;
-    await this.determineViewStrategy();
-    await this.initializeArray();
+    if (!this.binded) {
+      this.logger.info("sf-array", { form: this.form, model: this.model });
+      this.formCtrl = this.formInstances.get(this.formInstance);
+      this.bindRules();
+      this.form.$arrayItem.$schema = this.form.$schema.items;
+      await this.determineViewStrategy();
+      await this.initializeArray();
+      this.binded = true;
+    }
   }
 
   async initializeArray() {
@@ -70,6 +75,7 @@ export class SfArray {
   }
 
   attached() {
+    this.logger.info("sf-array-attached");
     if (this.formCtrl.formOptions.validateOnRender) {
       this.validate();
     }
@@ -91,7 +97,12 @@ export class SfArray {
   async createView() {
     this.logger.info("createView", { form: this.form.$arrayItem });
     const template = this.formService
-      .getTemplate("model[$index]", "form.$arrayItem", this.form.$arrayItem.$schema.type, this.formInstance);
+      .getTemplate(
+        "model[$index]",
+        "form.$arrayItem",
+        this.form.$arrayItem.$schema.type,
+        this.formInstance
+      );
     this.logger.info("createView-template", { template });
     this.itemViewStrategy = new InlineViewStrategy(`<template>${template}</template>`);
   }

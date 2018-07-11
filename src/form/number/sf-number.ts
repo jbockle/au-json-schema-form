@@ -5,12 +5,20 @@ import { RulesFactory } from "../../rules/rules-factory";
 import { IJsonSchemaNumberDefinition } from "../../interfaces/json-schema-definition";
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
+import { FormInstances } from "../../services/form-instances";
+import { IFormInstance } from "../../interfaces/form-instance";
 
-@inject(SchemaFormConfiguration, RulesFactory, SchemaFormLogger)
+@inject(
+  SchemaFormConfiguration,
+  RulesFactory,
+  SchemaFormLogger,
+  FormInstances
+)
 @customElement("sf-number")
 export class SfNumber {
   @bindable form: IFormOverride;
   @bindable model: number;
+  @bindable formInstance: string;
 
   id: string = Guid.newGuid();
 
@@ -18,16 +26,25 @@ export class SfNumber {
 
   kind = "number";
 
+  private formCtrl: IFormInstance;
+
   constructor(
     public configuration: SchemaFormConfiguration,
     public rules: RulesFactory,
-    private logger: SchemaFormLogger
-  ) {
-    this.view = configuration.templates.number;
+    private logger: SchemaFormLogger,
+    private formInstances: FormInstances
+  ) { }
+
+  attached() {
+    this.logger.info("sf-number-attached");
+    if (this.formCtrl.formOptions.validateOnRender) {
+      this.formCtrl.validationController.validate({ object: this });
+    }
   }
 
   bind() {
     this.logger.info("sf-number", this.form, this.model, arguments);
+    this.formCtrl = this.formInstances.get(this.formInstance);
     this.form.$schema = this.form.$schema as IJsonSchemaNumberDefinition;
     this.rules.bind(this);
     this.form.$step = this.form.$step || 1;
@@ -35,6 +52,7 @@ export class SfNumber {
   }
 
   determineViewStrategy() {
+    this.view = this.configuration.templates.number;
     if (this.form.$altTemplate) {
       this.view = this.form.$altTemplate;
     } else if (this.minimum !== undefined && this.maximum !== undefined) {

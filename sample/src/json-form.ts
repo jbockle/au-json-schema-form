@@ -20,6 +20,7 @@ export const form: IFormOverride = {
   phoneNumbers: {
     $arrayStartEmpty: true,
     $arrayItem: {
+      $required: true,
       $noTitle: true
     }
   },

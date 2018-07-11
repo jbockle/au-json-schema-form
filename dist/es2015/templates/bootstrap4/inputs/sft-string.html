@@ -4,7 +4,7 @@
            class="col-form-label-sm"
            if.bind="!form.$noTitle">${form.$schema.title}</label>
     <input type="text"
-           value.bind="model & validateOnChange"
+           value.bind="model & validateOnChange:formCtrl.validationController"
            class="form-control form-control-sm"
            id.one-time="id"
            placeholder.bind="form.$placeholder || ''"

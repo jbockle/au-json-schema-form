@@ -24,8 +24,6 @@ export class App {
 
   modelString: string;
 
-  resultString: string;
-
   schemaform: AuJsonSchemaForm
 
   options: IFormOptions = {
@@ -46,7 +44,6 @@ export class App {
     this.refreshModel();
     this.schemaform.validationController.subscribe((event: ValidateEvent) => {
       this.refreshModel();
-      // this.resultString = JSON.stringify(this.schemaform.formInstance.formController.validationController.errors, null, "\t");
     });
   }
 
@@ -76,7 +73,8 @@ export class App {
     this.modelString = JSON.stringify(this.model, null, "\t");
   }
 
-  async submit() {
+  async submit($event: Event) {
+    $event.preventDefault();
     const results = await this.schemaform.formInstance.formController.validationController.validate();
     if (results.valid) {
       window.alert("everything looks good!");

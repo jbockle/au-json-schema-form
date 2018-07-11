@@ -5,8 +5,15 @@ import { SchemaFormConfiguration } from "../../services/schema-form-configuratio
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
+import { FormInstances } from "../../services/form-instances";
+import { IFormInstance } from "../../interfaces/form-instance";
 
-@inject(SchemaFormConfiguration, FormService, SchemaFormLogger)
+@inject(
+  SchemaFormConfiguration,
+  FormService,
+  SchemaFormLogger,
+  FormInstances
+)
 @customElement("sf-object")
 export class SfObject {
   @bindable form: IFormOverride;
@@ -19,14 +26,25 @@ export class SfObject {
 
   view: InlineViewStrategy;
 
+  private formCtrl: IFormInstance;
+
   constructor(
     public configuration: SchemaFormConfiguration,
     public formService: FormService,
     private logger: SchemaFormLogger,
+    private formInstances: FormInstances
   ) { }
+
+  attached() {
+    this.logger.info("sf-array-attached");
+    if (this.formCtrl.formOptions.validateOnRender) {
+      this.formCtrl.validationController.validate({ object: this.model });
+    }
+  }
 
   async bind() {
     this.logger.info("sf-object", { form: this.form, model: this.model });
+    this.formCtrl = this.formInstances.get(this.formInstance);
     const template = await this.formService
       .getFormTemplateAsync(this.form, this.form.$schema, this.model, this.formInstance);
     this.view = new InlineViewStrategy(

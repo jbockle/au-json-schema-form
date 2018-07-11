@@ -6,11 +6,7 @@
          if.bind="form.$schema.description">${form.$schema.description}</small>
   <div class="text-danger"
        if.bind="!!errors">
-    <ul>
-      <li repeat.for="error of errors">
-        <small>${error.message}</small>
-      </li>
-    </ul>
+    <small repeat.for="error of errors">${error.message}</small>
   </div>
   <div class="form-group">
     <div class="form-check"

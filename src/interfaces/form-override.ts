@@ -40,8 +40,8 @@ export function setFormOverrides(
   form.$schema = schema;
 
   if (parentSchema && parentSchema.type === "object") {
-    form.$required = parentSchema.required
-      ? (parentSchema as IJsonSchemaObjectDefinition).required.indexOf(formKey) > -1 : false;
+    form.$required = form.$required || (parentSchema.required
+      ? (parentSchema as IJsonSchemaObjectDefinition).required.indexOf(formKey) > -1 : false);
   }
 }
 

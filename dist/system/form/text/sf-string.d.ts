@@ -14,7 +14,9 @@ export declare class SfString {
     id: string;
     kind: string;
     view: any;
+    private formCtrl;
     constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger, formInstances: FormInstances);
+    attached(): void;
     bind(): void;
     private determineViewStrategy;
 }

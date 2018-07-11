@@ -6,6 +6,7 @@ import { IJsonSchemaStringDefinition } from "../../interfaces/json-schema-defini
 import { IFormOverride } from "../../interfaces/form-override";
 import { SchemaFormLogger } from "../../resources/logger";
 import { FormInstances } from "../../services/form-instances";
+import { IFormInstance } from "../../interfaces/form-instance";
 
 @inject(
   SchemaFormConfiguration,
@@ -25,22 +26,31 @@ export class SfString {
 
   view;
 
+  private formCtrl: IFormInstance;
+
   constructor(
     public configuration: SchemaFormConfiguration,
     public rules: RulesFactory,
     private logger: SchemaFormLogger,
     private formInstances: FormInstances
-  ) {
-    this.view = configuration.templates.string;
+  ) { }
+
+  attached() {
+    this.logger.info("sf-string-attached");
+    if (this.formCtrl.formOptions.validateOnRender) {
+      this.formCtrl.validationController.validate({ object: this });
+    }
   }
 
   bind() {
     this.logger.info("sf-string", { form: this.form, model: this.model }, arguments);
+    this.formCtrl = this.formInstances.get(this.formInstance);
     this.rules.bind(this);
     this.determineViewStrategy();
   }
 
   private determineViewStrategy() {
+    this.view = this.configuration.templates.string;
     if (this.form.$altTemplate) {
       this.view = this.form.$altTemplate;
     } else if (this.form.$schema.enum && this.form.$schema.enum.length <= 5) {
