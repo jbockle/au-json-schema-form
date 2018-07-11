@@ -1,5 +1,4 @@
 import "./resources/number";
-import "./resources/string";
 import { BootstrapValidationRenderer } from "./renderers/bootstrap-validation-renderer";
 import { SchemaFormConfiguration } from "./services/schema-form-configuration";
 import { FrameworkConfiguration, PLATFORM, LogManager } from "aurelia-framework";
@@ -73,10 +72,8 @@ function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: 
   frameworkConfig.globalResources([
     PLATFORM.moduleName("./form/au-json-schema-form"),
     PLATFORM.moduleName("./value-converters/number-value-converter"),
-    PLATFORM.moduleName("./form/array/sf-array-binding-behavior"),
 
     PLATFORM.moduleName("./form/array/sf-array"),
-    PLATFORM.moduleName("./form/array/sf-array-item"),
     PLATFORM.moduleName("./form/object/sf-object"),
     PLATFORM.moduleName("./form/number/sf-number"),
     PLATFORM.moduleName("./form/text/sf-string"),

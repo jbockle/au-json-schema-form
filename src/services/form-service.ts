@@ -21,11 +21,11 @@ export class FormService {
   async getFormTemplateAsync(
     form: IFormOverride, schema: IJsonSchemaDefinition, model: any, instanceId: string
   ): Promise<ITemplate> {
-    this.logger.warn("getFormTemplateAsync", { form, schema, model });
+    this.logger.warn("getFormTemplateAsync", { form, schema, model, instanceId });
 
     const template: ITemplate = { content: "" };
 
-    model = this.defaultsService.getSchemaDefaultAsync(schema, model);
+    model = await this.defaultsService.getSchemaDefaultAsync(schema, model);
 
     setFormOverrides(form, null, null, schema);
 
@@ -75,9 +75,10 @@ export class FormService {
   getTemplate(
     modelPath: string, formPath: string, schemaType: SchemaType, instanceId: string
   ) {
+    this.logger.info("getTemplate", { modelPath, formPath, schemaType, instanceId });
     return `<sf-${schemaType}` +
       ` model.two-way="${modelPath}"` +
-      ` form.to-view="${formPath}">` +
+      ` form.to-view="${formPath}"` +
       ` form-instance="${instanceId}"` +
       `></sf-${schemaType}>`;
   }

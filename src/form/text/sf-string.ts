@@ -5,12 +5,19 @@ import { RulesFactory } from "../../rules/rules-factory";
 import { IJsonSchemaStringDefinition } from "../../interfaces/json-schema-definition";
 import { IFormOverride } from "../../interfaces/form-override";
 import { SchemaFormLogger } from "../../resources/logger";
+import { FormInstances } from "../../services/form-instances";
 
-@inject(SchemaFormConfiguration, RulesFactory, SchemaFormLogger)
+@inject(
+  SchemaFormConfiguration,
+  RulesFactory,
+  SchemaFormLogger,
+  FormInstances
+)
 @customElement("sf-string")
 export class SfString {
   @bindable form: IFormOverride;
   @bindable model: string;
+  @bindable formInstance: string;
 
   id: string = Guid.newGuid();
 
@@ -21,7 +28,8 @@ export class SfString {
   constructor(
     public configuration: SchemaFormConfiguration,
     public rules: RulesFactory,
-    private logger: SchemaFormLogger
+    private logger: SchemaFormLogger,
+    private formInstances: FormInstances
   ) {
     this.view = configuration.templates.string;
   }

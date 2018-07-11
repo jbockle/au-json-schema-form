@@ -18,11 +18,15 @@ export const form: IFormOverride = {
     }
   ],
   phoneNumbers: {
-    $noTitle: true
+    $arrayStartEmpty: true,
+    $arrayItem: {
+      $noTitle: true
+    }
   },
   favoritePet: {},
   foodAllergies: {
-    $noSeparator: true
+    $noSeparator: true,
+    $arrayItem: {}
   },
   averageDailyCoffeeConsumption: {
     //$step: 2
@@ -63,10 +67,12 @@ export const form: IFormOverride = {
     ]
   },
   references: {
-    $noTitle: true,
-    name: {},
-    relationship: {},
-    email: {}
+    $arrayItem: {
+      $noTitle: true,
+      name: {},
+      relationship: {},
+      email: {}
+    }
   },
   termsOfService: {},
   $noSeparator: true

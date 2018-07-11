@@ -2,16 +2,19 @@ import { SchemaFormConfiguration } from "../../services/schema-form-configuratio
 import { RulesFactory } from "../../rules/rules-factory";
 import { IFormOverride } from "../../interfaces/form-override";
 import { SchemaFormLogger } from "../../resources/logger";
+import { FormInstances } from "../../services/form-instances";
 export declare class SfString {
     configuration: SchemaFormConfiguration;
     rules: RulesFactory;
     private logger;
+    private formInstances;
     form: IFormOverride;
     model: string;
+    formInstance: string;
     id: string;
     kind: string;
     view: any;
-    constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger);
+    constructor(configuration: SchemaFormConfiguration, rules: RulesFactory, logger: SchemaFormLogger, formInstances: FormInstances);
     bind(): void;
     private determineViewStrategy;
 }

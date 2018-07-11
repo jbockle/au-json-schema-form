@@ -29,10 +29,16 @@ export class App {
   schemaform: AuJsonSchemaForm
 
   options: IFormOptions = {
-    validateOnRender: true
+    validateOnRender: true,
+    arrayStartEmpty: false
   }
 
-  model: any = {};
+  model: any = {
+    foodAllergies: [
+      "egg"
+    ],
+    averageDailyCoffeeConsumption: 1
+  };
 
   constructor(private signaler: BindingSignaler, private engine: BindingEngine) { }
 
@@ -40,7 +46,7 @@ export class App {
     this.refreshModel();
     this.schemaform.validationController.subscribe((event: ValidateEvent) => {
       this.refreshModel();
-      this.resultString = JSON.stringify(this.schemaform.formInstance.formController.validationController.errors, null, "\t");
+      // this.resultString = JSON.stringify(this.schemaform.formInstance.formController.validationController.errors, null, "\t");
     });
   }
 

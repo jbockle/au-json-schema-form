@@ -1,21 +1,22 @@
 import { customElement, bindable, inject, InlineViewStrategy, View, Optional } from "aurelia-framework";
-import { IJsonSchemaArrayDefinition } from "../../interfaces/json-schema-definition";
 import { Guid } from "../../resources/guid";
 import { SchemaFormConfiguration } from "../../services/schema-form-configuration";
 import { SchemaFormLogger } from "../../resources/logger";
 import { IFormOverride } from "../../interfaces/form-override";
 import { FormService } from "../../services/form-service";
-import { Validator, ValidateResult, ValidationController } from "aurelia-validation";
+import { ValidateResult } from "aurelia-validation";
 import { ArrayRules } from "../../rules/array-rules";
 import { DefaultsService } from "../../services/defaults-service";
+import { FormInstances } from "../../services/form-instances";
+import { IFormInstance } from "../../interfaces/form-instance";
 
 @inject(
   ArrayRules,
   SchemaFormConfiguration,
   FormService,
   SchemaFormLogger,
-  Validator,
-  DefaultsService
+  DefaultsService,
+  FormInstances
 )
 @customElement("sf-array")
 export class SfArray {
@@ -27,40 +28,54 @@ export class SfArray {
 
   kind = "array";
 
-  view: InlineViewStrategy;
-
   viewStrategy: string;
 
+  itemViewStrategy: InlineViewStrategy;
+
   validationErrors: string[];
-  validationController: ValidationController;
+
+  errors: ValidateResult[];
+
+  private formCtrl: IFormInstance;
 
   constructor(
     public arrayRules: ArrayRules,
     public configuration: SchemaFormConfiguration,
-    public formService: FormService,
+    private formService: FormService,
     private logger: SchemaFormLogger,
-    public validator: Validator,
-    public defaultsService: DefaultsService
+    private defaultsService: DefaultsService,
+    private formInstances: FormInstances
   ) {
 
   }
 
-  created(owningView: View, myView: View) {
-    this.validationController = myView.container.get(Optional.of(ValidationController));
-  }
-
   async bind() {
     this.logger.info("sf-array", { form: this.form, model: this.model });
+    this.formCtrl = this.formInstances.get(this.formInstance);
     this.bindRules();
-    await this.createView();
-    this.determineViewStrategy();
+    this.form.$arrayItem.$schema = this.form.$schema.items;
+    await this.determineViewStrategy();
+    await this.initializeArray();
+  }
+
+  async initializeArray() {
+    if (
+      this.form.$arrayItem.$schema.enum ||
+      (this.model && this.model.length > 0) ||
+      this.form.$arrayStartEmpty || this.formCtrl.formOptions.arrayStartEmpty
+    ) {
+      return;
+    }
+    await this.add(!!this.formCtrl.formOptions.validateOnRender);
   }
 
   attached() {
-    this.getErrors();
+    if (this.formCtrl.formOptions.validateOnRender) {
+      this.validate();
+    }
   }
 
-  determineViewStrategy() {
+  async determineViewStrategy() {
     let strategy;
     if (this.form.$altTemplate) {
       strategy = this.form.$altTemplate;
@@ -68,37 +83,37 @@ export class SfArray {
       strategy = this.configuration.templates.arrayStringEnum;
     } else {
       strategy = this.configuration.templates.array;
+      await this.createView();
     }
     this.viewStrategy = strategy;
   }
 
   async createView() {
-    const template = await this.formService
-      .getFormTemplateAsync(this.form, this.form.$schema, this.model, this.formInstance);
-    this.view = new InlineViewStrategy(`<template>${template.content}</template>`);
+    this.logger.info("createView", { form: this.form.$arrayItem });
+    const template = this.formService
+      .getTemplate("model[$index]", "form.$arrayItem", this.form.$arrayItem.$schema.type, this.formInstance);
+    this.logger.info("createView-template", { template });
+    this.itemViewStrategy = new InlineViewStrategy(`<template>${template}</template>`);
   }
 
   private bindRules() {
     this.arrayRules.bind(this);
-    this.validationController.addObject(this.model);
+    this.formCtrl.validationController.addObject(this.model);
   }
 
-  getFormController(overrideContext: any) {
-    return overrideContext.__parentOverrideContext.bindingContext;
-  }
-
-  add() {
-    this.model.push(this.defaultsService.getSchemaDefaultAsync(this.form.$schema.items, null));
-    this.validationController.validate({ object: this.model });
-    if (this.configuration.validationRenderer) {
-      this.logger.warn("validating");
-      this.validate();
+  async add(validate: boolean) {
+    const item = await this.defaultsService.getSchemaDefaultAsync(this.form.$schema.items, null);
+    this.model.push(item);
+    if (validate) {
+      await this.validate();
     }
   }
 
-  remove(index) {
+  async remove(index: number, validate: boolean) {
     this.model.splice(index, 1);
-    this.validate();
+    if (validate) {
+      await this.validate();
+    }
   }
 
   get isDisabled(): boolean {
@@ -116,18 +131,10 @@ export class SfArray {
   }
 
   async validate() {
-    const result = await this.validationController.validate({ object: this.model });
+    const result = await this.formCtrl.validationController.validate({ object: this.model });
     this.logger.info("validated array", result);
+    this.errors = result.results
+      .filter((r) => !r.valid);
     return result;
-  }
-
-  async getErrors() {
-    const result = await this.validate();
-    if (!result.valid) {
-      this.validationErrors = result.results
-        .filter((r) => !r.valid)
-        .map((r) => r.message);
-    }
-    return [];
   }
 }

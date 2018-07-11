@@ -1,3 +1,4 @@
 export interface IFormOptions {
-    validateOnRender: boolean;
+    validateOnRender?: boolean;
+    arrayStartEmpty?: boolean;
 }

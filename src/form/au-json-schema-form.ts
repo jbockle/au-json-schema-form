@@ -34,7 +34,7 @@ export class AuJsonSchemaForm {
 
   formInstance: IFormInstance;
 
-  id: string = Guid.newGuid();
+  id: string;
 
   private log: (message: string, ...rest: any[]) => void;
 
@@ -48,6 +48,7 @@ export class AuJsonSchemaForm {
     this.log = logger.info;
     this.validationController = validationControllerFactory.createForCurrentScope();
     this.validationController.addRenderer(configuration.validationRenderer);
+    this.id = Guid.newGuid();
   }
 
   schemaChanged() {

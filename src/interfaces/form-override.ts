@@ -4,11 +4,12 @@ import {
   IJsonSchemaObjectDefinition
 } from "./json-schema-definition";
 import { getLogger } from "aurelia-logging";
-import { fromCamelCase } from "../resources/string";
 
 export interface IFormOverride {
   [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition;
   $noTitle?: boolean;
+  $arrayItem?: IFormOverride;
+  $arrayStartEmpty?: boolean;
   $placeholder?: string;
   $htmlClass?: string;
   $altTemplate?: string;
@@ -34,12 +35,18 @@ export function setFormOverrides(
   form: IFormOverride, parentSchema: IJsonSchemaDefinition, formKey: string, schema: IJsonSchemaDefinition
 ) {
   getLogger("aurelia-json-schema-form")
-    .info("setOverrideOptions", { form, parentSchema, formKey, schema });
-  schema.title = schema.title || !!formKey ? fromCamelCase(formKey) : undefined;
+    .info("setFormOverrides", { form, parentSchema, formKey, schema });
+  schema.title = schema.title || (!!formKey ? fromCamelCase(formKey) : undefined);
   form.$schema = schema;
 
   if (parentSchema && parentSchema.type === "object") {
     form.$required = parentSchema.required
       ? (parentSchema as IJsonSchemaObjectDefinition).required.indexOf(formKey) > -1 : false;
   }
+}
+
+function fromCamelCase(val: string) {
+  return val
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase());
 }

@@ -1,5 +1,4 @@
 import "./resources/number";
-import "./resources/string";
 import { FrameworkConfiguration } from "aurelia-framework";
 import { ValidationRenderer } from "aurelia-validation";
 import { ITemplates } from "./interfaces/templates";

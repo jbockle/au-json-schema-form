@@ -12,6 +12,7 @@ export class DefaultsService {
   constructor(private logger: SchemaFormLogger) { }
 
   async getSchemaDefaultAsync(schema: IJsonSchemaDefinition, model: any) {
+    this.logger.info("getSchemaDefaultAsync", { schema, model })
     switch (schema.type) {
       case "array":
         model = await this.getArrayDefaultAsync(model, schema.items);
@@ -25,10 +26,10 @@ export class DefaultsService {
 
   async getPrimitiveDefaultAsync(model: any, schema: IJsonSchemaDefinition) {
     let value: any;
-    if (schema.items.type === "boolean") {
+    if (schema.type === "boolean") {
       value = false;
     }
-    return model || schema.items.const || schema.items.default || value;
+    return model || schema.const || schema.default || value;
   }
 
   async getArrayDefaultAsync(model: any, schema: IJsonSchemaArrayDefinition): Promise<any[]> {

@@ -1,20 +1,20 @@
 <template>
   <require from="../styles.css"></require>
   <h6 if.bind="!form.$noArrayTitle"
-      textcontent.to-view="schema.title"></h6>
+      textcontent.to-view="form.$schema.title"></h6>
   <small class="text-muted"
-         if.bind="schema.description">${schema.description}</small>
+         if.bind="form.$schema.description">${form.$schema.description}</small>
   <div class="text-danger"
-       if.bind="getErrors().length">
+       if.bind="!!errors">
     <ul>
-      <li repeat.for="error of getErrors()">
-        <small>${error}</small>
+      <li repeat.for="error of errors">
+        <small>${error.message}</small>
       </li>
     </ul>
   </div>
   <div class="form-group">
     <div class="form-check"
-         repeat.for="option of schema.items.enum">
+         repeat.for="option of form.$schema.items.enum">
       <input type="checkbox"
              id="${option+$index}"
              class="form-check-input"

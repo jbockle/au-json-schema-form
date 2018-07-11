@@ -2,6 +2,8 @@ import { IJsonSchemaDefinition } from "./json-schema-definition";
 export interface IFormOverride {
     [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition;
     $noTitle?: boolean;
+    $arrayItem?: IFormOverride;
+    $arrayStartEmpty?: boolean;
     $placeholder?: string;
     $htmlClass?: string;
     $altTemplate?: string;
