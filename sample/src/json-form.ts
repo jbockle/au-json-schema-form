@@ -71,7 +71,8 @@ export const form: IFormOverride = {
       $noTitle: true,
       name: {},
       relationship: {},
-      email: {}
+      email: {},
+      $noSeparator: true
     }
   },
   termsOfService: {},

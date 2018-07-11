@@ -329,7 +329,8 @@ define('json-form',["require", "exports"], function (require, exports) {
                 $noTitle: true,
                 name: {},
                 relationship: {},
-                email: {}
+                email: {},
+                $noSeparator: true
             }
         },
         termsOfService: {},
