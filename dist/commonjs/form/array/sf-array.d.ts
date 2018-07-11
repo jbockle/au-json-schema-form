@@ -18,7 +18,6 @@ export declare class SfArray {
     model: any[];
     formInstance: string;
     id: string;
-    selectedIndex: number;
     kind: string;
     viewStrategy: string;
     itemViewStrategy: InlineViewStrategy;

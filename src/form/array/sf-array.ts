@@ -26,8 +26,6 @@ export class SfArray {
 
   id: string = Guid.newGuid();
 
-  selectedIndex: number = -1;
-
   kind = "array";
 
   viewStrategy: string;
@@ -64,7 +62,6 @@ export class SfArray {
       await this.createItemView();
       await this.determineViewStrategy();
       await this.initializeArray();
-      this.selectedIndex = this.model ? this.model.length - 1 : -1;
       this.binded = true;
     }
   }
