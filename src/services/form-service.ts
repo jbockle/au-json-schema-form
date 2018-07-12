@@ -2,7 +2,6 @@ import { inject, TaskQueue } from "aurelia-framework";
 import { IFormOverride, isOverride, setFormOverrides } from "../interfaces/form-override";
 import {
   IJsonSchemaDefinition,
-  IJsonSchemaObjectDefinition,
   SchemaType
 } from "../interfaces/json-schema-definition";
 import { SchemaFormLogger } from "../resources/logger";
@@ -95,7 +94,7 @@ export class FormService {
     templateModule: ITemplateModule,
     parentSchema: IJsonSchemaDefinition
   ): void {
-    template.content += `<compose view-model="${templateModule.moduleName}"`;
+    template.content += `<${templateModule.elementName} `;
     if (templateModule.schemaKey) {
       template.content += ` model.two-way="model['${templateModule.schemaKey}']" schema.to-view="schema`;
       switch (this.getFormKeySchema(templateModule.schemaKey, parentSchema).type) {
@@ -108,7 +107,7 @@ export class FormService {
       }
       template.content += `['${templateModule.schemaKey}']"`;
     }
-    template.content += "></compose>";
+    template.content += `></${templateModule.elementName}>`;
   }
 
   getSfTemplate(

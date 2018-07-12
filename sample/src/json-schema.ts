@@ -169,6 +169,9 @@ export const schema: IJsonSchemaDefinition = {
           "email"
         ]
       }
+    },
+    random: {
+      type: "number"
     }
   },
   required: [

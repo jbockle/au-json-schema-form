@@ -6,10 +6,9 @@ export interface ITemplateStore {
  * not perform standard validation, implement view/view-model however you want.
  */
 export interface ITemplateModule {
-  /** moduleName
-   * @property the module name to resolve 
-   */
-  moduleName: string;
+
+  /** @property the element to append to template, make sure you have added it's moduleName to globalResources */
+  elementName: string;
 
   /** the schema's key to parse, binds form (to-view) and model(two-way) to your module
    * @property If schemaKey is specified, your module must have:

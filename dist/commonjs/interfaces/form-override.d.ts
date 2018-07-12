@@ -2,7 +2,7 @@ import { IJsonSchemaDefinition } from "./json-schema-definition";
 import { ITemplateModule } from "./template";
 export interface IFormOverride {
     [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition | ITemplateModule;
-    _template: ITemplateModule;
+    _template?: ITemplateModule;
     $noTitle?: boolean;
     $arrayItem?: IFormOverride;
     $noEmptyArrayInitialization?: boolean;

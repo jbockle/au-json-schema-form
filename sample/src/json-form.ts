@@ -1,4 +1,5 @@
-import { IFormOverride } from "aurelia-json-schema-form";
+import { IFormOverride } from "../../dist/commonjs/aurelia-json-schema-form";
+import { PLATFORM } from "aurelia-pal";
 
 export const form: IFormOverride = {
   "@div.row": [
@@ -79,5 +80,9 @@ export const form: IFormOverride = {
     ]
   },
   termsOfService: {},
+  _template: {
+    elementName: "random-number-generator",
+    schemaKey: "random"
+  },
   $noSeparator: true
 }

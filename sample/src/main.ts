@@ -25,7 +25,10 @@ export function configure(aurelia: Aurelia) {
   aurelia.use
     .plugin(PLATFORM.moduleName("aurelia-json-schema-form"), (options: PluginOptions) => {
       options.logLevel = logLevel.debug;
-    });
+    })
+    .globalResources([
+      PLATFORM.moduleName("./random-number-generator")
+    ]);
 
   // Uncomment the line below to enable animation.
   // aurelia.use.plugin(PLATFORM.moduleName('aurelia-animator-css'));

@@ -1,3 +1,40 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+define('random-number-generator',["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var RandomNumberGenerator = (function () {
+        function RandomNumberGenerator() {
+        }
+        RandomNumberGenerator.prototype.bind = function () {
+            console.log({ schema: this.schema, model: this.model });
+        };
+        RandomNumberGenerator.prototype.generate = function () {
+            this.model = Math.random();
+        };
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", Object)
+        ], RandomNumberGenerator.prototype, "schema", void 0);
+        __decorate([
+            aurelia_framework_1.bindable,
+            __metadata("design:type", Number)
+        ], RandomNumberGenerator.prototype, "model", void 0);
+        return RandomNumberGenerator;
+    }());
+    exports.RandomNumberGenerator = RandomNumberGenerator;
+});
+
+
+
+define('text!random-number-generator.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"row\">\n    <div class=\"col\">\n      <small class=\"text-muted\">\n        Custom Module Template - model json on left will not update until any validation event occurs\n      </small>\n      <br>\n      <button class=\"btn btn-success\"\n              type=\"button\"\n              click.delegate=\"generate()\">Generate</button>\n    </div>\n    <div class=\"col-12\">\n      <h4>Random number: ${model}</h4>\n    </div>\n  </div>\n</template>\n"; });
 define('navbar/navbar',["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -59,7 +96,10 @@ define('main',["require", "exports", "aurelia-logging-console", "aurelia-framewo
         aurelia.use
             .plugin(aurelia_pal_1.PLATFORM.moduleName("aurelia-json-schema-form"), function (options) {
             options.logLevel = aurelia_logging_1.logLevel.debug;
-        });
+        })
+            .globalResources([
+            aurelia_pal_1.PLATFORM.moduleName("./random-number-generator")
+        ]);
         if (environment_1.default.debug) {
             aurelia.use.developmentLogging();
         }
@@ -245,6 +285,9 @@ define('json-schema',["require", "exports"], function (require, exports) {
                         "email"
                     ]
                 }
+            },
+            random: {
+                type: "number"
             }
         },
         required: [
@@ -337,6 +380,10 @@ define('json-form',["require", "exports"], function (require, exports) {
             ]
         },
         termsOfService: {},
+        _template: {
+            elementName: "random-number-generator",
+            schemaKey: "random"
+        },
         $noSeparator: true
     };
 });
@@ -501,6 +548,6 @@ define('app',["require", "exports", "aurelia-templating-resources", "aurelia-fra
 
 
 
-define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./navbar/navbar\"></require>\n  <require from=\"./app.css\"></require>\n  <div ref=\"styleDiv\"></div>\n  <div class=\"d-flex flex-column h-100\">\n    <navbar></navbar>\n    <div class=\"d-flex flex-row h-100 w-100\">\n      <div class=\"d-flex flex-column h-100 w-25 pr-2\">\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"schema\">\n            Schema\n            <span class=\"text-danger\"\n                  if.bind=\"schemaState\"\n                  textcontent.bind=\"schemaState\"></span>\n          </label>\n          <textarea id=\"schema\"\n                    value.bind=\"schemaString\"\n                    class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"form\">Form\n            <span class=\"text-danger\"\n                  if.bind=\"formState\"\n                  textcontent.bind=\"formState\"></span>\n          </label>\n          <textarea id=\"form\"\n                    value.bind=\"formString\"\n                    class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill w-25 h-100 p-2\">\n        <div class=\"d-flex flex-column flex-fill h-50\">\n          <label for=\"model\">Model</label>\n          <textarea id=\"model\"\n                    value.to-view=\"modelString\"\n                    class=\"flex-fill border border-secondary no-resize\"\n                    readonly></textarea>\n        </div>\n        <div class=\"p-2 border border-danger bg-danger text-light\"\n             if.bind=\"schemaform.validationController.errors.length > 0\">\n          <ul>\n            <li repeat.for=\"error of schemaform.validationController.errors & throttle\">\n              ${error.message}\n            </li>\n          </ul>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill h-100 pr-2 w-50\">\n        <div class=\"border p-2 clearfix align-items-center bg-dark text-light\">\n          <h4>Options</h4>\n          <form>\n            <div class=\"form-row\">\n              <div class=\"col\">\n                <div class=\"form-check\">\n                  <input class=\"form-check-input\"\n                         type=\"checkbox\"\n                         checked.bind=\"options.validateOnRender\"\n                         id=\"validateOnRender\">\n                  <label class=\"form-check-label\"\n                         for=\"validateOnRender\">\n                    Validate on render\n                  </label>\n                </div>\n              </div>\n              <div class=\"col\">\n                <div class=\"form-check\">\n                  <label class=\"form-check-label\">\n                    <input class=\"form-check-input\"\n                           type=\"checkbox\"\n                           checked.bind=\"options.noEmptyArrayInitialization\"> Don't initialize arrays\n                  </label>\n                </div>\n              </div>\n              <div class=\"col-auto\">\n                <button type=\"button\"\n                        class=\"btn btn-primary btn-sm\"\n                        click.trigger=\"reload()\"\n                        if.bind=\"schemaform\">Reload Form</button>\n              </div>\n            </div>\n          </form>\n        </div>\n        <hr>\n        <label>Form</label>\n        <form class=\"p-2 border border-warning h-100\"\n              style=\"overflow-y:auto;overflow-x: hidden\"\n              submit.delegate=\"submit($event)\">\n          <au-json-schema-form schema.bind=\"schema\"\n                               form.bind=\"form\"\n                               model.two-way=\"model\"\n                               options.bind=\"options\"\n                               if.bind=\"formVisible\"\n                               view-model.ref=\"schemaform\"></au-json-schema-form>\n          <button type=\"submit\"\n                  class=\"btn btn-primary float-right\">Submit</button>\n        </form>\n      </div>\n    </div>\n  </div>\n</template>\n"; });
+define('text!app.html', ['module'], function(module) { module.exports = "<template>\n  <require from=\"./navbar/navbar\"></require>\n  <require from=\"./app.css\"></require>\n  <require from=\"./random-number-generator\"></require>\n  <div ref=\"styleDiv\"></div>\n  <div class=\"d-flex flex-column h-100\">\n    <navbar></navbar>\n    <div class=\"d-flex flex-row h-100 w-100\">\n      <div class=\"d-flex flex-column h-100 w-25 pr-2\">\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"schema\">\n            Schema\n            <span class=\"text-danger\"\n                  if.bind=\"schemaState\"\n                  textcontent.bind=\"schemaState\"></span>\n          </label>\n          <textarea id=\"schema\"\n                    value.bind=\"schemaString\"\n                    class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n        <div class=\"d-flex flex-column flex-fill w-100 h-100 p-2\">\n          <label for=\"form\">Form\n            <span class=\"text-danger\"\n                  if.bind=\"formState\"\n                  textcontent.bind=\"formState\"></span>\n          </label>\n          <textarea id=\"form\"\n                    value.bind=\"formString\"\n                    class=\"flex-fill border border-secondary no-resize\"></textarea>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill w-25 h-100 p-2\">\n        <div class=\"d-flex flex-column flex-fill h-50\">\n          <label for=\"model\">Model</label>\n          <textarea id=\"model\"\n                    value.to-view=\"modelString\"\n                    class=\"flex-fill border border-secondary no-resize\"\n                    readonly></textarea>\n        </div>\n        <div class=\"p-2 border border-danger bg-danger text-light\"\n             if.bind=\"schemaform.validationController.errors.length > 0\">\n          <ul>\n            <li repeat.for=\"error of schemaform.validationController.errors & throttle\">\n              ${error.message}\n            </li>\n          </ul>\n        </div>\n      </div>\n      <div class=\"d-flex flex-column flex-fill h-100 pr-2 w-50\">\n        <div class=\"border p-2 clearfix align-items-center bg-dark text-light\">\n          <h4>Options</h4>\n          <form>\n            <div class=\"form-row\">\n              <div class=\"col\">\n                <div class=\"form-check\">\n                  <input class=\"form-check-input\"\n                         type=\"checkbox\"\n                         checked.bind=\"options.validateOnRender\"\n                         id=\"validateOnRender\">\n                  <label class=\"form-check-label\"\n                         for=\"validateOnRender\">\n                    Validate on render\n                  </label>\n                </div>\n              </div>\n              <div class=\"col\">\n                <div class=\"form-check\">\n                  <label class=\"form-check-label\">\n                    <input class=\"form-check-input\"\n                           type=\"checkbox\"\n                           checked.bind=\"options.noEmptyArrayInitialization\"> Don't initialize arrays\n                  </label>\n                </div>\n              </div>\n              <div class=\"col-auto\">\n                <button type=\"button\"\n                        class=\"btn btn-primary btn-sm\"\n                        click.trigger=\"reload()\"\n                        if.bind=\"schemaform\">Reload Form</button>\n              </div>\n            </div>\n          </form>\n        </div>\n        <hr>\n        <label>Form</label>\n        <form class=\"p-2 border border-warning h-100\"\n              style=\"overflow-y:auto;overflow-x: hidden\"\n              submit.delegate=\"submit($event)\">\n          <au-json-schema-form schema.bind=\"schema\"\n                               form.bind=\"form\"\n                               model.two-way=\"model\"\n                               options.bind=\"options\"\n                               if.bind=\"formVisible\"\n                               view-model.ref=\"schemaform\"></au-json-schema-form>\n          <button type=\"submit\"\n                  class=\"btn btn-primary float-right\">Submit</button>\n        </form>\n      </div>\n    </div>\n  </div>\n</template>\n"; });
 define('text!app.css', ['module'], function(module) { module.exports = ".no-resize {\n  font-size: .8em;\n  overflow: auto;\n  max-width: 100%;\n  max-height: 100%;\n  white-space: pre;\n  resize: none;\n}\n\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n\n::-webkit-scrollbar-track {\n  box-shadow: inset 0 0 10px var(--secondary);\n}\n\n::-webkit-scrollbar-track:hover {\n  box-shadow: inset 0 0 15px var(--secondary);\n}\n\n::-webkit-scrollbar-thumb {\n  box-shadow: inset 0 0 20px var(--primary);\n}\n\n::-webkit-scrollbar-thumb:hover {\n  box-shadow: inset 0 0 40px var(--primary);\n}\n"; });
 //# sourceMappingURL=app-bundle.js.map
