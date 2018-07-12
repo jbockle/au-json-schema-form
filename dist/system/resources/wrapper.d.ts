@@ -1,4 +1,4 @@
-import { ITemplate } from "../interfaces/template";
+import { ITemplateStore } from "../interfaces/template";
 export declare class Wrapper {
     static readonly containerMarker: string;
     static readonly emmetRegex: RegExp;
@@ -10,6 +10,6 @@ export declare class Wrapper {
     private isVoidElement;
     private validateMatches;
     private getEmmetAttr;
-    applyEnd(template: ITemplate): void;
-    applyStart(template: ITemplate): void;
+    applyEnd(template: ITemplateStore): void;
+    applyStart(template: ITemplateStore): void;
 }

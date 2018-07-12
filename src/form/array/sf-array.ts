@@ -104,7 +104,7 @@ export class SfArray {
   async createItemView() {
     this.logger.info("createView", { form: this.form.$arrayItem });
     const template = this.formService
-      .getTemplate(
+      .getSfTemplate(
         "model[$index]",
         "form.$arrayItem",
         this.form.$arrayItem.$schema.type,

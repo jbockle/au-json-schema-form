@@ -20,6 +20,7 @@ import {
   IJsonSchemaBooleanDefinition
 } from "./interfaces/json-schema-definition";
 import { IFormOverride } from "./interfaces/form-override";
+import { ITemplateModule } from "./interfaces/template";
 
 class PluginOptions {
   /**
@@ -116,6 +117,7 @@ export {
   IFormOptions,
   AuJsonSchemaForm,
   IFormOverride,
+  ITemplateModule,
   IJsonSchemaDefinition,
   IJsonSchemaArrayDefinition,
   IJsonSchemaObjectDefinition,

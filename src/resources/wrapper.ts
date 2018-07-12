@@ -1,4 +1,4 @@
-import { ITemplate } from "../interfaces/template";
+import { ITemplateStore } from "../interfaces/template";
 
 export class Wrapper {
   static readonly containerMarker = "@";
@@ -60,13 +60,13 @@ export class Wrapper {
     };
   }
 
-  applyEnd(template: ITemplate) {
+  applyEnd(template: ITemplateStore) {
     if (this.end) {
       template.content += this.end;
     }
   }
 
-  applyStart(template: ITemplate) {
+  applyStart(template: ITemplateStore) {
     if (this.start) {
       template.content += this.start;
     }

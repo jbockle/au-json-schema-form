@@ -6,7 +6,7 @@ import {
   SchemaType
 } from "../interfaces/json-schema-definition";
 import { SchemaFormLogger } from "../resources/logger";
-import { ITemplate } from "../interfaces/template";
+import { ITemplateStore, isTemplateModule, ITemplateModule } from "../interfaces/template";
 import { DefaultsService } from "./defaults-service";
 import { Wrapper } from "../resources/wrapper";
 
@@ -20,23 +20,27 @@ export class FormService {
 
   async getFormTemplateAsync(
     form: IFormOverride, schema: IJsonSchemaDefinition, model: any, instanceId: string
-  ): Promise<ITemplate> {
+  ): Promise<ITemplateStore> {
     this.logger.warn("getFormTemplateAsync", { form, schema, model, instanceId });
 
-    const template: ITemplate = { content: "" };
+    const template: ITemplateStore = { content: "" };
 
     model = await this.defaultsService.getSchemaDefaultAsync(schema, model);
 
     setFormOverrides(form, null, null, schema);
 
-    this.transformTemplate(form, schema, template, instanceId);
+    this.generateTemplate(form, schema, template, instanceId);
 
     this.logger.warn("template created", { template });
     return template;
   }
 
-  transformTemplate(
-    form: IFormOverride, schema: IJsonSchemaDefinition, template: ITemplate, instanceId: string, segment: string = ""
+  generateTemplate(
+    form: IFormOverride,
+    schema: IJsonSchemaDefinition,
+    template: ITemplateStore,
+    instanceId: string,
+    segment: string = ""
   ) {
     this.logger.info("transformTemplate", { form, schema });
     for (const formKey in form) {
@@ -46,33 +50,68 @@ export class FormService {
       const wrapper = new Wrapper(formKey);
       wrapper.applyStart(template);
       if (Wrapper.isContainer(formKey)) {
-        (form[formKey] as IFormOverride[]).forEach((childForm, idx) => {
-          this.transformTemplate(
-            childForm,
-            schema,
-            template,
-            instanceId,
-            `${segment}['${formKey}'][${idx}]`
-          );
-        });
+        this.appendContainer(form, formKey, schema, template, instanceId, segment);
+      } else if (isTemplateModule(formKey)) {
+        this.appendTemplateModule(template, form._template, schema);
       } else {
-        setFormOverrides(
-          form[formKey] as IFormOverride,
-          schema,
-          formKey,
-          this.getFormKeySchema(formKey, schema)
-        );
-        template.content += this.getTemplate(
-          `model['${formKey}']`,
-          `form${segment}['${formKey}']`,
-          this.getFormKeySchema(formKey, schema).type,
-          instanceId);
+        this.appendSfTemplate(form, formKey, schema, template, segment, instanceId);
       }
       wrapper.applyEnd(template);
     }
   }
 
-  getTemplate(
+  private appendContainer(
+    form: IFormOverride,
+    formKey: string,
+    schema: IJsonSchemaDefinition,
+    template: ITemplateStore,
+    instanceId: string,
+    segment: string
+  ) {
+    (form[formKey] as IFormOverride[]).forEach((childForm, idx) => {
+      this.generateTemplate(childForm, schema, template, instanceId, `${segment}['${formKey}'][${idx}]`);
+    });
+  }
+
+  appendSfTemplate(
+    form: IFormOverride,
+    formKey: string,
+    schema: IJsonSchemaDefinition,
+    template: ITemplateStore,
+    segment: string,
+    instanceId: string
+  ) {
+    setFormOverrides(form[formKey] as IFormOverride, schema, formKey, this.getFormKeySchema(formKey, schema));
+    template.content += this.getSfTemplate(
+      `model['${formKey}']`,
+      `form${segment}['${formKey}']`,
+      this.getFormKeySchema(formKey, schema).type,
+      instanceId
+    );
+  }
+
+  appendTemplateModule(
+    template: ITemplateStore,
+    templateModule: ITemplateModule,
+    parentSchema: IJsonSchemaDefinition
+  ): void {
+    template.content += `<compose view-model="${templateModule.moduleName}"`;
+    if (templateModule.schemaKey) {
+      template.content += ` model.two-way="model['${templateModule.schemaKey}']" schema.to-view="schema`;
+      switch (this.getFormKeySchema(templateModule.schemaKey, parentSchema).type) {
+        case "array":
+          template.content += ".items";
+          break;
+        case "object":
+          template.content += ".properties";
+          break;
+      }
+      template.content += `['${templateModule.schemaKey}']"`;
+    }
+    template.content += "></compose>";
+  }
+
+  getSfTemplate(
     modelPath: string, formPath: string, schemaType: SchemaType, instanceId: string
   ) {
     this.logger.info("getTemplate", { modelPath, formPath, schemaType, instanceId });

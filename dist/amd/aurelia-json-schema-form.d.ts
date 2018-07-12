@@ -7,6 +7,7 @@ import { IFormOptions } from "./interfaces/form-options";
 import { AuJsonSchemaForm } from "./form/au-json-schema-form";
 import { IJsonSchemaDefinition, IJsonSchemaArrayDefinition, IJsonSchemaObjectDefinition, IJsonSchemaNumberDefinition, IJsonSchemaStringDefinition, IJsonSchemaBooleanDefinition } from "./interfaces/json-schema-definition";
 import { IFormOverride } from "./interfaces/form-override";
+import { ITemplateModule } from "./interfaces/template";
 declare class PluginOptions {
     /**
      * @property modifies DOM to display error/success states
@@ -31,4 +32,4 @@ declare class PluginOptions {
     constructor();
 }
 declare function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void): void;
-export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions, AuJsonSchemaForm, IFormOverride, IJsonSchemaDefinition, IJsonSchemaArrayDefinition, IJsonSchemaObjectDefinition, IJsonSchemaNumberDefinition, IJsonSchemaStringDefinition, IJsonSchemaBooleanDefinition };
+export { configure, ITemplates, IValidationMessages, PluginOptions, IFormOptions, AuJsonSchemaForm, IFormOverride, ITemplateModule, IJsonSchemaDefinition, IJsonSchemaArrayDefinition, IJsonSchemaObjectDefinition, IJsonSchemaNumberDefinition, IJsonSchemaStringDefinition, IJsonSchemaBooleanDefinition };

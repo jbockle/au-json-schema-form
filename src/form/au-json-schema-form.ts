@@ -82,7 +82,7 @@ export class AuJsonSchemaForm {
     this.log("buildViewStrategy");
     this.form.$schema = this.schema;
     this.formView = new InlineViewStrategy(
-      `<template>${this.formService.getTemplate("model", "form", this.schema.type, this.id)}</template>`);
+      `<template>${this.formService.getSfTemplate("model", "form", this.schema.type, this.id)}</template>`);
     this.formInstance = {
       schema: this.schema,
       form: this.form,
