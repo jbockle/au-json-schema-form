@@ -80,7 +80,7 @@ export const form: IFormOverride = {
     ]
   },
   termsOfService: {},
-  _template: {
+  _element: {
     elementName: "random-number-generator",
     schemaKey: "random"
   },

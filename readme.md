@@ -29,14 +29,32 @@ to view a demo, clone and checkout the **sample/readme.md**
 - Nested objects and arrays
 - Readonly fields
 - Default value population (even if not exposed in form) using default/const
-- Emmet-like custom element containers! Wrap form elements in an emmet key (supports @element#id.class.class syntax)
-  ```
+- Emmet-like custom element containers! Wrap form elements in an emmet key (supports `@element#id.class.class` syntax)
+  ```json
   "@div.col": [
     {
       state: {}
     }
   ]
   ```
+- BYO element
+  - `schemaKey` is optional, it will bind `schema` and `model` to your element
+  - validation does not occur on this schema key, you must perform your own validation
+  - use:
+    - create element _i.e._ `my-custom-element.ts` & `my-custom-element.html`
+    - add element as a global resource in your bootstrapper/feature 
+      ```javascript
+      aurelia.use.globalResources(PLATFORM.moduleName("../path/to/my-custom-element"))
+      ```
+    - add `_element` key to your form overrides
+      ```json
+      {
+        _element: {
+          elementName: "my-custom-element",
+          schemaKey: "firstName"
+        }
+      }
+      ```
 
 ## Coming soon/Need help with..
 

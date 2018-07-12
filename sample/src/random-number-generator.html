@@ -1,13 +1,14 @@
 <template>
   <div class="row">
     <div class="col">
-      <small class="text-muted">
-        Custom Module Template - model json on left will not update until any validation event occurs
-      </small>
-      <br>
       <button class="btn btn-success"
               type="button"
               click.delegate="generate()">Generate</button>
+      <br>
+      <small class="text-muted text-justify">
+        Custom Module Template
+        <br> model json on left will not update until it is signaled to by a validation event
+      </small>
     </div>
     <div class="col-12">
       <h4>Random number: ${model}</h4>

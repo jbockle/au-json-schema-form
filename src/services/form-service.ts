@@ -1,11 +1,17 @@
 import { inject, TaskQueue } from "aurelia-framework";
-import { IFormOverride, isOverride, setFormOverrides } from "../interfaces/form-override";
+import {
+  IFormOverride,
+  isOverride,
+  setFormOverrides,
+  ITemplateElement,
+  isTemplateModule
+} from "../interfaces/form-override";
 import {
   IJsonSchemaDefinition,
   SchemaType
 } from "../interfaces/json-schema-definition";
 import { SchemaFormLogger } from "../resources/logger";
-import { ITemplateStore, isTemplateModule, ITemplateModule } from "../interfaces/template";
+import { ITemplateStore } from "../interfaces/template";
 import { DefaultsService } from "./defaults-service";
 import { Wrapper } from "../resources/wrapper";
 
@@ -51,7 +57,7 @@ export class FormService {
       if (Wrapper.isContainer(formKey)) {
         this.appendContainer(form, formKey, schema, template, instanceId, segment);
       } else if (isTemplateModule(formKey)) {
-        this.appendTemplateModule(template, form._template, schema);
+        this.appendTemplateElement(template, form._element, schema, segment);
       } else {
         this.appendSfTemplate(form, formKey, schema, template, segment, instanceId);
       }
@@ -89,15 +95,18 @@ export class FormService {
     );
   }
 
-  appendTemplateModule(
+  appendTemplateElement(
     template: ITemplateStore,
-    templateModule: ITemplateModule,
-    parentSchema: IJsonSchemaDefinition
+    templateModule: ITemplateElement,
+    parentSchema: IJsonSchemaDefinition,
+    segment: string
   ): void {
+    this.logger.info("appendTemplateElement", { template, templateModule, parentSchema, segment });
     template.content += `<${templateModule.elementName} `;
     if (templateModule.schemaKey) {
-      template.content += ` model.two-way="model['${templateModule.schemaKey}']" schema.to-view="schema`;
-      switch (this.getFormKeySchema(templateModule.schemaKey, parentSchema).type) {
+      template.content += ` model.two-way="model['${templateModule.schemaKey}']"` +
+        ` schema.to-view="form${segment}.$schema`;
+      switch (parentSchema.type) {
         case "array":
           template.content += ".items";
           break;

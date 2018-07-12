@@ -6,7 +6,7 @@ export class RandomNumberGenerator {
   @bindable model: number;
 
   bind() {
-    console.log({ schema: this.schema, model: this.model });
+    console.log("random-number-generator", { schema: this.schema, model: this.model });
   }
 
   generate() {

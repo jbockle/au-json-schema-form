@@ -3,11 +3,10 @@ import {
   IJsonSchemaObjectDefinition
 } from "./json-schema-definition";
 import { getLogger } from "aurelia-logging";
-import { ITemplateModule } from "./template";
 
 export interface IFormOverride {
-  [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition | ITemplateModule;
-  _template?: ITemplateModule;
+  [key: string]: IFormOverride[] | IFormOverride | number | boolean | string | IJsonSchemaDefinition | ITemplateElement;
+  _element?: ITemplateElement;
   $noTitle?: boolean;
   $arrayItem?: IFormOverride;
   $noEmptyArrayInitialization?: boolean;
@@ -53,4 +52,27 @@ function fromCamelCase(val: string) {
   return val
     .replace(/([A-Z])/g, " $1")
     .replace(/^./, (str) => str.toUpperCase());
+}
+
+/** Used to declare a completely separate module that does
+ * not perform standard validation, implement view/view-model however you want.
+ */
+export interface ITemplateElement {
+
+  /** @property the element to append to template, make sure you have added it's moduleName to globalResources */
+  elementName: string;
+
+  /** the schema's key to parse, binds form (to-view) and model(two-way) to your module
+   * @property If schemaKey is specified, your module must have:
+   *   bindable schema: IJsonSchemaDefinition;
+   *   bindable model: any or model type;
+   *   If schemaKey is ommitted, no bindings are made
+   */
+  schemaKey?: string;
+}
+
+const templateModuleMarker: string = "_element";
+
+export function isTemplateModule(key: string): boolean {
+  return key === templateModuleMarker;
 }

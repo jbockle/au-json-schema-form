@@ -14,7 +14,7 @@ define('random-number-generator',["require", "exports", "aurelia-framework"], fu
         function RandomNumberGenerator() {
         }
         RandomNumberGenerator.prototype.bind = function () {
-            console.log({ schema: this.schema, model: this.model });
+            console.log("random-number-generator", { schema: this.schema, model: this.model });
         };
         RandomNumberGenerator.prototype.generate = function () {
             this.model = Math.random();
@@ -34,7 +34,7 @@ define('random-number-generator',["require", "exports", "aurelia-framework"], fu
 
 
 
-define('text!random-number-generator.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"row\">\n    <div class=\"col\">\n      <small class=\"text-muted\">\n        Custom Module Template - model json on left will not update until any validation event occurs\n      </small>\n      <br>\n      <button class=\"btn btn-success\"\n              type=\"button\"\n              click.delegate=\"generate()\">Generate</button>\n    </div>\n    <div class=\"col-12\">\n      <h4>Random number: ${model}</h4>\n    </div>\n  </div>\n</template>\n"; });
+define('text!random-number-generator.html', ['module'], function(module) { module.exports = "<template>\n  <div class=\"row\">\n    <div class=\"col\">\n      <button class=\"btn btn-success\"\n              type=\"button\"\n              click.delegate=\"generate()\">Generate</button>\n      <br>\n      <small class=\"text-muted text-justify\">\n        Custom Module Template\n        <br> model json on left will not update until it is signaled to by a validation event\n      </small>\n    </div>\n    <div class=\"col-12\">\n      <h4>Random number: ${model}</h4>\n    </div>\n  </div>\n</template>\n"; });
 define('navbar/navbar',["require", "exports", "aurelia-framework"], function (require, exports, aurelia_framework_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -380,7 +380,7 @@ define('json-form',["require", "exports"], function (require, exports) {
             ]
         },
         termsOfService: {},
-        _template: {
+        _element: {
             elementName: "random-number-generator",
             schemaKey: "random"
         },
