@@ -25,10 +25,13 @@ export interface IFormOverride {
   $parentForm?: IFormOverride;
   $enum?: any;
   $onChange?: ORChangeCallback;
+  $canRemove?: ORBooleanCallBack;
 }
 
 export declare type ORTypes =
-  IFormOverride[] | IFormOverride | ORPrimitive | IJsonSchemaDefinition | ITemplateElement[] | ORChangeCallback;
+  IFormOverride[] | IFormOverride | ORPrimitive | IJsonSchemaDefinition | ITemplateElement[] | ORChangeCallback |
+  ORBooleanCallBack;
+export declare type ORBooleanCallBack = () => boolean;
 export declare type ORPrimitive = string | number | boolean;
 export declare type ORChangeCallback = (newValue, oldValue) => void;
 

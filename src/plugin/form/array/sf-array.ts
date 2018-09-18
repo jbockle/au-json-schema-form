@@ -148,6 +148,17 @@ export class SfArray {
     return this.form.$schema.readOnly || !!this.form.$schema.const;
   }
 
+  get isRemovable(): boolean {
+    return this.form.$schema.readOnly || !!this.form.$schema.const || !this.canRemove() || this.form.$notRemovable;
+  }
+
+  private canRemove(): boolean {
+    if (!this.form.$arrayItem || !(this.form.$arrayItem.$canRemove instanceof Function)) {
+      return true;
+    }
+    return this.form.$arrayItem.$canRemove();
+  }
+
   get atCapacity(): boolean {
     return Number.isInteger(this.form.$schema.maxItems)
       ? this.model.length >= this.form.$schema.maxItems : false;

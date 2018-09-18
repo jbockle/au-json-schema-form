@@ -16,6 +16,7 @@ const coverage = buildOptions.isApplicable('coverage');
 const config = webpackConfig({
   production, server, extractCss, coverage, analyze
 });
+// tslint:disable-next-line:no-angle-bracket-type-assertion
 const compiler = webpack(<any>config);
 
 function buildWebpack(done) {
@@ -29,8 +30,10 @@ function buildWebpack(done) {
 
 function onBuild(err, stats) {
   if (!CLIOptions.hasFlag('watch') && err) {
+    // tslint:disable-next-line:no-console
     console.error(err.stack || err);
-    if (err.details) console.error(err.details);
+    // tslint:disable-next-line:no-console
+    if (err.details) { console.error(err.details); }
     process.exit(1);
   } else {
     process.stdout.write(stats.toString({ colors: require('supports-color') }) + '\n');

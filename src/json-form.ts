@@ -25,6 +25,7 @@ export const form: IFormOverride = {
       name: {},
       relationship: {},
       email: {},
+      $canRemove: () => {return false;},
       $noSeparator: true
     }
   },

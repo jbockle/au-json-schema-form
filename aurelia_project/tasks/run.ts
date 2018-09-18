@@ -31,8 +31,9 @@ function runWebpack(done) {
   const compiler = webpack(config);
   let server = new Server(compiler, opts);
 
+  // tslint:disable-next-line:only-arrow-functions
   server.listen(opts.port, opts.host, function(err) {
-    if (err) throw err;
+    if (err) { throw err; }
 
     reportWebpackReadiness(opts);
     done();
