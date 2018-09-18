@@ -149,7 +149,7 @@ export class SfArray {
   }
 
   get isRemovable(): boolean {
-    return this.form.$schema.readOnly || !!this.form.$schema.const || !this.canRemove() || this.form.$notRemovable;
+    return this.isDisabled || !this.canRemove() || this.form.$notRemovable;
   }
 
   private canRemove(): boolean {
