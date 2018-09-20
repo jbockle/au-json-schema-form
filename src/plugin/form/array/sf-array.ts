@@ -147,7 +147,7 @@ export class SfArray {
   }
 
   get isRemovable(): boolean {
-    return this.isDisabled ||  !this.form.$notRemovable;
+    return !this.isDisabled ||  !this.form.$notRemovable;
   }
 
   get atCapacity(): boolean {

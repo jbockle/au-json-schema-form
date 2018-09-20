@@ -25,7 +25,7 @@ export const form: IFormOverride = {
       name: {},
       relationship: {},
       email: {},
-      $canRemove: (item) => { if (item.relationship === '') {console.log('relationship is empty'); return true; } console.log('relationship is something'); return false; } ,
+      $canRemove: (item) => { if (item.relationship === '') { return false; } return true; } ,
       $noSeparator: true
     }
   },
