@@ -71,7 +71,10 @@ export class AuJsonSchemaForm {
     if (this.validationController === undefined) {
       this.validationController = this.validationControllerFactory.createForCurrentScope();
       this.validationController.addRenderer(this.configuration.validationRenderer);
+    }
+    if (!(this.validationController as any).__hasSubscription) {
       this.validationController.subscribe(() => { this.signaler.signal('validationChanged'); });
+      (this.validationController as any).__hasSubscription = true;
     }
   }
 
