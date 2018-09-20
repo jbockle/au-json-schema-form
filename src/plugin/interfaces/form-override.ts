@@ -31,7 +31,7 @@ export interface IFormOverride {
 export declare type ORTypes =
   IFormOverride[] | IFormOverride | ORPrimitive | IJsonSchemaDefinition | ITemplateElement[] | ORChangeCallback |
   ORBooleanCallBack;
-export declare type ORBooleanCallBack = () => boolean;
+export declare type ORBooleanCallBack = (model?: any) => boolean;
 export declare type ORPrimitive = string | number | boolean;
 export declare type ORChangeCallback = (newValue, oldValue) => void;
 

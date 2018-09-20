@@ -10,13 +10,15 @@ import { FormService } from '../services/form-service';
 import { Guid } from '../resources/guid';
 import { IFormInstance } from '../interfaces/form-instance';
 import { FormInstances } from '../services/form-instances';
+import { BindingSignaler } from 'aurelia-templating-resources';
 
 @inject(
   ValidationControllerFactory,
   SchemaFormConfiguration,
   SchemaFormLogger,
   FormService,
-  FormInstances
+  FormInstances,
+  BindingSignaler
 )
 @customElement('au-json-schema-form')
 export class AuJsonSchemaForm {
@@ -43,7 +45,8 @@ export class AuJsonSchemaForm {
     private configuration: SchemaFormConfiguration,
     private logger: SchemaFormLogger,
     private formService: FormService,
-    private formInstances: FormInstances
+    private formInstances: FormInstances,
+    public signaler: BindingSignaler
   ) {
     this.log = logger.info;
     this.id = Guid.newGuid();
@@ -68,6 +71,7 @@ export class AuJsonSchemaForm {
     if (this.validationController === undefined) {
       this.validationController = this.validationControllerFactory.createForCurrentScope();
       this.validationController.addRenderer(this.configuration.validationRenderer);
+      this.validationController.subscribe(() => { this.signaler.signal('validationChanged'); });
     }
   }
 

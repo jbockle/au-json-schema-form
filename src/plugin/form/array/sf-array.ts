@@ -47,9 +47,7 @@ export class SfArray {
     private logger: SchemaFormLogger,
     private defaultsService: DefaultsService,
     private formInstances: FormInstances
-  ) {
-
-  }
+  ) {  }
 
   async bind() {
     if (!this.binded) {
@@ -149,14 +147,7 @@ export class SfArray {
   }
 
   get isRemovable(): boolean {
-    return this.isDisabled || !this.canRemove() || this.form.$notRemovable;
-  }
-
-  private canRemove(): boolean {
-    if (!this.form.$arrayItem || !(this.form.$arrayItem.$canRemove instanceof Function)) {
-      return true;
-    }
-    return this.form.$arrayItem.$canRemove();
+    return this.isDisabled ||  !this.form.$notRemovable;
   }
 
   get atCapacity(): boolean {

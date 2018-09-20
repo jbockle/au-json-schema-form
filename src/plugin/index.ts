@@ -26,7 +26,7 @@ export function configure(frameworkConfig: FrameworkConfiguration, callback?: (c
   frameworkConfig.globalResources([
     PLATFORM.moduleName('./form/au-json-schema-form'),
     PLATFORM.moduleName('./value-converters/sf-number-value-converter'),
-
+    PLATFORM.moduleName('./value-converters/sf-array-can-remove-value-converter'),
     PLATFORM.moduleName('./form/array/sf-array'),
     PLATFORM.moduleName('./form/object/sf-object'),
     PLATFORM.moduleName('./form/number/sf-number'),
