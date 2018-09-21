@@ -1,6 +1,7 @@
 
-button:disabled.close:hover,button:disabled.close:focus {
-  opacity: .5;
+button:disabled.close,
+button:disabled.close * {
+  opacity: .3 !important;
   cursor: not-allowed;
 }
 
