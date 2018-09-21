@@ -7,15 +7,16 @@ import {
 } from './plugin';
 import { form } from './json-form';
 import { schema } from './json-schema';
+import { JSONHelper } from './json-helper';
 
 export class App {
   form: IFormOverride = form;
 
   schema: IJsonSchemaDefinition = schema;
 
-  @observable formString: string = JSON.stringify(this.form, null, '\t');
+  @observable formString: string = JSONHelper.stringify(this.form, '\t');
 
-  @observable schemaString: string = JSON.stringify(this.schema, null, '\t');
+  @observable schemaString: string = JSONHelper.stringify(this.schema, '\t');
 
   formVisible: boolean = true;
 
@@ -49,7 +50,7 @@ export class App {
   formStringChanged(newValue, oldValue) {
     if (!oldValue) { return; }
     try {
-      const obj = JSON.parse(newValue);
+      const obj = JSONHelper.parse(newValue);
       this.form = obj;
       this.formState = undefined;
     } catch {
@@ -60,7 +61,7 @@ export class App {
   schemaStringChanged(newValue, oldValue) {
     if (!oldValue) { return; }
     try {
-      const obj = JSON.parse(newValue);
+      const obj = JSONHelper.parse(newValue);
       this.schema = obj;
       this.schemaState = undefined;
     } catch {
@@ -69,7 +70,7 @@ export class App {
   }
 
   refreshModel() {
-    this.modelString = JSON.stringify(this.model, null, '\t');
+    this.modelString = JSONHelper.stringify(this.model, '\t');
   }
 
   async submit($event: Event) {
