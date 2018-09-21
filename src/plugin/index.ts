@@ -5,6 +5,7 @@ import { PLATFORM } from 'aurelia-pal';
 import { SchemaFormLogger } from './resources/logger';
 import { SchemaFormConfiguration } from './services/schema-form-configuration';
 import { PluginOptions } from './plugin-options';
+import './resources/number';
 
 export function configure(frameworkConfig: FrameworkConfiguration, callback?: (config: PluginOptions) => void) {
   const logger = getLogger('aurelia-json-schema-form');
