@@ -47,7 +47,7 @@ export class SfArray {
     private logger: SchemaFormLogger,
     private defaultsService: DefaultsService,
     private formInstances: FormInstances
-  ) {  }
+  ) { }
 
   async bind() {
     if (!this.binded) {
@@ -143,11 +143,7 @@ export class SfArray {
   }
 
   get isDisabled(): boolean {
-    return this.form.$schema.readOnly || !!this.form.$schema.const;
-  }
-
-  get isRemovable(): boolean {
-    return !this.isDisabled ||  !this.form.$notRemovable;
+    return this.form.$notRemovable || this.form.$schema.readOnly || !!this.form.$schema.const;
   }
 
   get atCapacity(): boolean {
