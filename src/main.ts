@@ -3,8 +3,9 @@ import { PLATFORM } from 'aurelia-pal';
 import environment from './environment';
 import 'bootstrap';
 import { logLevel } from 'aurelia-logging';
+import * as Bluebird from 'bluebird';
 
-(Promise as any).config({
+Bluebird.config({
   longStackTraces: false,
   warnings: {
     wForgottenReturn: false
@@ -33,9 +34,9 @@ export function configure(aurelia: Aurelia) {
     aurelia.use.developmentLogging();
   }
 
-  if (environment.testing) {
-    aurelia.use.plugin(PLATFORM.moduleName('aurelia-testing'));
-  }
+  // if (environment.testing) {
+  //   aurelia.use.plugin(PLATFORM.moduleName('aurelia-testing'));
+  // }
 
   aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
 }
