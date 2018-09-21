@@ -39,7 +39,7 @@
               data-placement="left"
               title="remove"
               click.trigger="remove($index,true)"
-              disabled.bind="(isRemovable || atMinimumCapacity) | sfArrayCanRemove:form.$arrayItem:item & signal:'validationChanged'"
+              disabled.bind="(isDisabled || atMinimumCapacity) | sfArrayCanRemove:form.$arrayItem:item & signal:'validationChanged'"
               if.bind="!form.$notRemovable">
         <span>&times;</span>
       </button>
