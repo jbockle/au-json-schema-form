@@ -13,7 +13,7 @@
            min.bind="minimum"
            max.bind="maximum"
            step.bind="form.$step"
-           readonly.bind="form.$schema.readOnly || form.$schema.const"
+           readonly.bind="(form.$schema.readOnly || form.$schema.const || form.$schema.$isReadOnly) | sfBooleanIsReadOnly:form:formCtrl.model  & signal:'validationChanged'"
            >
     <small class="form-text text-muted"
            if.bind="form.$schema.description"

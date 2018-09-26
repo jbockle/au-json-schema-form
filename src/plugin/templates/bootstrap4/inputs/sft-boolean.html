@@ -5,7 +5,7 @@
              type="checkbox"
              id.one-time="id"
              checked.bind="model & validateOnChange:formCtrl.validationController"
-             readonly.bind="form.$schema.readOnly || form.$schema.const">
+             readonly.bind="(form.$schema.readOnly || form.$schema.const || form.$schema.$isReadOnly) | sfBooleanIsReadOnly:form:formCtrl.model  & signal:'validationChanged'">
       <label for.one-time="id"
              class="form-check-label"
              if.bind="!form.$noTitle">${schema.title}</label>

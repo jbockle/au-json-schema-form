@@ -101,7 +101,8 @@ export class AuJsonSchemaForm {
       form: this.form,
       formController: new FormController(this.logger, this.options, this.validationController),
       validationController: this.validationController,
-      formOptions: this.options
+      formOptions: this.options,
+      model: this.model
     };
     this.logger.warn('buildViewStrategy completed', this.formInstance);
     this.formInstances.set(this.id, this.formInstance);

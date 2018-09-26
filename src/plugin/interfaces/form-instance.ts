@@ -10,4 +10,5 @@ export interface IFormInstance {
   formController: FormController;
   validationController: ValidationController;
   formOptions: IFormOptions;
+  model: object;
 }

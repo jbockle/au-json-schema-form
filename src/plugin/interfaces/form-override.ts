@@ -26,6 +26,7 @@ export interface IFormOverride {
   $enum?: any;
   $onChange?: ORChangeCallback;
   $canRemove?: ORBooleanCallBack;
+  $isReadOnly?: ORBooleanCallBack;
 }
 
 export declare type ORTypes =

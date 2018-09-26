@@ -8,7 +8,7 @@
            class="form-control form-control-sm"
            id.one-time="id"
            placeholder.bind="form.$placeholder || ''"
-           readonly.bind="form.$schema.readOnly || form.$schema.const">
+           readonly.bind="(form.$schema.readOnly || form.$schema.const || form.$schema.$isReadOnly) | sfBooleanIsReadOnly:form:formCtrl.model  & signal:'validationChanged'">
     <small class="form-text text-muted"
            if.bind="form.$schema.description"
            textcontent.bind="form.$schema.description"></small>

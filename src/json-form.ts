@@ -12,7 +12,11 @@ export const form: IFormOverride = {
     {
       '@div.col': [
         {
-          lastName: {}
+          lastName: {
+            $isReadOnly: (item) => {
+              return !item.firstName;
+            }
+          }
         }
       ]
     }
