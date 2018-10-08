@@ -2,6 +2,7 @@ export interface ITemplates {
   number: string;
   numberRange: string;
   string: string;
+  stringTextArea: string;
   stringRadioEnum: string;
   stringSelectEnum: string;
   object: string;

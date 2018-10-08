@@ -7,6 +7,7 @@ import { getLogger } from 'aurelia-logging';
 export interface IFormOverride {
   [key: string]: ORTypes;
   _element?: ITemplateElement[];
+  $textarea?: IORTextarea;
   $noTitle?: boolean;
   $arrayItem?: IFormOverride;
   $noEmptyArrayInitialization?: boolean;
@@ -31,7 +32,8 @@ export interface IFormOverride {
 
 export declare type ORTypes =
   IFormOverride[] | IFormOverride | ORPrimitive | IJsonSchemaDefinition | ITemplateElement[] | ORChangeCallback |
-  ORBooleanCallBack;
+  ORBooleanCallBack | IORTextarea;
+export interface IORTextarea { rows?: number; resize?: 'none' | 'both' | 'horizontal' | 'vertical'; }
 export declare type ORBooleanCallBack = (model?: any) => boolean;
 export declare type ORPrimitive = string | number | boolean;
 export declare type ORChangeCallback = (newValue, oldValue) => void;

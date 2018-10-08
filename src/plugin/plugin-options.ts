@@ -35,6 +35,7 @@ export class PluginOptions {
       number: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-number.html'),
       numberRange: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-number-range.html'),
       string: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-string.html'),
+      stringTextArea: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-string-textarea.html'),
       stringRadioEnum: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-string-radio-enum.html'),
       stringSelectEnum: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-string-select-enum.html'),
       object: PLATFORM.moduleName('./templates/bootstrap4/inputs/sft-object.html'),

@@ -58,6 +58,8 @@ export class SfString {
     this.view = this.formService.getTemplatePath('string');
     if (this.form.$altTemplate) {
       this.view = this.form.$altTemplate;
+    } else if (this.form.$textarea) {
+      this.view = this.formService.getTemplatePath('stringTextArea');
     } else if (this.form.$schema.enum && this.form.$schema.enum.length <= 5) {
       this.view = this.formService.getTemplatePath('stringRadioEnum');
     } else if (this.form.$schema.enum) {

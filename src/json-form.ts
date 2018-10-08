@@ -21,6 +21,11 @@ export const form: IFormOverride = {
       ]
     }
   ],
+  'description': {
+    $textarea: {
+      resize: 'vertical'
+    }
+  },
   'references': {
     $arrayAsTabs: true,
     $tabTitle: '${model[$index].name || \'Item \' + ($index + 1)}',

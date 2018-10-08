@@ -1,0 +1,10 @@
+<template>
+  <div class="form-group">
+    <label for.one-time="id" class="col-form-label-sm" if.bind="!form.$noTitle">${form.$schema.title}</label>
+    <textarea class="form-control" value.bind="model & validateOnChange:formCtrl.validationController"
+              rows.bind="form.$textarea.rows || 3" css="resize: ${form.$textarea.resize ? form.$textarea.resize : 'none'}"></textarea>
+    <small class="form-text text-muted" if.bind="form.$schema.description"
+           textcontent.bind="form.$schema.description"></small>
+    <div class="invalid-feedback"></div>
+  </div>
+</template>

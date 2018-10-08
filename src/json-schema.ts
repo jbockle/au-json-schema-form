@@ -11,6 +11,9 @@ export const schema: IJsonSchemaDefinition = {
       type: 'string',
       minLength: 3
     },
+    description: {
+      type: 'string'
+    },
     hiddenPropertyWithDefault: {
       type: 'string',
       default: 'I\'m hidden but still populating the model!'
@@ -178,6 +181,7 @@ export const schema: IJsonSchemaDefinition = {
     'firstName',
     'lastName',
     'averageDailyCoffeeConsumption',
-    'required'
+    'required',
+    'description'
   ]
 };
