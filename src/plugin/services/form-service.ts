@@ -6,8 +6,7 @@ import {
   isTemplateModule
 } from '../interfaces/form-override';
 import {
-  IJsonSchemaDefinition,
-  SchemaType
+  IJsonSchemaDefinition
 } from '../interfaces/json-schema-definition';
 import { SchemaFormLogger } from '../resources/logger';
 import { ITemplateStore } from '../interfaces/template';
@@ -126,7 +125,7 @@ export class FormService {
   }
 
   getSfTemplate(
-    modelPath: string, formPath: string, schemaType: SchemaType, instanceId: string
+    modelPath: string, formPath: string, schemaType, instanceId: string
   ) {
     this.logger.info('getTemplate', { modelPath, formPath, schemaType, instanceId });
     return `<sf-${schemaType}` +

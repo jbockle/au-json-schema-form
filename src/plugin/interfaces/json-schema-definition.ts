@@ -1,6 +1,6 @@
 export declare type StringFormat = 'date-time' | 'date' | 'time' | 'ipv4' | 'ipv6' | 'email';
 
-export declare type SchemaType = 'object' | 'array' | 'string' | 'number' | 'boolean';
+export declare type SchemaType = 'object' | 'array' | 'string' | 'number' | 'boolean' | 'null';
 
 export declare type PrimitiveType = number | boolean | string | null;
 
@@ -8,7 +8,7 @@ export interface IJsonSchemaDefinition {
   $schema?: string;
   description?: string;
   title?: string;
-  type: SchemaType;
+  type: SchemaType | SchemaType[];
   enum?: PrimitiveType[];
   default?: PrimitiveType | object | object[];
   const?: PrimitiveType | object | object[];

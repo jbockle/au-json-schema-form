@@ -12,6 +12,9 @@ export class DefaultsService {
 
   async getSchemaDefaultAsync(schema: IJsonSchemaDefinition, model: any) {
     this.logger.info('getSchemaDefaultAsync', { schema, model });
+    if (Array.isArray(schema.type)) {
+      schema.type = schema.type[0];
+    }
     switch (schema.type) {
       case 'array':
         model = await this.getArrayDefaultAsync(model);

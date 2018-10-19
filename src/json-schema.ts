@@ -4,7 +4,7 @@ export const schema: IJsonSchemaDefinition = {
   type: 'object',
   properties: {
     firstName: {
-      type: 'string',
+      type: ['string', 'null'],
       minLength: 3
     },
     lastName: {
